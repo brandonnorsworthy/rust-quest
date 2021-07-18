@@ -32,3 +32,31 @@
     background-color: rgba(26, 61, 88, 1);
 }
 
+.title {
+    color: #ffffff;
+    font-size: 250%;
+}
+
+.title:hover {
+    cursor: pointer;
+    color: #c0c0c0;
+}
+
+.subtitle {
+    color: #ffffff;
+    font-size: 150%
+}
+
+.no-hover:hover {
+    cursor: default;
+    color: #ffffff;
+}
+
+.disabled {
+    color: #6c757d;
+}
+
+.disabled:hover {
+    cursor: default;
+    color: #6c757d;
+}

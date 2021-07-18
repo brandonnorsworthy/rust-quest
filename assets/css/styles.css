@@ -37,11 +37,6 @@ body {
     width: 400px;
 }
 
-.controls h1 {
-    color: #ffffff;
-    font-size: var(--title-sizes);
-}
-
 .controls-top {
     padding-top: 5vh;
 }
@@ -66,11 +61,11 @@ body {
     padding-top: 0px;
 }
 
-.controls-bottom h1:hover {
+/* .controls-bottom h1:hover {
     cursor: pointer;
     color: #c5c5c5;
 }
-
+ */
 #credits {
     margin-top: 40%; /* push a bit lower than the rest of buttons */
 }
@@ -104,7 +99,6 @@ body {
     margin-top: 1.5%;
     width: 100%;
     text-align: center;
-    font-size: var(--title-sizes);
 }
 
 .card-info h2 {
@@ -186,10 +180,6 @@ body {
     width: 80vw;
     height: 80vw;
 }
-
-/* #wheel:hover {
-    background-color: red;
-} */
 
 .nav {
     width: var(--navbar-width);
