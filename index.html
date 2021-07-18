@@ -22,26 +22,29 @@
                 <div class="controls-bottom">
                     <h1 id="spin-wheel">SPIN WHEEL</h1>
                     <h1 id="settings">SETTINGS</h1>
-                    <!-- <h1 id="about">ABOUT</h1>
-                    <h1 id="future-stuff">FUTURE STUFF</h1> -->
+                    <h1 id="about">ABOUT</h1>
+                    <h1 id="stats">STATS</h1>
+                    <h1 id="future-stuff">FUTURE</h1>
                     <h1 id="credits">CREDITS</h1>
                 </div>
             </div>
             <div class="content">
-                <div class="card" style="display:block">
+                <div class="paint" id="paint-stroke" style="display:block">
+                    <div class="paint-mask">
+                        <div id="wheel">
+                        <img src="./assets/img/wheel-dummy-text.png" alt="">
+                        </div>
+                    </div>
+                </div>
+                <div class="card" id="mission-card" style="display:none">
                     <div class="card-img">
-                        <img src="./assets/TEMP/cargoship.png" alt="mission image demo">
+                        <img id="mission-thumbnail" src="./assets/TEMP/cargoship.png" alt="mission image demo">
                     </div>
                     <div class="card-info">
-                        <h1>TAKE OVER THE CARGOSHIP</h1>
-                        <h2>Category: PVE | Difficulty: Hard</h2>
-                        <div class="card-info-description">
-                            <p>Once a cargo ship spawns on the map you must immediately go to take over the ship and kill any people who may come to counter your efforts</p>
-                            <ul>
-                                <li>Hack all 3 crates</li>
-                                <li>Kill all scientists</li>
-                                <li>Escape with the loot</li>
-                            </ul>
+                        <h1 id="mission-title">TAKE OVER THE CARGOSHIP</h1>
+                        <h2 id="mission-subtitle">Category: PVE | Difficulty: Hard</h2>
+                        <div class="card-info-description" id="mission-card-description">
+
                         </div>
                     </div>
                     <div class="card-buttons">
@@ -52,11 +55,6 @@
                             <button type="button" class="button btn-secondary" id="skip">SKIP</button>
                             <button type="button" class="button btn-confirm" id="complete">COMPLETE</button>
                         </div>
-                    </div>
-                </div>
-                <div class="paint" style="display:none">
-                    <div class="paint-mask">
-                        <img src="./assets/img/wheel-dummy-text.png" alt="">
                     </div>
                 </div>
             </div>
@@ -81,6 +79,7 @@
         </div>
     </div>
     <script src="./assets/js/script.js"></script>
-    <script src="./assets/js/src/obj.js"></script>
+    <script src="./assets/js/src/createCardHtml.js"></script>
+    <script src="./assets/js/src/missions.js"></script>
 </body>
 </html>
