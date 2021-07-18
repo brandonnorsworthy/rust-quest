@@ -3,6 +3,8 @@
     padding: 15px;
     font-size: 120%;
     border: none;
+    min-width: 120px;
+    max-height: 100%;
 }
 
 .button:hover {

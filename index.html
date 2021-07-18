@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./assets/css/reset.css">
+    <link rel="stylesheet" href="./assets/css/presets.css">
     <link rel="stylesheet" href="./assets/css/styles.css">
     <!-- favicon -->
     <title>Rust Strat Roulette</title>
@@ -27,7 +28,33 @@
                 </div>
             </div>
             <div class="content">
-                <div class="paint">
+                <div class="card" style="display:block">
+                    <div class="card-img">
+                        <img src="./assets/TEMP/cargoship.png" alt="mission image demo">
+                    </div>
+                    <div class="card-info">
+                        <h1>TAKE OVER THE CARGOSHIP</h1>
+                        <h2>Category: PVE | Difficulty: Hard</h2>
+                        <div class="card-info-description">
+                            <p>Once a cargo ship spawns on the map you must immediately go to take over the ship and kill any people who may come to counter your efforts</p>
+                            <ul>
+                                <li>Hack all 3 crates</li>
+                                <li>Kill all scientists</li>
+                                <li>Escape with the loot</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-buttons">
+                        <div class="card-buttons-left">
+                            <button type="button" class="button btn-info" id="learn-more">LEARN MORE</button>
+                        </div>
+                        <div class="card-buttons-right">
+                            <button type="button" class="button btn-secondary" id="skip">SKIP</button>
+                            <button type="button" class="button btn-confirm" id="complete">COMPLETE</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="paint" style="display:none">
                     <div class="paint-mask">
                         <img src="./assets/img/wheel-dummy-text.png" alt="">
                     </div>

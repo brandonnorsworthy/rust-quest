@@ -1,5 +1,7 @@
 :root {
     --navbar-width: 76px;
+    --title-sizes: 250%;
+    --subtitle-sizes: 150%;
 }
 
 body {
@@ -35,7 +37,7 @@ body {
 
 .controls h1 {
     color: #ffffff;
-    font-size: 250%;
+    font-size: var(--title-sizes);
 }
 
 .controls-top {
@@ -71,6 +73,82 @@ body {
     margin-top: 40%; /* push a bit lower than the rest of buttons */
 }
 
+.card {
+    position: absolute;
+    right: 20%;
+    top: 5%;
+    background-color: rgba(28, 33, 27, 1);
+    width: 45vw;
+    height: 85vh;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-img {
+    width: fit-content;
+    overflow: hidden;
+}
+
+.card-info {
+    color: #ffffff;
+}
+
+.card-info h1 {
+    margin-top: 1.5%;
+    width: 100%;
+    text-align: center;
+    font-size: var(--title-sizes);
+}
+
+.card-info h2 {
+    margin-top: 0.5%;
+    width: 100%;
+    text-align: center;
+    font-size: var(--subtitle-sizes);
+}
+
+.card-info-description {
+    margin: 1.5% 0 0 1.5%;
+}
+
+.card-info-description p {
+    margin: 1.5% 0 0 1.5%;
+    font-size: 125%;
+    color: rgba(129, 129, 129, 1);
+}
+
+.card-info-description ul {
+    font-size: 125%;
+    color: rgba(129, 129, 129, 1);
+    margin: 1.5% 0 0 4.5%;
+    list-style-type: circle;
+}
+
+.card-buttons {
+    position: absolute;
+    bottom: 7.5px;
+    right: 7.5px;
+    left: 7.5px;
+    display: flex;
+}
+
+.card-buttons-left {
+    width: 50%;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.card-buttons-right{
+    width: 50%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* #skip {
+    padding: 0 30px 0 30px;
+} */
+
 .paint {
     position: absolute;
     top: 15vh;
@@ -85,7 +163,6 @@ body {
     left: 0;
     top: 0;
     bottom: 0;
-
     mask-image: url(../img/paint-brush-stroke-mask.png);
     -webkit-mask-image: url(../img/paint-brush-stroke-mask.png);
     mask-size: 100%, 100%;
