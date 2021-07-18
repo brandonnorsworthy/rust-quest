@@ -1,3 +1,7 @@
+:root {
+    --navbar-width: 76px;
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -56,14 +60,41 @@ body {
 
 .controls-bottom h1:hover {
     cursor: pointer;
+    color: #c5c5c5;
 }
 
 #credits {
     margin-top: 40%; /* push a bit lower than the rest of buttons */
 }
 
+.paint {
+    position: absolute;
+    top: 15vh;
+    right: var(--navbar-width);
+    width: 75vw;
+    height: 85vh;
+}
+
+.paint-mask {
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    mask-image: url(../img/paint-brush-stroke-mask.png) ;
+    mask-size: 100%, 100%;
+    mask-repeat: no-repeat;
+    background-color: rgba(28, 33, 27, 1);
+}
+
+.paint-mask img {
+    width: 100%;
+    height: 99%;
+    overflow: hidden;
+}
+
 .nav {
-    width: 76px;
+    width: var(--navbar-width);
     height: 100vh;
     padding-left: 6px;
     position: absolute;
@@ -122,3 +153,12 @@ body {
     color: rgba(168, 220, 77, 1);
 }
 /* media query for screens less than 1080p to make controls margins-top go away */
+
+@media screen and (max-width:1000px) {
+    .nav {
+        display: none;
+    }
+    .paint {
+        display: none;
+    }
+}
