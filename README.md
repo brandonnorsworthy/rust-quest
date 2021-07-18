@@ -8,6 +8,8 @@ deployment: [Github Pages Deployment](https://brandonnorsworthy.github.io/rust-s
 
 ## Introduction
 
+Picks a random event to do in the Sandbox MMO Game **Rust** developed by **Facepunch**, you can click on the wheel or click spin wheel to begin, showing you a nice animation of the style from the bandit camp casino ingame that randomly will pick a category *based off weights for each category* and then will randomly pick a event inside that category for a cool completion based wipe, to challenge yourself for some new events, or just if maybe your group cannot ever thing of what you should do.
+
 ## Table of Contents
 
  - [Demo](#demo)
@@ -17,7 +19,7 @@ deployment: [Github Pages Deployment](https://brandonnorsworthy.github.io/rust-s
 
 ## Demo
 
-![demo gif here]()
+<!-- ![demo gif here]() -->
 
 ## Contribution Guidelines
 
@@ -54,27 +56,28 @@ Then wheel in the center would only show around the top of the whell kinda like 
 
 ### Mission Screen TODOS
 
-#### Learn More Button
+1. Learn More Button
 
-links to wiki about event / thing (helps people learn more about stuff in game)
-#### Complete Green Button / Skip Button
+    links to wiki about event / thing (helps people learn more about stuff in game)
 
-in future probably change this to accept so can hold multiple missions at once incase one literally just cannot be completed right now
-also change the skip button to a cancel button **maybe**
+2. Complete Green Button / Skip Button
 
-#### Future
+    in future probably change this to accept so can hold multiple missions at once incase one literally just cannot be completed right now
+    also change the skip button to a cancel button **maybe**
 
-add % of people that pass in future and if say like 70% of people pass difficulty would be labeled as “hard”
+3. Future
+
+    add % of people that pass in future and if say like 70% of people pass difficulty would be labeled as “hard”
 
 ### Option Screen TODOS
-options / filters  
-+ disable sound
-+ disable animation
-  
-filters:  
-+ category adjustments (disable categories like raid or roleplayer stuff)
-+ change weigths (sliders maybe like if raid is too rare can make it heavier in weight to show more)
-+ disable events that are time based (cargo, heli, airdrops) stuff that can only happen if event is currently going on
+1. options
+    + disable sound
+    + disable animation
+    
+2. filters:  
+    + category adjustments (disable categories like raid or roleplayer stuff)
+    + change weigths (sliders maybe like if raid is too rare can make it heavier in weight to show more)
+    + disable events that are time based (cargo, heli, airdrops) stuff that can only happen if event is currently going on
 
 ## Questions
 
