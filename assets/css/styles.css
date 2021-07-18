@@ -83,16 +83,15 @@ body {
     padding: 15px;
     display: flex;
     flex-direction: column;
-
 }
 
 .card-img {
+    height: 40%;
+    width: 100%;
+    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: fit-content;
-    height: 40%;
-    overflow: hidden;
 }
 
 .card-info {
