@@ -83,9 +83,13 @@ body {
     padding: 15px;
     display: flex;
     flex-direction: column;
+
 }
 
 .card-img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: fit-content;
     height: 40%;
     overflow: hidden;
