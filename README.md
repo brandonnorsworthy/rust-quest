@@ -11,9 +11,9 @@ deployment: [Github Pages Deployment](https://brandonnorsworthy.github.io/rust-s
 ## Table of Contents
 
  - [Demo](#demo)
- - [Demo](#contribution-guidelines)
- - [Demo](#todos)
- - [Demo](#questions)
+ - [Contribution Guidelines](#contribution-guidelines)
+ - [Todos](#todos)
+ - [Questions](#questions)
 
 ## Demo
 
