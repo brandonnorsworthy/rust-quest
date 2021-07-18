@@ -187,10 +187,9 @@ body {
     height: 80vw;
 }
 
-#wheel:hover {
+/* #wheel:hover {
     background-color: red;
-
-}
+} */
 
 .nav {
     width: var(--navbar-width);

@@ -5,7 +5,7 @@ const missionTitleEl = document.getElementById("mission-title");
 const missionSubtitleEl = document.getElementById("mission-subtitle");
 const missionDescriptionEl = document.getElementById("mission-card-description");
 
-function buildHtml(currentMission, category) {
+function generateCardHtml(category, currentMission) {
     if(currentMission) {
         missionImageEl.setAttribute("src", currentMission.missionImageURL);
         missionTitleEl.textContent = currentMission.missionName;
