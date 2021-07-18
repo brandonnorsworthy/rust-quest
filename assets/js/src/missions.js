@@ -20,13 +20,13 @@
 
 function getCategoryAmounts() {
     let categoryWeights = [ //! to add weights in the future multiply by weight so if its empty it cant be chosen
-        ["pvp", missions.pvp.length],
-        ["pve", missions.pve.length],
-        ["roleplay", missions.roleplay.length],
-        ["monument", missions.monument.length],
-        /* ["farming", missions.farming.length],
-        ["building", missions.building.length], //todo add a lot more missions
-        ["raiding", missions.raiding.length], */
+        ["PVP", missions.pvp.length],
+        ["PVE", missions.pve.length],
+        ["Roleplay", missions.roleplay.length],
+        ["Monument", missions.monument.length],
+        ["Farming", missions.farming.length],
+        ["Building", missions.building.length], //todo add a lot more missions
+        ["Raiding", missions.raiding.length],
     ];
 
     let weightTotal = 0;
@@ -42,7 +42,7 @@ function getCategoryAmounts() {
 function getMission(category, index) {
     let mission = {};
 
-    switch(category){
+    switch(category.toLowerCase()){
         case "pvp":
             mission = missions.pvp[index];
             break;
@@ -83,9 +83,9 @@ const missions = {
             missionGameStage: 2,
             missionDescription: `Once a cargo ship spawns on the map you must immediately go to take over the ship and kill any people who may come to counter your efforts.`,
             missionTasks: [
-                ["Newbie: Hack 1 Locked Crate", "Last one top or bottom?: Hack 2 Locked Crates", "All mine: Hack all 3 Locked Crates"],
-                ["All must die: Kill all scientists", "I really an the Captain: Kill All Bridge Scientists", "Mercenary: Kill only scientists that are absolutely necessary"],
-                ["Getaway Driver: Escape with the loot by the Escape Rhiib", "Lazarus Night Ops: Escape with the loot via scuba gear"],
+                ["Hack 1 Locked Crate", "Hack 2 Locked Crates", "Hack all 3 Locked Crates"],
+                ["Kill all scientists", "Kill All Bridge Scientists", "Kill only scientists that are absolutely necessary"],
+                ["Escape with the loot by the Escape Rhiib", "Escape with the loot via scuba gear"],
             ],
             missionIsTimeDependent: true,
             missionPlayersRecommended: 2,
@@ -97,9 +97,9 @@ const missions = {
             missionGameStage: 2,
             missionDescription: `Once a cargo ship spawns on the map you must immediately go to take over the ship and kill any people who may come to counter your efforts.`,
             missionTasks: [
-                ["Newbie: Hack 1 Locked Crate", "Last one top or bottom?: Hack 2 Locked Crates", "All mine: Hack all 3 Locked Crates"],
-                ["All must die: Kill all scientists", "I really an the Captain: Kill All Bridge Scientists", "Mercenary: Kill only scientists that are absolutely necessary"],
-                ["Getaway Driver: Escape with the loot by the Escape Rhiib", "Lazarus Night Ops: Escape with the loot via scuba gear"],
+                ["Hack 1 Locked Crate", "Hack 2 Locked Crates", "Hack all 3 Locked Crates"],
+                ["Kill all scientists", "Kill All Bridge Scientists", "Kill only scientists that are absolutely necessary"],
+                ["Escape with the loot by the Escape Rhiib", "Escape with the loot via scuba gear"],
             ],
             missionIsTimeDependent: false,
             missionPlayersRecommended: 2,

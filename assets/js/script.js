@@ -43,7 +43,7 @@ function generateRandomMission() {
         }
 
         let category = sessionWeights[categoryIndex][0]
-        generateCardHtml(category.toUpperCase(), getMission(category, Math.floor(Math.random() * sessionWeights[categoryIndex][1])));
+        generateCardHtml(category, getMission(category, Math.floor(Math.random() * sessionWeights[categoryIndex][1])));
     }
 }
 
