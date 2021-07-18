@@ -14,22 +14,23 @@ function init() {
 
 function createEventListeners() {
     //todo sound design for completions
-    document.getElementById("spin-wheel").addEventListener("click", () => {
-        missionCardEl.style.display = "block";
-        if (!grabbedWeights) {
-            sessionWeights = getCategoryAmounts();
-            grabbedWeights = true;
-        }
-        generateRandomMission();
-    })
+    document.getElementById("spin-wheel").addEventListener("click", spinWheel)
 
     document.getElementById("complete").addEventListener("click", () => {
         missionCardEl.style.display = "none";
     })
 
-    document.getElementById("skip").addEventListener("click", () => {
-        missionCardEl.style.display = "none";
-    })
+    document.getElementById("skip").addEventListener("click", spinWheel)
+}
+
+function spinWheel() {
+    // missionCardEl.style.display = "none";
+    missionCardEl.style.display = "block"; //!will need to wait in the future for the wheel to spin
+    if (!grabbedWeights) {
+        sessionWeights = getCategoryAmounts();
+        grabbedWeights = true;
+    }
+    generateRandomMission();
 }
 
 function generateRandomMission() {

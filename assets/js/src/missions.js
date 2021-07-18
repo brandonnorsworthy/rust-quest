@@ -27,7 +27,7 @@ function getCategoryAmounts() {
         ["Monument", missions.monument.length],
         ["Farming", missions.farming.length],
         ["Building", missions.building.length], //todo add a lot more missions
-        ["Raiding", missions.raiding.length],
+        ["Raiding", missions.raiding.length],//todo add support for random weapon choices
     ];
 
     let weightTotal = 0;
@@ -95,18 +95,19 @@ const missions = {
         },
         {
             ImageURL: `/assets/TEMP/cargoship.png`,
-            Name: `Black Gold`,
+            Name: `Smol Black Gold`,
             Difficulty: 2,
             GameStage: 2,
-            Description: `Once a cargo ship spawns on the map you must immediately go to take over the ship and kill any people who may come to counter your efforts.`,
+            Description: `Go to the small oil rig to hijack the facility for yourself. Watch out I hear they call in reinforcements.`,
             Tasks: [
-                ["Hack 1 Locked Crate", "Hack 2 Locked Crates", "Hack all 3 Locked Crates"],
-                ["Kill all scientists", "Kill All Bridge Scientists", "Kill only scientists that are absolutely necessary"],
-                ["Escape with the loot by the Escape Rhiib", "Escape with the loot via scuba gear"],
+                ["Hack 1 the Locked Crate"],
+                ["Kill all Scientists", "Kill every Scientist but the boys just chilling on the dock"],
+                ["Unlock the Green Card, Blue Card and Red Card Doors", "Loot the red button room", "Only go for the crate"],
+                ["Clear out the helipad from a helicopter and land on it", "Skip the dock and immediatly go scale the ladder"],
             ],
             IsTimeDependent: false,
             PlayersRecommended: 2,
-            WikiURL: "https://rust.fandom.com/wiki/Cargo_Ship",
+            WikiURL: "https://rust.fandom.com/wiki/Oil_Rig",
         },
     ],
     roleplay: [
@@ -121,7 +122,7 @@ const missions = {
             ],
             IsTimeDependent: false,
             PlayersRecommended: 1,
-            WikiURL: "https://rust.fandom.com/wiki/Cargo_Ship",
+            WikiURL: "https://rustlabs.com/skin/mother's-day-rock",
         },
     ],
     monument: [
