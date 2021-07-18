@@ -1,0 +1,32 @@
+.button {
+    margin: 7.5px;
+    padding: 15px;
+    font-size: 120%;
+    border: none;
+}
+
+.button:hover {
+    cursor: pointer;
+}
+
+
+.btn-confirm {
+    color: rgba(168, 220, 77, 1);
+    background-color: rgba(62, 75, 40, 1);
+}
+
+.btn-warning {
+    color: rgba(220, 77, 77, 1);
+    background-color: rgba(75, 40, 40, 1);
+}
+
+.btn-secondary {
+    color: rgba(86, 83, 78, 1);
+    background-color: rgba(204, 195, 186, 1);
+}
+
+.btn-info {
+    color: rgba(65, 156, 219, 1);
+    background-color: rgba(26, 61, 88, 1);
+}
+
