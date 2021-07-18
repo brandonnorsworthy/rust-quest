@@ -1,17 +1,18 @@
 /*
     {
-        missionImageURL: ``, //! thumbnail image prefer urls to save memory
-        missionName: `I am the Captain now`, //! Name that shows under the image
-        missionDifficulty: 2, //! difficulty [0 easy, 1 normal, 2 harder, 3 very hard]
-        missionGameStage: 1 //! [0 any, 1 early game, 2 mid game, 3 late game]
-        missionDescription: `Once a cargo ship spawns on the map you must immediately go to take over the ship and kill any people who may come to counter your efforts`,
-        missionTasks: [ //! tasks are listed in a bullet point format helps give a challenge
+        ImageURL: ``, //! thumbnail image prefer urls to save memory
+        Name: `I am the Captain now`, //! Name that shows under the image
+        Difficulty: 2, //! difficulty [0 easy, 1 normal, 2 harder, 3 very hard]
+        GameStage: 1 //! [0 any, 1 early game, 2 mid game, 3 late game]
+        Description: `Once a cargo ship spawns on the map you must immediately go to take over the ship and kill any people who may come to counter your efforts`,
+        Tasks: [ //! tasks are listed in a bullet point format helps give a challenge
             ["Newbie: Hack 1 Locked Crate", "Last one top or bottom?: Hack 2 Locked Crates", "All mine: Hack all 3 Locked Crates"],
             ["All must die: Kill all scientists", "I really an the Captain: Kill All Bridge Scientists", "Mercenary: Kill only scientists that are absolutely necessary"],
             ["Getaway Driver: Escape with the loot by the Escape Rhiib", "Lazarus Night Ops: Escape with the loot via scuba gear"],
         ],
-        missionIsTimeDependent = true, //! mission can only be completed while a event is active
-        missionPlayersRecommended = 2 //! default 1
+        IsTimeDependent = true, //! mission can only be completed while a event is active
+        PlayersRecommended = 2 //! default 1
+        WikiUrl = "" //!links to either wiki or rustlabs
     },
 */
 
@@ -74,49 +75,53 @@ function getMission(category, index) {
 
 const missions = {
     pvp:[
+
     ],
     pve: [
         {
-            missionImageURL: `/assets/TEMP/cargoship.png`,
-            missionName: `I am the Captain now`,
-            missionDifficulty: 2,
-            missionGameStage: 2,
-            missionDescription: `Once a cargo ship spawns on the map you must immediately go to take over the ship and kill any people who may come to counter your efforts.`,
-            missionTasks: [
+            ImageURL: `/assets/TEMP/cargoship.png`,
+            Name: `I am the Captain now`,
+            Difficulty: 2,
+            GameStage: 2,
+            Description: `Once a cargo ship spawns on the map you must immediately go to take over the ship and kill any people who may come to counter your efforts.`,
+            Tasks: [
                 ["Hack 1 Locked Crate", "Hack 2 Locked Crates", "Hack all 3 Locked Crates"],
                 ["Kill all scientists", "Kill All Bridge Scientists", "Kill only scientists that are absolutely necessary"],
                 ["Escape with the loot by the Escape Rhiib", "Escape with the loot via scuba gear"],
             ],
-            missionIsTimeDependent: true,
-            missionPlayersRecommended: 2,
+            IsTimeDependent: true,
+            PlayersRecommended: 2,
+            WikiURL: "https://rust.fandom.com/wiki/Cargo_Ship",
         },
         {
-            missionImageURL: `/assets/TEMP/cargoship.png`,
-            missionName: `Black Gold`,
-            missionDifficulty: 2,
-            missionGameStage: 2,
-            missionDescription: `Once a cargo ship spawns on the map you must immediately go to take over the ship and kill any people who may come to counter your efforts.`,
-            missionTasks: [
+            ImageURL: `/assets/TEMP/cargoship.png`,
+            Name: `Black Gold`,
+            Difficulty: 2,
+            GameStage: 2,
+            Description: `Once a cargo ship spawns on the map you must immediately go to take over the ship and kill any people who may come to counter your efforts.`,
+            Tasks: [
                 ["Hack 1 Locked Crate", "Hack 2 Locked Crates", "Hack all 3 Locked Crates"],
                 ["Kill all scientists", "Kill All Bridge Scientists", "Kill only scientists that are absolutely necessary"],
                 ["Escape with the loot by the Escape Rhiib", "Escape with the loot via scuba gear"],
             ],
-            missionIsTimeDependent: false,
-            missionPlayersRecommended: 2,
+            IsTimeDependent: false,
+            PlayersRecommended: 2,
+            WikiURL: "https://rust.fandom.com/wiki/Cargo_Ship",
         },
     ],
     roleplay: [
         {
-            missionImageURL: `/assets/TEMP/cargoship.png`,
-            missionName: `Happy Mothers Day`,
-            missionDifficulty: 3,
-            missionGameStage: 0,
-            missionDescription: `Go venture around the map meeting new people trying to find someone who can make you a mom rock.`,
-            missionTasks: [
+            ImageURL: `/assets/TEMP/cargoship.png`,
+            Name: `Happy Mothers Day`,
+            Difficulty: 3,
+            GameStage: 0,
+            Description: `Go venture around the map meeting new people trying to find someone who can make you a mom rock.`,
+            Tasks: [
                 ["Obtain a mom rock",],
             ],
-            missionIsTimeDependent: false,
-            missionPlayersRecommended: 1,
+            IsTimeDependent: false,
+            PlayersRecommended: 1,
+            WikiURL: "https://rust.fandom.com/wiki/Cargo_Ship",
         },
     ],
     monument: [
@@ -129,6 +134,6 @@ const missions = {
 
     ],
     raiding: [
-        
+
     ],
 }

@@ -4,20 +4,22 @@ const missionImageEl = document.getElementById("mission-thumbnail");
 const missionTitleEl = document.getElementById("mission-title");
 const missionSubtitleEl = document.getElementById("mission-subtitle");
 const missionDescriptionEl = document.getElementById("mission-card-description");
+const wikiBtnEl = document.getElementById("learn-more");
 
 function generateCardHtml(category, currentMission) {
     if(currentMission) {
-        missionImageEl.setAttribute("src", currentMission.missionImageURL);
-        missionTitleEl.textContent = currentMission.missionName;
-        missionSubtitleEl.textContent = `Category: ${category} | Difficulty: ${getMissionDifficulty(currentMission.missionDifficulty)}`
+        missionImageEl.setAttribute("src", currentMission.ImageURL);
+        missionTitleEl.textContent = currentMission.Name;
+        missionSubtitleEl.textContent = `Category: ${category} | Difficulty: ${getMissionDifficulty(currentMission.Difficulty)}`
         missionDescriptionEl.innerHTML = `
-        <p>${currentMission.missionDescription}</p>
+        <p>${currentMission.Description}</p>
         <ul>
-            ${pickRandomTasks(currentMission.missionTasks)}
+            ${pickRandomTasks(currentMission.Tasks)}
         </ul>
-        <p>People Recommended: ${currentMission.missionPlayersRecommended} <br>
-        Time Dependent: ${currentMission.missionIsTimeDependent ? "Yes" : "No"}</p>
+        <p>People Recommended: ${currentMission.PlayersRecommended} <br>
+        Time Dependent: ${currentMission.IsTimeDependent ? "Yes" : "No"}</p>
         `
+        wikiBtnEl.setAttribute("href", currentMission.WikiURL)
     } else {
         console.log("Error while generating card information")
     }
