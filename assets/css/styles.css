@@ -1,11 +1,24 @@
-.main {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    justify-content: center;
+body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    box-sizing: border-box;
 }
 
-.main > * {
-    padding: 10%;
-    font-size: 400%;
+#background {
+    background: url(../img/background-image.jpg) no-repeat;
+    width: 100vw;
+    height: 100vh;
+    background-position: center;
 }
+
+#background-gradient {
+    width: 100vw;
+    height: 100vh;
+    background: rgb(35,36,32);
+    background: radial-gradient(circle, rgba(35,36,32,0.9) 0%, rgba(36,35,28,0.99) 100%);
+}
+
+/* #232420 90% 
+#24231C 99%*/
