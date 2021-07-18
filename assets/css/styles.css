@@ -6,19 +6,6 @@ body {
     box-sizing: border-box;
 }
 
-.footer {
-    position: absolute;
-    bottom: 2.5%;
-    width: 100%;
-    text-align: center;
-    color: #ffffff;
-}
-
-.footer a {
-    text-decoration: none;
-    color: #A8DC4D;
-}
-
 #background {
     background: url(../img/background-image.jpg) no-repeat;
     width: 100vw;
@@ -72,7 +59,19 @@ body {
 }
 
 #credits {
-    margin-top: 40%;
+    margin-top: 40%; /* push a bit lower than the rest of buttons */
 }
 
+.footer {
+    position: absolute;
+    bottom: 2.5%;
+    width: 100%;
+    text-align: center;
+    color: #ffffff;
+}
+
+.footer a {
+    text-decoration: none;
+    color: #A8DC4D;
+}
 /* media query for screens less than 1080p to make controls margins-top go away */
