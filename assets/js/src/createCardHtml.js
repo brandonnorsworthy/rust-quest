@@ -8,7 +8,7 @@ const wikiBtnEl = document.getElementById("learn-more");
 
 function generateCardHtml(category, currentMission) {
     if(currentMission) {
-        missionImageEl.setAttribute("src", currentMission.ImageURL);
+        missionImageEl.setAttribute("src", `.${currentMission.ImageURL}`);
         missionTitleEl.textContent = currentMission.Name;
         missionSubtitleEl.textContent = `Category: ${category} | Difficulty: ${getMissionDifficulty(currentMission.Difficulty)}`
         missionDescriptionEl.innerHTML = `
@@ -21,7 +21,7 @@ function generateCardHtml(category, currentMission) {
         `
         wikiBtnEl.setAttribute("href", currentMission.WikiURL)
     } else {
-        console.log("Error while generating card information")
+        console.log("Error while generating card information", currentMission, category)
     }
 }
 

@@ -126,13 +126,39 @@ const missions = {
         },
     ],
     monument: [
-
+        {
+            ImageURL: `/assets/TEMP/cargoship.png`,
+            Name: `Go say Hi to Thomas`,
+            Difficulty: 1,
+            GameStage: 1,
+            Description: `Go loot the Monument Train Yard.`,
+            Tasks: [
+                ["Loot just the entire monument", "Access the blue card room", "Access minimum green card room",],
+                ["Climb to the top of the water tower", "Leave by Train (Tunnels)"]
+            ],
+            IsTimeDependent: false,
+            PlayersRecommended: 1,
+            WikiURL: "https://rust.fandom.com/wiki/Train_Yard",
+        }
     ],
     farming: [
 
     ],
     building: [
-
+        {
+            ImageURL: `/assets/TEMP/cargoship.png`,
+            Name: `Cookin it big time`,
+            Difficulty: 1,
+            GameStage: 0,
+            Description: `Build a Meta Furnace base with roofs`,
+            Tasks: [
+                ["Build a furnace base",],
+                ["Add a large furnace", "Add support for a future refinery"]
+            ],
+            IsTimeDependent: false,
+            PlayersRecommended: 1,
+            WikiURL: "https://www.youtube.com/watch?v=OOqQyTRJWB4",
+        },
     ],
     raiding: [
 
