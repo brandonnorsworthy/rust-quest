@@ -8,29 +8,26 @@ body{
 }
 
 a{
-	color:#34495e;	
+	color:#34495e;
 }
 
-
-
-
 /*WRAPPER*/
-#wrapper{ 
-	margin: 40px auto 0;	
-	width:266px; 
+#wrapper{
+	margin: 40px auto 0;
+	width:266px;
 	position:relative;
 }
 
 #txt{
-	color:#eaeaea;	
+	color:#eaeaea;
 }
 
 
 /*WHEEL*/
 #wheel{
-	width:250px;
-	height:250px;
-	border-radius:50%;	
+	width:420px;
+	height:420px;
+	border-radius:50%;
 	position:relative;
 	overflow:hidden;
 	border:8px solid #fff;
@@ -42,16 +39,15 @@ a{
 	content:'';
 	position:absolute;
 	border:4px solid rgba(0,0,0,0.1);
-	width:242px;
-	height:242px;
+	width:418px;
+	height:418px;
 	border-radius:50%;
-	z-index:1000;	
+	z-index:1000;
 }
 
 #inner-wheel{
 	width:100%;
 	height:100%;
-	
 	-webkit-transition: all 6s cubic-bezier(0,.99,.44,.99);
 	-moz-transition:    all 6 cubic-bezier(0,.99,.44,.99);
 	-o-transition:      all 6s cubic-bezier(0,.99,.44,.99);
@@ -64,109 +60,204 @@ a{
 	width: 0;
 	height: 0;
 	border-style: solid;
-	border-width: 130px 56.25px 0;
+	border-width: 210px 28px 0;
 	border-color: #19c transparent;
-	transform-origin: 75px 129px;
-	left:50px;
-	top:-4px;
+	transform-origin: 28px 210px;
+	left:183px;
+	top:0px;
 	opacity:1;
 }
 
 #wheel div.sec:nth-child(1){
+	-webkit-transform: rotate(15deg);
+	-moz-transform: rotate(15deg);
+	-o-transform: rotate(15deg);
+	-ms-transform: rotate(15deg);
+	border-color: #16a085 transparent;
+}
+#wheel div.sec:nth-child(2){
 	transform: rotate(30deg);
 	-webkit-transform: rotate(30deg);
 	-moz-transform: rotate(30deg);
 	-o-transform: rotate(30deg);
 	-ms-transform: rotate(30deg);
-	border-color: #16a085 transparent;	
+	border-color: #2980b9 transparent;
 }
-#wheel div.sec:nth-child(2){
+#wheel div.sec:nth-child(3){
+	transform: rotate(45deg);
+	-webkit-transform: rotate(45deg);
+	-moz-transform: rotate(45deg);
+	-o-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	border-color: #34495e transparent;
+}
+#wheel div.sec:nth-child(4){
 	transform: rotate(60deg);
 	-webkit-transform: rotate(60deg);
 	-moz-transform: rotate(60deg);
 	-o-transform: rotate(60deg);
 	-ms-transform: rotate(60deg);
-	border-color: #2980b9 transparent;	
+	border-color: #f39c12 transparent;
 }
-#wheel div.sec:nth-child(3){
+#wheel div.sec:nth-child(5){
+	transform: rotate(75deg);
+	-webkit-transform: rotate(75deg);
+	-moz-transform: rotate(75deg);
+	-o-transform: rotate(75deg);
+	-ms-transform: rotate(75deg);
+	border-color: #d35400 transparent;
+}
+#wheel div.sec:nth-child(6){
 	transform: rotate(90deg);
 	-webkit-transform: rotate(90deg);
 	-moz-transform: rotate(90deg);
 	-o-transform: rotate(90deg);
 	-ms-transform: rotate(90deg);
-	border-color: #34495e transparent;	
+	border-color: #c0392b transparent;
 }
-#wheel div.sec:nth-child(4){
+#wheel div.sec:nth-child(7){
+	transform: rotate(105deg);
+	-webkit-transform: rotate(105deg);
+	-moz-transform: rotate(105deg);
+	-o-transform: rotate(105deg);
+	-ms-transform: rotate(105deg);
+	border-color: #16a085 transparent;
+}
+#wheel div.sec:nth-child(8){
 	transform: rotate(120deg);
 	-webkit-transform: rotate(120deg);
 	-moz-transform: rotate(120deg);
 	-o-transform: rotate(120deg);
 	-ms-transform: rotate(120deg);
-	border-color: #f39c12 transparent;	
+	border-color: #f39c12 transparent;
 }
-#wheel div.sec:nth-child(5){
+#wheel div.sec:nth-child(9){
+	transform: rotate(135deg);
+	-webkit-transform: rotate(135deg);
+	-moz-transform: rotate(135deg);
+	-o-transform: rotate(135deg);
+	-ms-transform: rotate(135deg);
+	border-color: #34495e transparent;
+}
+#wheel div.sec:nth-child(10){
 	transform: rotate(150deg);
 	-webkit-transform: rotate(150deg);
 	-moz-transform: rotate(150deg);
 	-o-transform: rotate(150deg);
 	-ms-transform: rotate(150deg);
-	border-color: #d35400 transparent;	
+	border-color: #f39c12 transparent;
 }
-#wheel div.sec:nth-child(6){
+#wheel div.sec:nth-child(11){
+	transform: rotate(165deg);
+	-webkit-transform: rotate(165deg);
+	-moz-transform: rotate(165deg);
+	-o-transform: rotate(165deg);
+	-ms-transform: rotate(165deg);
+	border-color: #d35400 transparent;
+}
+#wheel div.sec:nth-child(12){
 	transform: rotate(180deg);
 	-webkit-transform: rotate(180deg);
 	-moz-transform: rotate(180deg);
 	-o-transform: rotate(180deg);
 	-ms-transform: rotate(180deg);
-	border-color: #c0392b transparent;	
+	border-color: #c0392b transparent;
 }
-#wheel div.sec:nth-child(7){
+#wheel div.sec:nth-child(13){
+	transform: rotate(195deg);
+	-webkit-transform: rotate(195deg);
+	-moz-transform: rotate(195deg);
+	-o-transform: rotate(195deg);
+	-ms-transform: rotate(195deg);
+	border-color: #16a085 transparent;
+}
+#wheel div.sec:nth-child(14){
 	transform: rotate(210deg);
 	-webkit-transform: rotate(210deg);
 	-moz-transform: rotate(210deg);
 	-o-transform: rotate(210deg);
 	-ms-transform: rotate(210deg);
-	border-color: #16a085 transparent;	
+	border-color: #2980b9 transparent;
 }
-#wheel div.sec:nth-child(8){
+#wheel div.sec:nth-child(15){
+	transform: rotate(225deg);
+	-webkit-transform: rotate(225deg);
+	-moz-transform: rotate(225deg);
+	-o-transform: rotate(225deg);
+	-ms-transform: rotate(225deg);
+	border-color: #34495e transparent;
+}
+#wheel div.sec:nth-child(16){
 	transform: rotate(240deg);
 	-webkit-transform: rotate(240deg);
 	-moz-transform: rotate(240deg);
 	-o-transform: rotate(240deg);
 	-ms-transform: rotate(240deg);
-	border-color: #2980b9 transparent;	
+	border-color: #2980b9 transparent;
 }
-#wheel div.sec:nth-child(9){
+#wheel div.sec:nth-child(17){
+	transform: rotate(255deg);
+	-webkit-transform: rotate(255deg);
+	-moz-transform: rotate(255deg);
+	-o-transform: rotate(255deg);
+	-ms-transform: rotate(255deg);
+	border-color: #d35400 transparent;
+}
+#wheel div.sec:nth-child(18){
 	transform: rotate(270deg);
 	-webkit-transform: rotate(270deg);
 	-moz-transform: rotate(270deg);
 	-o-transform: rotate(270deg);
 	-ms-transform: rotate(270deg);
-	border-color: #34495e transparent;	
+	border-color: #c0392b transparent;
 }
-#wheel div.sec:nth-child(10){
+#wheel div.sec:nth-child(19){
+	transform: rotate(285deg);
+	-webkit-transform: rotate(285deg);
+	-moz-transform: rotate(285deg);
+	-o-transform: rotate(285deg);
+	-ms-transform: rotate(285deg);
+	border-color: #16a085 transparent;
+}
+#wheel div.sec:nth-child(20){
 	transform: rotate(300deg);
 	-webkit-transform: rotate(300deg);
 	-moz-transform: rotate(300deg);
 	-o-transform: rotate(300deg);
 	-ms-transform: rotate(300deg);
-	border-color: #f39c12 transparent;	
+	border-color: #2980b9 transparent;
 }
-#wheel div.sec:nth-child(11){
+#wheel div.sec:nth-child(21){
+	transform: rotate(315deg);
+	-webkit-transform: rotate(315deg);
+	-moz-transform: rotate(315deg);
+	-o-transform: rotate(315deg);
+	-ms-transform: rotate(315deg);
+	border-color: #34495e transparent;	
+}
+#wheel div.sec:nth-child(22){
 	transform: rotate(330deg);
 	-webkit-transform: rotate(330deg);
 	-moz-transform: rotate(330deg);
 	-o-transform: rotate(330deg);
 	-ms-transform: rotate(330deg);
-	border-color: #d35400 transparent;	
+	border-color: #f39c12 transparent;
 }
-#wheel div.sec:nth-child(12){
+#wheel div.sec:nth-child(23){
+	transform: rotate(345deg);
+	-webkit-transform: rotate(345deg);
+	-moz-transform: rotate(345deg);
+	-o-transform: rotate(345deg);
+	-ms-transform: rotate(345deg);
+	border-color: #d35400 transparent;
+}
+#wheel div.sec:nth-child(24){
 	transform: rotate(360deg);
 	-webkit-transform: rotate(360deg);
 	-moz-transform: rotate(360deg);
 	-o-transform: rotate(360deg);
 	-ms-transform: rotate(360deg);
-	border-color: #c0392b transparent;	
+	border-color: #c0392b transparent;
 }
 
 
@@ -179,7 +270,6 @@ a{
 	text-align: center;
 	font-size:36px;
 	margin-left:-15px;
-	
 	text-shadow: rgba(255, 255, 255, 0.1) 0px -1px 0px, rgba(0, 0, 0, 0.2) 0px 1px 0px;
 }
 
@@ -199,17 +289,16 @@ a{
 	background:#fff;
 	cursor:pointer;
 	font-family: 'Exo 2', sans-serif;
-  
-  -webkit-user-select: none; 
-  -moz-user-select: none;    
-  -ms-user-select: none;     
-  -o-user-select: none;
-  user-select: none;   
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-o-user-select: none;
+	user-select: none;
 }
 
 
 #spin:after{
-	content:"SPIN";	
+	content:"SPIN";
 	text-align:center;
 	line-height:68px;
 	color:#CCC;
