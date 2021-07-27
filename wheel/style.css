@@ -64,7 +64,7 @@ a{
 	width: 0;
 	height: 0;
 	border-style: solid;
-	border-width: 130px 75px 0;
+	border-width: 130px 56.25px 0;
 	border-color: #19c transparent;
 	transform-origin: 75px 129px;
 	left:50px;
@@ -73,45 +73,94 @@ a{
 }
 
 #wheel div.sec:nth-child(1){
+	transform: rotate(30deg);
+	-webkit-transform: rotate(30deg);
+	-moz-transform: rotate(30deg);
+	-o-transform: rotate(30deg);
+	-ms-transform: rotate(30deg);
+	border-color: #16a085 transparent;	
+}
+#wheel div.sec:nth-child(2){
+	transform: rotate(60deg);
 	-webkit-transform: rotate(60deg);
 	-moz-transform: rotate(60deg);
 	-o-transform: rotate(60deg);
 	-ms-transform: rotate(60deg);
-	border-color: #16a085 transparent;	
+	border-color: #2980b9 transparent;	
 }
-#wheel div.sec:nth-child(2){
+#wheel div.sec:nth-child(3){
+	transform: rotate(90deg);
+	-webkit-transform: rotate(90deg);
+	-moz-transform: rotate(90deg);
+	-o-transform: rotate(90deg);
+	-ms-transform: rotate(90deg);
+	border-color: #34495e transparent;	
+}
+#wheel div.sec:nth-child(4){
 	transform: rotate(120deg);
 	-webkit-transform: rotate(120deg);
 	-moz-transform: rotate(120deg);
 	-o-transform: rotate(120deg);
 	-ms-transform: rotate(120deg);
-	border-color: #2980b9 transparent;	
+	border-color: #f39c12 transparent;	
 }
-#wheel div.sec:nth-child(3){
+#wheel div.sec:nth-child(5){
+	transform: rotate(150deg);
+	-webkit-transform: rotate(150deg);
+	-moz-transform: rotate(150deg);
+	-o-transform: rotate(150deg);
+	-ms-transform: rotate(150deg);
+	border-color: #d35400 transparent;	
+}
+#wheel div.sec:nth-child(6){
 	transform: rotate(180deg);
 	-webkit-transform: rotate(180deg);
 	-moz-transform: rotate(180deg);
 	-o-transform: rotate(180deg);
 	-ms-transform: rotate(180deg);
-	border-color: #34495e transparent;	
+	border-color: #c0392b transparent;	
 }
-#wheel div.sec:nth-child(4){
+#wheel div.sec:nth-child(7){
+	transform: rotate(210deg);
+	-webkit-transform: rotate(210deg);
+	-moz-transform: rotate(210deg);
+	-o-transform: rotate(210deg);
+	-ms-transform: rotate(210deg);
+	border-color: #16a085 transparent;	
+}
+#wheel div.sec:nth-child(8){
 	transform: rotate(240deg);
 	-webkit-transform: rotate(240deg);
 	-moz-transform: rotate(240deg);
 	-o-transform: rotate(240deg);
 	-ms-transform: rotate(240deg);
-	border-color: #f39c12 transparent;	
+	border-color: #2980b9 transparent;	
 }
-#wheel div.sec:nth-child(5){
+#wheel div.sec:nth-child(9){
+	transform: rotate(270deg);
+	-webkit-transform: rotate(270deg);
+	-moz-transform: rotate(270deg);
+	-o-transform: rotate(270deg);
+	-ms-transform: rotate(270deg);
+	border-color: #34495e transparent;	
+}
+#wheel div.sec:nth-child(10){
 	transform: rotate(300deg);
 	-webkit-transform: rotate(300deg);
 	-moz-transform: rotate(300deg);
 	-o-transform: rotate(300deg);
 	-ms-transform: rotate(300deg);
+	border-color: #f39c12 transparent;	
+}
+#wheel div.sec:nth-child(11){
+	transform: rotate(330deg);
+	-webkit-transform: rotate(330deg);
+	-moz-transform: rotate(330deg);
+	-o-transform: rotate(330deg);
+	-ms-transform: rotate(330deg);
 	border-color: #d35400 transparent;	
 }
-#wheel div.sec:nth-child(6){
+#wheel div.sec:nth-child(12){
 	transform: rotate(360deg);
 	-webkit-transform: rotate(360deg);
 	-moz-transform: rotate(360deg);
