@@ -6,8 +6,8 @@ function App() {
 
   return (
     <div>
-      <header className='text-red-400'>
-        <h3>
+      <header className='bg-red-400'>
+        <h3 className='text-red-500'>
           Welcome to the resurected rust app
         </h3>
       </header>
