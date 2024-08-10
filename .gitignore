@@ -22,3 +22,14 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# vscode files
+.vscode/*
+!.vscode/extensions.json
+*.code-workspace
+
+# sql
+*.session.sql
+
+# secrets
+*.env
