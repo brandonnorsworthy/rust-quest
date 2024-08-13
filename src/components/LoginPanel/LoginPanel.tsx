@@ -36,7 +36,6 @@ const LoginPanel = () => {
   }, [open]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    console.log({ username, password, isRegistering });
     e.preventDefault();
     try {
       if (!username || !password) {
