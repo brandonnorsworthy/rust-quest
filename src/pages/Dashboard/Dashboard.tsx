@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import withAuth from "@/hocs/WithAuth";
 
 const Dashboard: React.FC = () => {
   const navigate = useNavigate();
@@ -15,4 +16,5 @@ const Dashboard: React.FC = () => {
   )
 };
 
-export default Dashboard;
+const AuthenticatedDashboard = withAuth(Dashboard);
+export default AuthenticatedDashboard;
