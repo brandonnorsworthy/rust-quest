@@ -7,7 +7,7 @@ const Dashboard: React.FC = () => {
       <h1>Dashboard</h1>
       <button
         className="p-2 mt-2 text-white transition-colors rounded-md bg-slate-500 hover:bg-slate-400"
-        onClick={() => { navigate('/'); }}
+        onClick={() => navigate('/')}
       >
         back to /
       </button>
