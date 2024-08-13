@@ -1,4 +1,6 @@
 import sendRequest from "@/lib/sendRequest";
+import { LoginResponse } from "@/models/AuthModels/loginResponse";
+import { RegisterResponse } from "@/models/AuthModels/registerResponse";
 
 //todo: add interfaces for the response
 export default {
@@ -17,7 +19,7 @@ export default {
         username,
         password
       }
-    });
+    }) as Promise<RegisterResponse>;
   },
 
   /**
@@ -34,7 +36,7 @@ export default {
         username,
         password
       }
-    });
+    }) as Promise<LoginResponse>;
   },
 
   /**

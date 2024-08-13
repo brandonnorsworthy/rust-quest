@@ -13,16 +13,13 @@ const withAuth = <P extends object>(WrappedComponent: ComponentType<P>) => {
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
     useEffect(() => {
-      //make it not random
-      const status = Math.random() > 0.3;
-      console.log(status);
-      if (status) {
-        console.log("Authenticated");
-        setIsAuthenticated(true);
-      } else {
-        console.log("Not Authenticated");
-        navigate("/");
+      const token = localStorage.getItem("token");
+      if (!token) {
+        navigate("/"); //maybe propmt them to login? 
+        return;
       }
+
+      setIsAuthenticated(true);
     }, [navigate]);
 
     if (!isAuthenticated) {

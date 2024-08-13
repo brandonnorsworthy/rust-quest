@@ -4,18 +4,22 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
 import AuthService from "@/service/authService";
 import { Input } from "../ui/input";
+import { AxiosError } from "axios";
 
 //todo: login vs register
 const LoginPanel = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isRegistering, setIsRegistering] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     setTimeout(() => {
@@ -23,32 +27,58 @@ const LoginPanel = () => {
     }, 5000);
   }, [error]);
 
+  useEffect(() => {
+    if (!open) {
+      setUsername("");
+      setPassword("");
+      setError("");
+    }
+  }, [open]);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    console.log({ username, password, isRegistering });
     e.preventDefault();
     try {
       if (!username || !password) {
         setError("Please enter a username and password");
         return;
       }
-      const authResponse = await AuthService.register(username, password);
-      console.log(authResponse);
+      if (isRegistering) {
+        const authResponse = await AuthService.register(username, password);
+        localStorage.setItem("token", authResponse?.token);
+        setOpen(false);
+        return;
+      }
+      const authResponse = await AuthService.login(username, password);
+      localStorage.setItem("token", authResponse?.token);
+      setOpen(false);
     }
     catch (error: unknown) {
-      if (error instanceof Error) {
-        setError(error.message);
+      console.log(error);
+      if (error instanceof AxiosError) {
+        setError(error.response?.data.error || "An error occurred");
+        return;
       }
+      setError("An unkown error occurred");
     }
   }
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen} modal>
       <DialogTrigger asChild>
         <button
-          className="w-16 p-2 mt-2 text-white transition-colors rounded-md bg-slate-500 hover:bg-slate-400">
+          className="p-2 mt-2 text-white transition-colors rounded-md bg-slate-500 hover:bg-slate-400"
+          onClick={() => setOpen(true)}
+        >
           Login
         </button>
       </DialogTrigger>
-      <DialogContent className="bg-slate-100">
+      <DialogContent
+        className="bg-slate-100"
+        onCloseAutoFocus={(event) => {
+          event.preventDefault(); // Prevents the dialog from closing automatically
+        }}
+      >
         <DialogHeader>
           <DialogTitle className='text-muted-foreground'>Login</DialogTitle>
           <DialogDescription>
@@ -89,13 +119,21 @@ const LoginPanel = () => {
               )}
               <button
                 type="submit"
-                className="w-16 p-2 mt-2 text-white transition-colors rounded-md bg-slate-500 hover:bg-slate-400"
+                className="p-2 mt-2 text-white transition-colors rounded-md bg-slate-500 hover:bg-slate-400"
               >
-                Login
+                {isRegistering ? "Register" : "Login"}
               </button>
             </div>
           </div>
         </form>
+        <DialogFooter>
+          <button
+            className="border-none text-muted-foreground bg-none test-sm"
+            onClick={() => setIsRegistering(!isRegistering)}
+          >
+            {isRegistering ? "Login" : "Register"}
+          </button>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
 
