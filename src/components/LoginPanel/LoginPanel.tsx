@@ -12,6 +12,7 @@ import {
 import AuthService from "@/service/authService";
 import { Input } from "../ui/input";
 import { AxiosError } from "axios";
+import useAuth from "@/hooks/useAuth";
 
 //todo: login vs register
 const LoginPanel = () => {
@@ -20,6 +21,8 @@ const LoginPanel = () => {
   const [error, setError] = useState("");
   const [isRegistering, setIsRegistering] = useState(false);
   const [open, setOpen] = useState(false);
+
+  const { saveToken } = useAuth();
 
   useEffect(() => {
     setTimeout(() => {
@@ -44,12 +47,13 @@ const LoginPanel = () => {
       }
       if (isRegistering) {
         const authResponse = await AuthService.register(username, password);
-        localStorage.setItem("token", authResponse?.token);
+        saveToken(authResponse.token);
         setOpen(false);
         return;
       }
       const authResponse = await AuthService.login(username, password);
-      localStorage.setItem("token", authResponse?.token);
+      saveToken(authResponse.token);
+
       setOpen(false);
     }
     catch (error: unknown) {
@@ -66,16 +70,16 @@ const LoginPanel = () => {
     <Dialog open={open} onOpenChange={setOpen} modal>
       <DialogTrigger asChild>
         <button
-          className="p-2 mt-2 text-white transition-colors rounded-md bg-slate-500 hover:bg-slate-400"
+          className=""
           onClick={() => setOpen(true)}
         >
-          Login
+          LOGIN
         </button>
       </DialogTrigger>
       <DialogContent
         className="bg-slate-100"
         onCloseAutoFocus={(event) => {
-          event.preventDefault(); // Prevents the dialog from closing automatically
+          event.preventDefault();
         }}
       >
         <DialogHeader>
