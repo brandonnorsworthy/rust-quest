@@ -1,32 +1,33 @@
-import { useNavigate } from "react-router-dom";
 import LoginPanel from "@/components/LoginPanel";
+import SuggestionsPanel from "@/components/SuggestionsPanel/SuggestionsPanel";
 
 
 const LandingPage = () => {
-  const nav = useNavigate();
 
   return (
-    <div className="h-screen text-white bg-idk">
+    <div className="h-screen font-bold text-white bg-idk font-rust-like">
       <header className='flex justify-between p-4 text-3xl '>
-        <h1 className=''>
+        {/* logo? */}
+        <h1 className='text-5xl'>
           Welcome to the resurected rust app
         </h1>
-        <LoginPanel />
+
       </header>
       <main className="px-12 py-2">
-        hehe
-        <button
-          className="p-2 mt-2 text-white transition-colors rounded-md bg-slate-500 hover:bg-slate-400"
-          onClick={() => nav('/dashboard')}
-        >
-          test auth
-        </button>
-        <button
-          className="p-2 mt-2 text-white transition-colors rounded-md bg-slate-500 hover:bg-slate-400"
-          onClick={() => { localStorage.removeItem('token'); }}
-        >
-          reset token
-        </button>
+        <div className="flex flex-col items-start gap-4 pl-32 text-4xl mt-60">
+          {/* todo: finalize flow, which menu options should be visible before login etc*/}
+          <LoginPanel />
+          <button className="mt-12">
+            SPIN WHEEL
+          </button>
+          <button>
+            COMPLETED QUESTS
+          </button>
+          <SuggestionsPanel />
+          <button className="mt-12">
+            SETTINGS
+          </button>
+        </div>
       </main>
     </div>
   );
