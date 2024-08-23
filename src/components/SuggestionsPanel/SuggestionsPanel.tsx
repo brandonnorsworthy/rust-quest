@@ -22,7 +22,7 @@ const SuggestionsPanel = () => {
   const [suggestion, setSuggestion] = useState("");
   const [title, setTitle] = useState("");
 
-  const { accessToken, user } = useAuth();
+  const { accessToken } = useAuth();
 
   const mutation = useMutation({
     mutationFn: (newSuggestion: CreateSuggestionRequest) => {
@@ -38,7 +38,6 @@ const SuggestionsPanel = () => {
       setTitle("");
       setSuggestion("");
     }
-    console.log(user);
   }, [open]);
 
   const handleSubmit = (event: React.FormEvent) => {
