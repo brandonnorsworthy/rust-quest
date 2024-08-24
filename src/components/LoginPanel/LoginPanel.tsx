@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { AxiosError } from "axios";
 
 import {
   Dialog,
@@ -9,12 +10,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import AuthService from "@/service/authService";
 import { Input } from "../ui/input";
-import { AxiosError } from "axios";
+
+import AuthService from "@/service/authService";
 import useAuth from "@/hooks/useAuth";
 
-//todo: login vs register
 const LoginPanel = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -72,6 +72,8 @@ const LoginPanel = () => {
         <button
           className=""
           onClick={() => setOpen(true)}
+          aria-label="Open login dialog"
+          data-testid="open-login-button"
         >
           LOGIN
         </button>
@@ -88,17 +90,19 @@ const LoginPanel = () => {
             Please enter your credentials to continue
           </DialogDescription>
         </DialogHeader>
-        <form className="flex flex-col" onSubmit={handleSubmit}>
+        <form className="flex flex-col" onSubmit={handleSubmit} data-testid="login-form">
           <div className="p-2">
             <label htmlFor="username" className="sr-only">
               Username
             </label>
             <Input
               id="username"
-              type="username"
+              type="text"
               placeholder="username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
+              aria-label="Username"
+              data-testid="username-input"
             />
           </div>
           <div className="p-2">
@@ -111,18 +115,22 @@ const LoginPanel = () => {
               placeholder="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              aria-label="Password"
+              data-testid="password-input"
             />
           </div>
           <div className="flex justify-end">
             <div className="flex flex-col items-end">
               {error && (
-                <p className="text-right text-red-500">
+                <p className="text-right text-red-500" data-testid="error-message">
                   {error}
                 </p>
               )}
               <button
                 type="submit"
                 className="p-2 mt-2 text-white transition-colors rounded-md bg-slate-500 hover:bg-slate-400"
+                aria-label={isRegistering ? "Register" : "Login"}
+                data-testid="submit-button"
               >
                 {isRegistering ? "Register" : "Login"}
               </button>
@@ -133,14 +141,15 @@ const LoginPanel = () => {
           <button
             className="border-none text-muted-foreground bg-none test-sm"
             onClick={() => setIsRegistering(!isRegistering)}
+            aria-label={isRegistering ? "Switch to Login" : "Switch to Register"}
+            data-testid="toggle-register-button"
           >
-            {isRegistering ? "Login" : "Register"}
+            {isRegistering ? "Click here to Login instead" : "Click here to Register instead"}
           </button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
-
-  )
-}
+  );
+};
 
 export default LoginPanel;
