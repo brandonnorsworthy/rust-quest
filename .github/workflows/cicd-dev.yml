@@ -58,11 +58,13 @@ jobs:
           scp -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ./dist.tar.gz ${{ secrets.EC2_USER }}@${{ secrets.EC2_IP }}:/home/ec2-user/
           ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_IP }} << 'EOF'
             cd ~
+            pm2 stop app
             rm -rf app
             mkdir app
             mv dist.tar.gz ./app
             cd app
             tar -xzvf dist.tar.gz
             npm install
-            npx serve --single .
+            pm2 start npx --name app serve --single .
+            pm2 status app
           EOF
