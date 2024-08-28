@@ -65,6 +65,5 @@ jobs:
             cd app
             tar -xzvf dist.tar.gz
             npm install
-            pm2 start npx --name app serve --single .
-            pm2 status app
+            pm2 start serve --name app -- -s -l 80
           EOF
