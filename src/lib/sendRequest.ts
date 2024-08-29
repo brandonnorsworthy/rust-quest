@@ -1,6 +1,6 @@
 import RequestOptions from '@/models/RequestOptions/requestOptions';
-import axios, {AxiosRequestConfig, AxiosResponse} from 'axios';
-import * as AppConfig from '../config';
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { API_DOMAIN } from '../config';
 
 /**
  * Generic HTTP request function
@@ -17,7 +17,7 @@ import * as AppConfig from '../config';
 const sendRequest = (options: RequestOptions): Promise<unknown> => {
   return new Promise((resolve, reject) => {
     const {
-      domain = AppConfig.API_DOMAIN,
+      domain = API_DOMAIN,
       method = 'GET',
       endpoint,
       accessToken,
@@ -28,7 +28,8 @@ const sendRequest = (options: RequestOptions): Promise<unknown> => {
 
     const config: AxiosRequestConfig = {};
     config.responseType = responseType as 'json';
-    if (accessToken) {config.headers = {
+    if (accessToken) {
+      config.headers = {
         Authorization: `Bearer ${accessToken}`
       };
     }
