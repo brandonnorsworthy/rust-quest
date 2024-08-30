@@ -20,6 +20,11 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Create environment file
+        run: |
+          echo "NODE_ENV=dev" > .env
+          echo "VITE_API_URL=${{ secrets.VITE_API_URL }}" >> .env
+
       - name: Build the project
         run: npm run build
 
@@ -28,16 +33,6 @@ jobs:
           NODE_ENV: dev
           API_URL: ${{ secrets.VITE_API_URL }}
         run: npm test
-
-      - name: Copy files to dist
-        run: |
-          cp package.json dist/
-          cp package-lock.json dist/
-
-      - name: Create environment file
-        run: |
-          echo "NODE_ENV=dev" > dist/.env
-          echo "VITE_API_URL=${{ secrets.VITE_API_URL }}" >> dist/.env
 
       - name: Create tarball
         run: |
