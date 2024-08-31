@@ -15,8 +15,6 @@ const DevPage: React.FC = () => {
     setCurrentQuest(randomQuestResponse);
   }
 
-  console.log(currentQuest)
-
   return (
     <div>
       {

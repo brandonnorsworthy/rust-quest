@@ -57,7 +57,7 @@ const LoginPanel = () => {
       setOpen(false);
     }
     catch (error: unknown) {
-      console.log(error);
+      console.error(error);
       if (error instanceof AxiosError) {
         setError(error.response?.data.error || "An error occurred");
         return;

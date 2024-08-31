@@ -4,11 +4,9 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import LandingPage from './pages/LandingPage'
 import Dashboard from './pages/Dashboard';
 import DevPage from './pages/DevPage';
-import withAuth from './hocs/WithAuth';
 
 import './App.css'
 
-const AuthenticatedDashboard = withAuth(Dashboard);
 const queryClient = new QueryClient()
 
 function App() {
@@ -24,7 +22,7 @@ function App() {
           {/* protected routes */}
           <Route
             path="/dashboard"
-            element={<AuthenticatedDashboard />}
+            element={<Dashboard />}
           />
           <Route
             path="/dev"
