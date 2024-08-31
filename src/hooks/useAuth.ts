@@ -2,9 +2,16 @@ import { useState, useEffect } from "react";
 
 const TOKEN_STORAGE_KEY = "token";
 
+interface User {
+  userId: number;
+  username: string;
+  role: string;
+  iat: number;
+}
+
 const useAuth = () => {
   const [accessToken, setAccessToken] = useState<string | null>(null);
-  const [user, setUser] = useState<unknown | null>(null);
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     const storedToken = localStorage.getItem(TOKEN_STORAGE_KEY);

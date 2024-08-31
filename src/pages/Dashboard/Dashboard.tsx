@@ -17,4 +17,5 @@ const Dashboard: React.FC = () => {
 };
 
 const AuthenticatedDashboard = withAuth(Dashboard);
+
 export default AuthenticatedDashboard;
