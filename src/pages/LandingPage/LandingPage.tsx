@@ -1,6 +1,8 @@
+import { Link } from "react-router-dom";
+
+import GoogleAd from "@/components/GoogleAd/GoogleAd";
 import LoginPanel from "@/components/LoginPanel";
 import SuggestionsPanel from "@/components/SuggestionsPanel/SuggestionsPanel";
-import { Link } from "react-router-dom";
 
 const LandingPage = () => {
   return (
@@ -26,6 +28,10 @@ const LandingPage = () => {
           <button className="mt-12">
             SETTINGS
           </button>
+        </div>
+        {/* Test div for Google Ad */}
+        <div className="mt-12">
+          <GoogleAd />
         </div>
       </main>
     </div>
