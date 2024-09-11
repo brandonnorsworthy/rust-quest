@@ -3,7 +3,7 @@ import React from 'react';
 const MenuSpacer: React.FC = () => {
   return (
     <div
-      className="h-12 min-h-12"
+      className="h-12 md:h-9"
     >
     </div>
   );

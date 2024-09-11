@@ -10,9 +10,9 @@ const LandingPage = () => {
   const navigate = useNavigate();
 
   return (
-    <main>
-      <div className="flex flex-col items-start mt-20 ml-20 text-5xl text-white/50">
-        <img src={logoImg} alt="logo" width={411} height={177} />
+    <main className="h-screen overflow-hidden">
+      <div className="flex flex-col items-start mt-10 ml-20 text-5xl text-white/50">
+        <img src={logoImg} alt="logo" className="h-36 md:h-32" />
 
         <div className="flex flex-col items-start mt-20">
           <MenuButton text="SPIN WHEEL" onClick={() => { }} />
