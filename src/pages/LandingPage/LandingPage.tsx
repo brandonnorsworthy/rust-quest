@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 
-import GoogleAd from "@/components/GoogleAd/GoogleAd";
 import MenuButton from "../../components/MenuButton"
 import MenuSpacer from "../../components/MenuSpacer"
 

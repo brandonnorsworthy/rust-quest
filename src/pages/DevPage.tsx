@@ -3,7 +3,6 @@ import questService from "@/service/questService";
 import { useState } from "react";
 
 import { Quest } from "../models/QuestModels/questResponse";
-import withAuth from "@/hocs/WithAuth";
 import { Link } from "react-router-dom";
 
 const DevPage: React.FC = () => {
