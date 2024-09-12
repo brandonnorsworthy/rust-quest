@@ -10,8 +10,8 @@ import QuestModal from "@/components/QuestModal";
 import logoImg from '@/assets/placeholder-logo.png'
 import { Dialog, DialogContent } from "@radix-ui/react-dialog";
 import Button from "@/components/Button";
-import withAuth from "@/hocs/withAuth";
 import { useAuth } from "@/context/AuthenticationProvider";
+import withAuth from "@/hocs/withAuth";
 
 const AdminPage = () => {
   const navigate = useNavigate();

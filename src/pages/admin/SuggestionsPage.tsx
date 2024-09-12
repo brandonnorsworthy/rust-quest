@@ -1,11 +1,11 @@
 import { useNavigate } from "react-router-dom";
 
 import MenuButton from "@/components/MenuButton"
-import withAuth from "@/hocs/withAuth";
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "@/components/Toaster";
 import suggestionService from "@/service/suggestionService";
 import { useAuth } from "@/context/AuthenticationProvider";
+import withAuth from "@/hocs/withAuth";
 
 const SuggestionsPage = () => {
   const navigate = useNavigate();
