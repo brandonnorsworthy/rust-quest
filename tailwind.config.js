@@ -20,11 +20,17 @@ module.exports = {
       colors: {
         // figma
         primary: "#24221C",
-        secondary: "#1C211B",
+        secondary:{
+          DEFAULT: "#1C211B",
+          highlight: "#272820",
+        },
 
         text: {
           DEFAULT: "#F2E6DC",
-          secondary: "#AFA79F",
+          secondary: {
+            DEFAULT: "#AFA79F",
+            highlight: "#64605A",
+          },
         },
 
         buttonText: {

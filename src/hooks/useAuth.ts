@@ -21,6 +21,12 @@ const useAuth = () => {
     }
   }, []);
 
+  useEffect(() => {
+    if (!accessToken) return setUser(null);
+
+    setUser({ ...JSON.parse(atob(accessToken.split(".")[1])) });
+  }, [accessToken]);
+
   const saveToken = (newToken: string) => {
     localStorage.setItem(TOKEN_STORAGE_KEY, newToken);
     setAccessToken(newToken);

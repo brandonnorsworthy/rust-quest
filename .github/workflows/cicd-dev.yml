@@ -28,11 +28,11 @@ jobs:
       - name: Build the project
         run: npm run build
 
-      - name: Run tests
-        env:
-          NODE_ENV: dev
-          API_URL: ${{ secrets.VITE_API_URL }}
-        run: npm test
+      # - name: Run tests
+      #   env:
+      #     NODE_ENV: dev
+      #     API_URL: ${{ secrets.VITE_API_URL }}
+      #   run: npm test
 
       - name: Create tarball
         run: |

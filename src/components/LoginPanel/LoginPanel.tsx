@@ -8,35 +8,35 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog"
 import { Input } from "../ui/input";
 
 import AuthService from "@/service/authService";
 import useAuth from "@/hooks/useAuth";
 
-const LoginPanel = () => {
+interface LoginPanelProps {
+  onLoginSuccess: () => void;
+  onRegistrationSuccess: () => void;
+}
+
+const LoginPanel: React.FC<LoginPanelProps> = (props) => {
+  const {
+    onLoginSuccess,
+    onRegistrationSuccess,
+  } = props;
+
+  const { saveToken } = useAuth();
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isRegistering, setIsRegistering] = useState(false);
-  const [open, setOpen] = useState(false);
-
-  const { saveToken } = useAuth();
 
   useEffect(() => {
     setTimeout(() => {
       setError("");
     }, 5000);
   }, [error]);
-
-  useEffect(() => {
-    if (!open) {
-      setUsername("");
-      setPassword("");
-      setError("");
-    }
-  }, [open]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -45,16 +45,17 @@ const LoginPanel = () => {
         setError("Please enter a username and password");
         return;
       }
+
       if (isRegistering) {
         const authResponse = await AuthService.register(username, password);
         saveToken(authResponse.token);
-        setOpen(false);
+        onRegistrationSuccess();
         return;
       }
+
       const authResponse = await AuthService.login(username, password);
       saveToken(authResponse.token);
-
-      setOpen(false);
+      onLoginSuccess();
     }
     catch (error: unknown) {
       console.error(error);
@@ -67,25 +68,12 @@ const LoginPanel = () => {
   }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen} modal>
-      <DialogTrigger asChild>
-        <button
-          className=""
-          onClick={() => setOpen(true)}
-          aria-label="Open login dialog"
-          data-testid="open-login-button"
-        >
-          LOGIN
-        </button>
-      </DialogTrigger>
+    <Dialog open={true} modal>
       <DialogContent
         className="bg-slate-100"
-        onCloseAutoFocus={(event) => {
-          event.preventDefault();
-        }}
       >
         <DialogHeader>
-          <DialogTitle className='text-muted-foreground'>Login</DialogTitle>
+          <DialogTitle className='text-muted-foreground'>{isRegistering ? "Register" : "Login"}</DialogTitle>
           <DialogDescription>
             Please enter your credentials to continue
           </DialogDescription>
@@ -144,7 +132,11 @@ const LoginPanel = () => {
             aria-label={isRegistering ? "Switch to Login" : "Switch to Register"}
             data-testid="toggle-register-button"
           >
-            {isRegistering ? "Click here to Login instead" : "Click here to Register instead"}
+            {
+              isRegistering ?
+                "Click here to Login instead" :
+                "Click here to Register instead"
+            }
           </button>
         </DialogFooter>
       </DialogContent>
