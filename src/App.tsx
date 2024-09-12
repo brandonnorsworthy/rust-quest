@@ -11,7 +11,7 @@ import AuthenticatedSuggestionsPage from './pages/admin/SuggestionsPage';
 
 import './App.css';
 import Background from './components/Background';
-import { useAuth } from './context/AuthenticationProvider';
+import { useAuth } from './context/useAuth';
 
 const queryClient = new QueryClient()
 

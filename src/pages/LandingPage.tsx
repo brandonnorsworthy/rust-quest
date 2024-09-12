@@ -11,7 +11,7 @@ import QuestModal from "@/components/QuestModal";
 import userService from "@/service/userService";
 import { toast } from "@/components/Toaster";
 import SuggestionsPanel from "@/components/SuggestionsPanel";
-import { useAuth } from "@/context/AuthenticationProvider";
+import { useAuth } from "@/context/useAuth";
 
 const LandingPage = () => {
   const { accessToken, clearToken, user } = useAuth();

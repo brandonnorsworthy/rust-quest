@@ -10,7 +10,7 @@ import QuestModal from "@/components/QuestModal";
 import logoImg from '@/assets/placeholder-logo.png'
 import { Dialog, DialogContent } from "@radix-ui/react-dialog";
 import Button from "@/components/Button";
-import { useAuth } from "@/context/AuthenticationProvider";
+import { useAuth } from "@/context/useAuth";
 import withAuth from "@/hocs/withAuth";
 
 const AdminPage = () => {

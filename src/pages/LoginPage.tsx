@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
 import LoginPanel from "@/components/LoginPanel";
-import { useAuth } from "@/context/AuthenticationProvider";
+import { useAuth } from "@/context/useAuth";
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();

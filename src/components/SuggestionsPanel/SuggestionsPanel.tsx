@@ -4,7 +4,7 @@ import CreateSuggestionRequest from "@/models/SuggestionModels/CreateSuggestionR
 import suggestionService from "@/service/suggestionService";
 import { toast } from "../Toaster";
 import { AxiosError } from "axios";
-import { useAuth } from "@/context/AuthenticationProvider";
+import { useAuth } from "@/context/useAuth";
 
 type SuggestionsPanelProps = {
   onClose: () => void;

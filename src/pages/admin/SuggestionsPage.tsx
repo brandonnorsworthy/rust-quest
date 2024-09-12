@@ -4,7 +4,7 @@ import MenuButton from "@/components/MenuButton"
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "@/components/Toaster";
 import suggestionService from "@/service/suggestionService";
-import { useAuth } from "@/context/AuthenticationProvider";
+import { useAuth } from "@/context/useAuth";
 import withAuth from "@/hocs/withAuth";
 
 interface Suggestion {
