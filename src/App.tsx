@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import LandingPage from './pages/LandingPage';
-import DevPage from './pages/DevPage';
+import DeveloperPage from './pages/DeveloperPage';
 
 import './App.css';
 
@@ -19,7 +19,7 @@ function App() {
           {/* protected routes */}
           <Route
             path="/dev"
-            element={<DevPage />}
+            element={<DeveloperPage />}
           />
         </Routes>
       </Router>

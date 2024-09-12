@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
 
-import MenuButton from "../../components/MenuButton"
-import MenuSpacer from "../../components/MenuSpacer"
+import MenuButton from "../components/MenuButton"
+import MenuSpacer from "../components/MenuSpacer"
 
-import logoImg from '../../assets/placeholder-logo.png'
-import backgroundImg from '../../assets/background.png'
+import logoImg from '../assets/placeholder-logo.png'
+import backgroundImg from '../assets/background.png'
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -32,6 +32,7 @@ const LandingPage = () => {
       </div>
 
       {/* <GoogleAd /> */}
+
       <div className="absolute top-0 left-0 w-full h-full z-[-1]">
         {/* Image Background */}
         <img src={backgroundImg} alt="background" className="absolute top-0 left-0 object-cover w-full h-full" />
