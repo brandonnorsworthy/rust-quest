@@ -7,14 +7,20 @@ import suggestionService from "@/service/suggestionService";
 import { useAuth } from "@/context/AuthenticationProvider";
 import withAuth from "@/hocs/withAuth";
 
+interface Suggestion {
+  id: string;
+  suggestion: string;
+  createdBy: string;
+}
+
 const SuggestionsPage = () => {
   const navigate = useNavigate();
   const { accessToken } = useAuth();
-  const [suggestions, setSuggestions] = useState([]);
+  const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
 
   const fetchSuggestions: () => Promise<void> = useCallback(async () => {
     try {
-      const suggestionsResponse = await suggestionService.getSuggestions(accessToken!);
+      const suggestionsResponse = await suggestionService.getSuggestions(accessToken!) as Suggestion[];
       setSuggestions(suggestionsResponse);
     } catch (error) {
       toast.error("Failed to get suggestions", error);
@@ -47,7 +53,7 @@ const SuggestionsPage = () => {
             </div> :
             <div className="flex flex-col items-center mt-8">
               {
-                suggestions.map((suggestion: any) => (
+                suggestions.map((suggestion: Suggestion) => (
                   <p>{JSON.stringify(suggestion)}</p>
                   // <div key={suggestion.id} className="flex flex-col items-center w-1/2 p-4 m-4 rounded-lg bg-white/10">
                   //   <p className="text-white">{suggestion.suggestion}</p>
