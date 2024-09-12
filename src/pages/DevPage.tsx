@@ -1,8 +1,9 @@
-import useAuth from "@/hooks/useAuth"
+import useAuth from "@/hooks/useAuth";
 import questService from "@/service/questService";
 import { useState } from "react";
 
-import { Quest } from "../models/QuestModels/questResponse"
+import { Quest } from "../models/QuestModels/questResponse";
+import { Link } from "react-router-dom";
 
 const DevPage: React.FC = () => {
   const { accessToken } = useAuth();
@@ -34,8 +35,12 @@ const DevPage: React.FC = () => {
             )}
         </div>
       }
+      <Link to="/">Go to Home</Link>
     </div>
   )
 }
 
-export default DevPage
+// const AuthenticatedDevPage = withAuth(DevPage);
+
+// export default AuthenticatedDevPage;
+export default DevPage;

@@ -18,16 +18,16 @@ module.exports = {
     },
     extend: {
       colors: {
+        // figma
+        primary: "#24221C",
+
+        // old
         idk: "#26241D",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-        },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
@@ -73,7 +73,8 @@ module.exports = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
       fontFamily: {
-        'rust-like': ['"Roboto Condensed"', 'sans-serif'],
+        'rust': ['"Roboto Condensed"', 'sans-serif'],
+        'roboto': ['"Roboto"', 'sans-serif'],
       },
     },
   },

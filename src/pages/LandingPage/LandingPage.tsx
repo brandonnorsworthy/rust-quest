@@ -1,40 +1,46 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-import GoogleAd from "@/components/GoogleAd/GoogleAd";
-import LoginPanel from "@/components/LoginPanel";
-import SuggestionsPanel from "@/components/SuggestionsPanel/SuggestionsPanel";
+import MenuButton from "../../components/MenuButton"
+import MenuSpacer from "../../components/MenuSpacer"
+
+import logoImg from '../../assets/placeholder-logo.png'
+import backgroundImg from '../../assets/background.png'
 
 const LandingPage = () => {
+  const navigate = useNavigate();
+
   return (
-    <div className="h-screen font-bold text-white bg-idk font-rust-like">
-      <header className='flex justify-between p-4 text-3xl '>
-        {/* logo? */}
-        <h1 className='text-5xl'>
-          Welcome to the resurected rust app
-        </h1>
-        <Link to='/dev'>Dev hre</Link>
-      </header>
-      <main className="px-12 py-2">
-        <div className="flex flex-col items-start gap-4 pl-32 text-4xl mt-60">
-          {/* todo: finalize flow, which menu options should be visible before login etc*/}
-          <LoginPanel />
-          <button className="mt-12">
-            SPIN WHEEL
-          </button>
-          <button>
-            COMPLETED QUESTS
-          </button>
-          <SuggestionsPanel />
-          <button className="mt-12">
-            SETTINGS
-          </button>
+    <main className="h-screen overflow-hidden">
+      <div className="flex flex-col items-start mt-10 ml-20 text-5xl text-white/50">
+        <img src={logoImg} alt="logo" className="h-36 md:h-32" />
+
+        <div className="flex flex-col items-start mt-20">
+          <MenuButton text="SPIN WHEEL" onClick={() => { }} />
+          <MenuSpacer />
+
+          <MenuButton text="NEWS" onClick={() => { }} />
+          <MenuButton text="COMPLETED" onClick={() => { }} />
+          <MenuButton text="SUGGESTIONS" onClick={() => { }} />
+          <MenuButton text="DEVELOPER" onClick={() => navigate("/dev")} />
+          <MenuSpacer />
+
+          <MenuButton text="SETTINGS" onClick={() => { }} />
+          <MenuSpacer />
+
+          <MenuButton text="LOGOUT" onClick={() => { }} />
         </div>
-        {/* Test div for Google Ad */}
-        <div className="mt-12">
-          <GoogleAd />
+      </div>
+
+      {/* <GoogleAd /> */}
+      <div className="absolute top-0 left-0 w-full h-full z-[-1]">
+        {/* Image Background */}
+        <img src={backgroundImg} alt="background" className="absolute top-0 left-0 object-cover w-full h-full" />
+
+        {/* Gradient Overlay */}
+        <div className="absolute top-0 left-0 w-full h-full" style={{ backgroundImage: "radial-gradient(circle, rgba(36, 34, 28, 0), rgba(36, 34, 28, 0.5))" }}>
         </div>
-      </main>
-    </div>
+      </div>
+    </main>
   );
 }
 
