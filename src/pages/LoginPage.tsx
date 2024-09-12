@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
 import LoginPanel from "@/components/LoginPanel";
-import Background from "@/components/Background";
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
@@ -12,8 +11,6 @@ const LoginPage: React.FC = () => {
         onLoginSuccess={() => navigate("/")}
         onRegistrationSuccess={() => navigate("/")}
       />
-
-      <Background />
     </main>
   );
 }

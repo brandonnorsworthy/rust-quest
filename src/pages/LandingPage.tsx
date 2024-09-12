@@ -5,7 +5,6 @@ import MenuSpacer from "../components/MenuSpacer"
 
 import logoImg from '../assets/placeholder-logo.png'
 import useAuth from "@/hooks/useAuth";
-import Background from "@/components/Background";
 import questService from "@/service/questService";
 import { Quest } from "@/models/QuestModels/questResponse";
 import { useEffect, useState } from "react";
@@ -89,13 +88,13 @@ const LandingPage = () => {
           <MenuButton text="NEWS" onClick={undefined} />
           <MenuButton text="completed quests" onClick={undefined} />
           <MenuButton text="SUGGESTIONS" onClick={() => setIsSuggestionsOpen(true)} />
-          {
-            user && user.role === "admin" &&
-            <MenuButton text="DEVELOPER" onClick={() => navigate("/dev")} />
-          }
           <MenuSpacer />
 
           <MenuButton text="SETTINGS" onClick={undefined} />
+          {
+            user && user.role === "admin" &&
+            <MenuButton text="ADMIN" onClick={() => navigate("/admin")} />
+          }
           <MenuSpacer />
 
           {
@@ -131,12 +130,10 @@ const LandingPage = () => {
 
       {
         isSuggestionsOpen &&
-        <SuggestionsPanel 
+        <SuggestionsPanel
           onClose={() => setIsSuggestionsOpen(false)}
         />
       }
-
-      <Background />
     </main>
   );
 }

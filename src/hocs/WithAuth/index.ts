@@ -1,3 +1,3 @@
-import withAuth from './WithAuth';
+import withAuth from './withAuth';
 
 export default withAuth;
