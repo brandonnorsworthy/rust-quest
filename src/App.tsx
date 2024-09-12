@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Toaster } from '@/components/Toaster';
 
 import LandingPage from './pages/LandingPage';
 import DeveloperPage from './pages/DeveloperPage';
@@ -12,6 +13,7 @@ const queryClient = new QueryClient()
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
+      <Toaster />
       <Router>
         <Routes>
           {/* public routes */}

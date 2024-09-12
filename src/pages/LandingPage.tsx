@@ -10,6 +10,8 @@ import questService from "@/service/questService";
 import { Quest } from "@/models/QuestModels/questResponse";
 import { useEffect, useState } from "react";
 import QuestModal from "@/components/QuestModal";
+import userService from "@/service/userService";
+import { toast } from "@/components/Toaster";
 
 const LandingPage = () => {
   const { accessToken, clearToken, user } = useAuth();
@@ -34,11 +36,20 @@ const LandingPage = () => {
   const handleSpinWheel = async () => {
     if (!accessToken) return navigate("/login");
 
-    const randomQuestResponse = await questService.getRandomQuest(accessToken);
+    try {
+      const randomQuestResponse = await questService.getRandomQuest(accessToken);
 
-    setCurrentQuest(randomQuestResponse);
-    setIsQuestModalOpen(true);
-    localStorage.setItem('currentQuest', JSON.stringify(randomQuestResponse));
+      if (!randomQuestResponse) {
+        toast.warning("No quests available, check filters or you completed them all");
+        return;
+      }
+
+      setCurrentQuest(randomQuestResponse);
+      setIsQuestModalOpen(true);
+      localStorage.setItem('currentQuest', JSON.stringify(randomQuestResponse));
+    } catch (error) {
+      toast.error("Failed to get random quest", error);
+    }
   };
 
   const handleQuestSkip = () => {
@@ -46,9 +57,18 @@ const LandingPage = () => {
     localStorage.removeItem('currentQuest');
   };
 
-  const handleQuestComplete = () => {
-    setCurrentQuest(null);
-    localStorage.removeItem('currentQuest');
+  const handleQuestComplete = async () => {
+    if (!accessToken) return navigate("/login");
+
+    try {
+      await userService.completeQuest(accessToken, currentQuest!.id);
+
+      setCurrentQuest(null);
+      localStorage.removeItem('currentQuest');
+      toast.success("Quest completed");
+    } catch (error) {
+      toast.error("Failed to complete quest", error);
+    }
   };
 
   return (

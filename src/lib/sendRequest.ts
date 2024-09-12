@@ -1,5 +1,5 @@
 import RequestOptions from '@/models/RequestOptions/requestOptions';
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { API_DOMAIN } from '../config';
 
 /**
@@ -45,7 +45,7 @@ const sendRequest = (options: RequestOptions): Promise<unknown> => {
       ...config
     }).then((response: AxiosResponse<unknown>) => {
       resolve(response.data);
-    }).catch((error: unknown) => {
+    }).catch((error: AxiosError) => {
       console.error(`Failed to send request to ${endpoint}:`, error);
       reject(error);
     });
