@@ -20,6 +20,25 @@ module.exports = {
       colors: {
         // figma
         primary: "#24221C",
+        secondary: "#1C211B",
+
+        text: {
+          DEFAULT: "#F2E6DC",
+          secondary: "#AFA79F",
+        },
+
+        buttonText: {
+          DEFAULT: "#CBC1B9",
+          info: "#429DDE",
+          cancel: "#EBC8C2",
+          confirm: "#A8DC4D"
+        },
+        buttonBackground: {
+          DEFAULT: "#2E302E",
+          info: "#154061",
+          cancel: "#873023",
+          confirm: "#657B3C"
+        },
 
         // old
         idk: "#26241D",
@@ -28,10 +47,6 @@ module.exports = {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
-        },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
