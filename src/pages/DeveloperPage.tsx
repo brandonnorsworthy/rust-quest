@@ -7,14 +7,18 @@ import useAuth from "@/hooks/useAuth";
 import MenuButton from "@/components/MenuButton"
 import MenuSpacer from "@/components/MenuSpacer"
 import QuestModal from "@/components/QuestModal";
+import withAuth from "@/hocs/WithAuth";
+
 import logoImg from '@/assets/placeholder-logo.png'
-import backgroundImg from '@/assets/background.png'
+import Background from "@/components/Background";
+import { Dialog, DialogContent } from "@radix-ui/react-dialog";
+import Button from "@/components/Button";
 
 const DeveloperPage = () => {
   const navigate = useNavigate();
   const { accessToken } = useAuth();
   const [currentQuest, setCurrentQuest] = useState<Quest | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isQuestModalOpen, setIsQuestModalOpen] = useState(false);
 
   const handleGetRandomQuest = async () => {
     if (!accessToken) return;
@@ -32,28 +36,33 @@ const DeveloperPage = () => {
           <MenuButton text="RANDOM QUEST" onClick={handleGetRandomQuest} />
           <MenuSpacer />
 
-          <MenuButton text="TEST MODAL" onClick={() => setIsModalOpen(true)} />
+          <MenuButton text="TEST MODAL" onClick={() => setIsQuestModalOpen(true)} />
           <MenuSpacer />
 
-          <MenuButton text="GO HOME" onClick={() => navigate("/")} />
+          <MenuButton text="back" onClick={() => navigate("/")} />
         </div>
       </div>
 
       {
         currentQuest &&
-        <div className="flex flex-col bg-white">
-          <span className="text-xlg">{currentQuest.title}</span>
-          <span className="text-lg">{currentQuest.description}</span>
-          {
-            currentQuest.objectives?.map((objective, index) =>
-              <span key={objective + index}>{objective}</span>
-            )}
-        </div>
+        <Dialog open={true} modal>
+          <DialogContent
+            className="bg-slate-100"
+          >
+            <p>
+            {JSON.stringify(currentQuest)}
+            </p>
+            <Button type="confirm" text="close" onClick={() => setCurrentQuest(null)} />
+          </DialogContent>
+        </Dialog>
       }
 
       <QuestModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        onClose={() => setIsQuestModalOpen(false)}
+        onComplete={() => setIsQuestModalOpen(false)}
+        onSkip={() => setIsQuestModalOpen(false)}
+        infoUrl="https://google.com"
+        isOpen={isQuestModalOpen}
         imageUrl="https://via.placeholder.com/870x350"
         title="Modal Title"
         category="PVE"
@@ -65,16 +74,11 @@ const DeveloperPage = () => {
         ]}
       />
 
-      <div className="absolute top-0 left-0 w-full h-full z-[-1]">
-        {/* Image Background */}
-        <img src={backgroundImg} alt="background" className="absolute top-0 left-0 object-cover w-full h-full" />
-
-        {/* Gradient Overlay */}
-        <div className="absolute top-0 left-0 w-full h-full" style={{ backgroundImage: "radial-gradient(circle, rgba(36, 34, 28, 0), rgba(36, 34, 28, 0.5))" }}>
-        </div>
-      </div>
+      <Background />
     </main>
   );
 }
 
-export default DeveloperPage;
+const AuthenticatedDeveloperPage = withAuth(DeveloperPage);
+
+export default AuthenticatedDeveloperPage;
