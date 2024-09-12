@@ -9,9 +9,20 @@ interface ModalProps {
   category: string;
   description: string;
   objectives: string[];
+  infoUrl?: string;
 }
 
-const QuestModal: React.FC<ModalProps> = ({ isOpen, onClose, imageUrl, title, category, description, objectives }) => {
+const QuestModal: React.FC<ModalProps> = (props) => {
+  const {
+    isOpen,
+    onClose,
+    imageUrl,
+    title,
+    category,
+    description,
+    objectives,
+    infoUrl
+  } = props;
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
@@ -44,7 +55,7 @@ const QuestModal: React.FC<ModalProps> = ({ isOpen, onClose, imageUrl, title, ca
         </div>
 
         <div className="flex justify-center w-full mt-4">
-          <p className="text-2xl font-bold text-text-secondary">Category: {category}</p>
+          <p className="text-2xl font-bold text-text-secondary">Category: {category.toUpperCase()}</p>
         </div>
 
 
@@ -67,8 +78,13 @@ const QuestModal: React.FC<ModalProps> = ({ isOpen, onClose, imageUrl, title, ca
 
         <div className="flex justify-end mt-6">
           <div className="flex justify-between w-full gap-4">
-            <Button text="learn more" type="info" onClick={onClose} />
-            <div className="flex gap-4">
+            <div className="flex">
+              {
+                infoUrl &&
+                <Button text="learn more" type="info" onClick={() => window.open(infoUrl, '_blank', 'noopener,noreferrer')} />
+              }
+            </div>
+            <div className="flex justify-end gap-4">
               <Button text="Skip" onClick={onClose} />
               <Button text="complete" type="confirm" onClick={onClose} />
             </div>
