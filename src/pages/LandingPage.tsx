@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import QuestModal from "@/components/QuestModal";
 import userService from "@/service/userService";
 import { toast } from "@/components/Toaster";
+import SuggestionsPanel from "@/components/SuggestionsPanel";
 
 const LandingPage = () => {
   const { accessToken, clearToken, user } = useAuth();
@@ -20,6 +21,7 @@ const LandingPage = () => {
   const storedQuests = localStorage.getItem('currentQuest') ? JSON.parse(localStorage.getItem('currentQuest') as string) : null;
   const [currentQuest, setCurrentQuest] = useState<Quest | null>(storedQuests);
   const [isQuestModalOpen, setIsQuestModalOpen] = useState(false);
+  const [isSuggestionsOpen, setIsSuggestionsOpen] = useState(false);
 
   useEffect(() => {
     if (!currentQuest) {
@@ -86,7 +88,7 @@ const LandingPage = () => {
 
           <MenuButton text="NEWS" onClick={undefined} />
           <MenuButton text="completed quests" onClick={undefined} />
-          <MenuButton text="SUGGESTIONS" onClick={undefined} />
+          <MenuButton text="SUGGESTIONS" onClick={() => setIsSuggestionsOpen(true)} />
           {
             user && user.role === "admin" &&
             <MenuButton text="DEVELOPER" onClick={() => navigate("/dev")} />
@@ -124,6 +126,13 @@ const LandingPage = () => {
           description={currentQuest.description}
           objectives={currentQuest.objectives}
           infoUrl={currentQuest.info_url}
+        />
+      }
+
+      {
+        isSuggestionsOpen &&
+        <SuggestionsPanel 
+          onClose={() => setIsSuggestionsOpen(false)}
         />
       }
 
