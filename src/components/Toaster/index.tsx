@@ -48,7 +48,7 @@ const Toaster: React.FC = () => {
           }
 
           return (
-            <div className={`${toastStyle} text-2xl font-bold font-roboto px-6 py-3 ${index !== 0 ? "mt-4" : ""}`} key={toast.id}>
+            <div className={`${toastStyle} font-bold font-roboto px-4 py-2 ${index !== 0 ? "mt-4" : ""}`} key={toast.id}>
               <span>{toast.message}</span>
             </div>)
         })

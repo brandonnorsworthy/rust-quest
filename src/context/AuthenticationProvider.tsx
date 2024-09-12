@@ -1,17 +1,20 @@
-import { useState, useEffect } from "react";
+import React, { createContext, useState, useEffect } from "react";
+import { UserToken } from "@/models/AuthModels/userToken";
 
 const TOKEN_STORAGE_KEY = "token";
 
-interface User {
-  userId: number;
-  username: string;
-  role: string;
-  iat: number;
+export interface AuthContextProps {
+  accessToken: string | null;
+  user: UserToken | null;
+  saveToken: (token: string) => void;
+  clearToken: () => void;
 }
 
-const useAuth = () => {
+export const AuthContext = createContext<AuthContextProps | undefined>(undefined);
+
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [accessToken, setAccessToken] = useState<string | null>(null);
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<UserToken | null>(null);
 
   useEffect(() => {
     const storedToken = localStorage.getItem(TOKEN_STORAGE_KEY);
@@ -37,12 +40,9 @@ const useAuth = () => {
     setAccessToken(null);
   };
 
-  return {
-    accessToken,
-    saveToken,
-    clearToken,
-    user,
-  };
+  return (
+    <AuthContext.Provider value={{ accessToken, user, saveToken, clearToken }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
-
-export default useAuth;

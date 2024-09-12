@@ -3,18 +3,17 @@ import { useNavigate } from "react-router-dom";
 
 import questService from "@/service/questService";
 import { Quest } from "@/models/QuestModels/questResponse";
-import useAuth from "@/hooks/useAuth";
 import MenuButton from "@/components/MenuButton"
 import MenuSpacer from "@/components/MenuSpacer"
 import QuestModal from "@/components/QuestModal";
-import withAuth from "@/hocs/WithAuth";
 
 import logoImg from '@/assets/placeholder-logo.png'
-import Background from "@/components/Background";
 import { Dialog, DialogContent } from "@radix-ui/react-dialog";
 import Button from "@/components/Button";
+import { useAuth } from "@/context/useAuth";
+import withAuth from "@/hocs/withAuth";
 
-const DeveloperPage = () => {
+const AdminPage = () => {
   const navigate = useNavigate();
   const { accessToken } = useAuth();
   const [currentQuest, setCurrentQuest] = useState<Quest | null>(null);
@@ -34,9 +33,12 @@ const DeveloperPage = () => {
 
         <div className="flex flex-col items-start mt-20">
           <MenuButton text="RANDOM QUEST" onClick={handleGetRandomQuest} />
+          <MenuButton text="TEST MODAL" onClick={() => setIsQuestModalOpen(true)} />
           <MenuSpacer />
 
-          <MenuButton text="TEST MODAL" onClick={() => setIsQuestModalOpen(true)} />
+          <MenuButton text="view suggestions" onClick={() => navigate("/admin/suggestions")} />
+          <MenuButton text="view quests" onClick={() => navigate("/admin/quests")} />
+          <MenuButton text="view users" onClick={() => navigate("/admin/users")} />
           <MenuSpacer />
 
           <MenuButton text="back" onClick={() => navigate("/")} />
@@ -50,7 +52,7 @@ const DeveloperPage = () => {
             className="bg-slate-100"
           >
             <p>
-            {JSON.stringify(currentQuest)}
+              {JSON.stringify(currentQuest)}
             </p>
             <Button type="confirm" text="close" onClick={() => setCurrentQuest(null)} />
           </DialogContent>
@@ -73,12 +75,10 @@ const DeveloperPage = () => {
           "Escape with the loot"
         ]}
       />
-
-      <Background />
     </main>
   );
 }
 
-const AuthenticatedDeveloperPage = withAuth(DeveloperPage);
+const AuthenticatedAdminPage = withAuth(AdminPage, "admin");
 
-export default AuthenticatedDeveloperPage;
+export default AuthenticatedAdminPage;

@@ -22,9 +22,10 @@ export default {
    * gets all suggestions
    * @returns a promise that resolves to the response from the server
    */
-  getSuggestions: async (accessToken: string) => await sendRequest({
+  getSuggestions: async (accessToken: string, page: number) => await sendRequest({
     method: "GET",
     endpoint: baseUrl,
-    accessToken
+    accessToken,
+    queryVariables: [{ key: "page", value: page.toString() }]
   }),
 }

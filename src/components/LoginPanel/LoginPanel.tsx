@@ -12,7 +12,7 @@ import {
 import { Input } from "../ui/input";
 
 import AuthService from "@/service/authService";
-import useAuth from "@/hooks/useAuth";
+import { useAuth } from "@/context/useAuth";
 
 interface LoginPanelProps {
   onLoginSuccess: () => void;

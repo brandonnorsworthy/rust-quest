@@ -4,14 +4,14 @@ import MenuButton from "../components/MenuButton"
 import MenuSpacer from "../components/MenuSpacer"
 
 import logoImg from '../assets/placeholder-logo.png'
-import useAuth from "@/hooks/useAuth";
-import Background from "@/components/Background";
 import questService from "@/service/questService";
 import { Quest } from "@/models/QuestModels/questResponse";
 import { useEffect, useState } from "react";
 import QuestModal from "@/components/QuestModal";
 import userService from "@/service/userService";
 import { toast } from "@/components/Toaster";
+import SuggestionsPanel from "@/components/SuggestionsPanel";
+import { useAuth } from "@/context/useAuth";
 
 const LandingPage = () => {
   const { accessToken, clearToken, user } = useAuth();
@@ -20,6 +20,7 @@ const LandingPage = () => {
   const storedQuests = localStorage.getItem('currentQuest') ? JSON.parse(localStorage.getItem('currentQuest') as string) : null;
   const [currentQuest, setCurrentQuest] = useState<Quest | null>(storedQuests);
   const [isQuestModalOpen, setIsQuestModalOpen] = useState(false);
+  const [isSuggestionsOpen, setIsSuggestionsOpen] = useState(false);
 
   useEffect(() => {
     if (!currentQuest) {
@@ -86,14 +87,14 @@ const LandingPage = () => {
 
           <MenuButton text="NEWS" onClick={undefined} />
           <MenuButton text="completed quests" onClick={undefined} />
-          <MenuButton text="SUGGESTIONS" onClick={undefined} />
-          {
-            user && user.role === "admin" &&
-            <MenuButton text="DEVELOPER" onClick={() => navigate("/dev")} />
-          }
+          <MenuButton text="SUGGESTIONS" onClick={() => setIsSuggestionsOpen(true)} />
           <MenuSpacer />
 
           <MenuButton text="SETTINGS" onClick={undefined} />
+          {
+            user && user.role === "admin" &&
+            <MenuButton text="ADMIN" onClick={() => navigate("/admin")} />
+          }
           <MenuSpacer />
 
           {
@@ -103,13 +104,6 @@ const LandingPage = () => {
           }
         </div>
       </div>
-
-      {
-        user &&
-        <div className="fixed top-0 right-0 flex flex-col justify-end m-4 text-white">
-          <span className="text-right">{user.username} ({user.role})</span>
-        </div>
-      }
 
       {
         (isQuestModalOpen && currentQuest) &&
@@ -127,7 +121,12 @@ const LandingPage = () => {
         />
       }
 
-      <Background />
+      {
+        isSuggestionsOpen &&
+        <SuggestionsPanel
+          onClose={() => setIsSuggestionsOpen(false)}
+        />
+      }
     </main>
   );
 }
