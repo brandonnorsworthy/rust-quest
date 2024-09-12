@@ -26,7 +26,7 @@ const SuggestionsPanel = () => {
 
   const mutation = useMutation({
     mutationFn: (newSuggestion: CreateSuggestionRequest) => {
-      return suggestionService.createSuggestion(newSuggestion, accessToken);
+      return suggestionService.createSuggestion(newSuggestion, accessToken!);
     },
     onSuccess: () => {
       setOpen(false);
