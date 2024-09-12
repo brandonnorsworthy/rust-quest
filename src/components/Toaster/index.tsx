@@ -14,7 +14,7 @@ const Toaster: React.FC = () => {
       });
       setTimeout(() => {
         dismiss(toast.id);
-      }, 3000);
+      }, 4000);
     });
 
     return unsubscribe;
@@ -33,23 +33,23 @@ const Toaster: React.FC = () => {
           let toastStyle = null;
           switch (toast.type) {
             case 'error':
-              toastStyle = 'text-white bg-red-500';
+              toastStyle = 'bg-buttonBackground-cancel text-buttonText-cancel';
               break;
             case 'success':
-              toastStyle = 'text-white bg-green-500';
+              toastStyle = 'bg-buttonBackground-confirm text-buttonText-confirm';
               break;
             case 'warning':
-              toastStyle = 'text-white bg-yellow-500';
+            case 'info':
+              toastStyle = 'bg-buttonBackground-info text-buttonText-info';
               break;
             default:
-              toastStyle = 'text-black bg-gray-500';
+              toastStyle = 'bg-buttonBackground text-buttonText';
               break;
           }
 
           return (
-            <div className={`${toastStyle} px-4 py-2 ${index !== 0 ? "mt-4" : ""}`} key={toast.id}>
+            <div className={`${toastStyle} text-2xl font-bold font-roboto px-6 py-3 ${index !== 0 ? "mt-4" : ""}`} key={toast.id}>
               <span>{toast.message}</span>
-              <button className="ml-4" onClick={() => dismiss(toast.id)}>❌</button>
             </div>)
         })
       }

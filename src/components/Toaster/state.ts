@@ -2,7 +2,7 @@ let toastsCounter = 0;
 
 type ToastBase = {
   message: string,
-  type?: 'error' | 'success' | 'warning'
+  type?: 'error' | 'success' | 'warning' | 'info',
 }
 
 export type Toast = {
