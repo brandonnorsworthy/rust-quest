@@ -9,23 +9,26 @@ import withAuth from "@/hocs/withAuth";
 
 interface Suggestion {
   id: string;
-  suggestion: string;
-  createdBy: string;
+  username: string;
+  title: string;
+  description: string;
 }
 
 const SuggestionsPage = () => {
   const navigate = useNavigate();
   const { accessToken } = useAuth();
   const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
+  const [page, setPage] = useState(1);
+  const maxLength = 20;
 
   const fetchSuggestions: () => Promise<void> = useCallback(async () => {
     try {
-      const suggestionsResponse = await suggestionService.getSuggestions(accessToken!) as Suggestion[];
+      const suggestionsResponse = await suggestionService.getSuggestions(accessToken!, page) as Suggestion[];
       setSuggestions(suggestionsResponse);
     } catch (error) {
       toast.error("Failed to get suggestions", error);
     }
-  }, [accessToken]);
+  }, [accessToken, page]);
 
   useEffect(() => {
     if (!accessToken) {
@@ -35,15 +38,19 @@ const SuggestionsPage = () => {
     fetchSuggestions();
   }, [accessToken, navigate, fetchSuggestions]);
 
+  useEffect(() => {
+    fetchSuggestions();
+  }, [page, fetchSuggestions]);
+
   return (
-    <main className="h-screen overflow-hidden">
+    <main className="h-screen overflow-scroll">
       <div className="p-8">
         <div className="absolute top-8 left-8">
           <MenuButton text="back to admin" onClick={() => navigate("/admin")} />
         </div>
 
-        <div className="flex justify-center w-full">
-          <h1 className="text-4xl font-bold text-white">Admin Suggestions</h1>
+        <div className="flex justify-center w-full mt-8">
+          <h1 className="text-4xl font-bold text-white">All Suggestions</h1>
         </div>
 
         {
@@ -51,19 +58,45 @@ const SuggestionsPage = () => {
             <div className="flex justify-center w-full mt-8">
               <h1 className="text-2xl font-bold text-white">No suggestions</h1>
             </div> :
-            <div className="flex flex-col items-center mt-8">
-              {
-                suggestions.map((suggestion: Suggestion) => (
-                  <p>{JSON.stringify(suggestion)}</p>
-                  // <div key={suggestion.id} className="flex flex-col items-center w-1/2 p-4 m-4 rounded-lg bg-white/10">
-                  //   <p className="text-white">{suggestion.suggestion}</p>
-                  //   {/* <p className="text-white">{suggestion.createdBy}</p> */}
-                  // </div>
-                ))
-              }
+            <div className="flex flex-col items-center mt-8 text-xl">
+              <table className="bg-white">
+                <thead className="font-bold">
+                  <th className="px-4 py-2">ID</th>
+                  <th className="px-4 py-2">Created By</th>
+                  <th className="px-4 py-2">Title</th>
+                  <th className="px-4 py-2">Description</th>
+                </thead>
+
+                <tbody>
+                  {
+                    suggestions.map((suggestion: Suggestion) => (
+                      <tr className="bg-slate-100 even:bg-slate-200 hover:bg-white hover:cursor-pointer">
+                        <td className="px-2 py-1">{suggestion.id}</td>
+                        <td className="px-2 py-1">{suggestion.username}</td>
+                        <td className="px-2 py-1">{suggestion.title}</td>
+                        <td className="px-2 py-1">{suggestion.description}</td>
+                      </tr>
+                    ))
+                  }
+                </tbody>
+              </table>
+
+              <div className="flex justify-center w-full gap-2 mt-8">
+                <button
+                  className="px-4 py-2 font-bold bg-white border rounded disabled:bg-white/50"
+                  disabled={page === 1}
+                  onClick={() => setPage((prevPage) => prevPage - 1)}
+                >previous</button>
+                <span
+                  className="px-4 py-2 font-bold bg-white border rounded select-none">page: {page}</span>
+                <button
+                  className="px-4 py-2 font-bold bg-white border rounded disabled:bg-white/50"
+                  disabled={suggestions.length < maxLength}
+                  onClick={() => setPage((prevPage) => prevPage + 1)}
+                >next</button>
+              </div>
             </div>
         }
-
       </div>
     </main>
   );
