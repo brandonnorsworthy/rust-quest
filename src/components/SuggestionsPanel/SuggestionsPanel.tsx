@@ -2,9 +2,9 @@ import React, { useState } from "react";
 
 import CreateSuggestionRequest from "@/models/SuggestionModels/CreateSuggestionRequest";
 import suggestionService from "@/service/suggestionService";
-import useAuth from "@/hooks/useAuth";
 import { toast } from "../Toaster";
 import { AxiosError } from "axios";
+import { useAuth } from "@/context/AuthenticationProvider";
 
 type SuggestionsPanelProps = {
   onClose: () => void;

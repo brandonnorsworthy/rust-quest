@@ -1,3 +1,4 @@
+import { UserToken } from "@/models/AuthModels/userToken";
 import React, { useEffect, useState, ComponentType } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -5,25 +6,24 @@ const withAuth = <P extends object>(WrappedComponent: ComponentType<P>, required
   const ComponentWithAuth: React.FC<P> = (props) => {
     const navigate = useNavigate();
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-    const [userRole, setUserRole] = useState<string | null>(null);
+    const [user, setUser] = useState<UserToken | null>(null);
 
     useEffect(() => {
       const token = localStorage.getItem("token");
-      const role = localStorage.getItem("role"); // Assuming the role is stored in local storage
       if (!token) {
         navigate("/login");
         return;
       }
 
+      setUser({ ...JSON.parse(atob(token.split(".")[1])) });
       setIsAuthenticated(true);
-      setUserRole(role);
     }, [navigate]);
 
-    if (!isAuthenticated) {
+    if (!isAuthenticated || !user) {
       return null;
     }
 
-    if (requiredRole && userRole !== requiredRole) {
+    if (requiredRole && user.role !== requiredRole) {
       navigate("/unauthorized");
       return null;
     }

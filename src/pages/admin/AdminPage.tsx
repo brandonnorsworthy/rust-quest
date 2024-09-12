@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 
 import questService from "@/service/questService";
 import { Quest } from "@/models/QuestModels/questResponse";
-import useAuth from "@/hooks/useAuth";
 import MenuButton from "@/components/MenuButton"
 import MenuSpacer from "@/components/MenuSpacer"
 import QuestModal from "@/components/QuestModal";
@@ -12,6 +11,7 @@ import logoImg from '@/assets/placeholder-logo.png'
 import { Dialog, DialogContent } from "@radix-ui/react-dialog";
 import Button from "@/components/Button";
 import withAuth from "@/hocs/withAuth";
+import { useAuth } from "@/context/AuthenticationProvider";
 
 const AdminPage = () => {
   const navigate = useNavigate();

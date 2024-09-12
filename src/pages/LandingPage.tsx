@@ -4,7 +4,6 @@ import MenuButton from "../components/MenuButton"
 import MenuSpacer from "../components/MenuSpacer"
 
 import logoImg from '../assets/placeholder-logo.png'
-import useAuth from "@/hooks/useAuth";
 import questService from "@/service/questService";
 import { Quest } from "@/models/QuestModels/questResponse";
 import { useEffect, useState } from "react";
@@ -12,6 +11,7 @@ import QuestModal from "@/components/QuestModal";
 import userService from "@/service/userService";
 import { toast } from "@/components/Toaster";
 import SuggestionsPanel from "@/components/SuggestionsPanel";
+import { useAuth } from "@/context/AuthenticationProvider";
 
 const LandingPage = () => {
   const { accessToken, clearToken, user } = useAuth();
@@ -104,13 +104,6 @@ const LandingPage = () => {
           }
         </div>
       </div>
-
-      {
-        user &&
-        <div className="fixed top-0 right-0 flex flex-col justify-end m-4 text-white">
-          <span className="text-right">{user.username} ({user.role})</span>
-        </div>
-      }
 
       {
         (isQuestModalOpen && currentQuest) &&

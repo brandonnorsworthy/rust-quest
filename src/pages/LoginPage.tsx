@@ -1,9 +1,16 @@
 import { useNavigate } from "react-router-dom";
 
 import LoginPanel from "@/components/LoginPanel";
+import { useAuth } from "@/context/AuthenticationProvider";
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
+  const { accessToken } = useAuth();
+
+  if (accessToken) {
+    navigate("/");
+    return null;
+  }
 
   return (
     <main className="h-screen overflow-hidden">
