@@ -25,7 +25,7 @@ const Button: React.FC<MenuButtonProps> = ({ text, onClick, type }) => {
 
   return (
     <button
-      className={[`text-2xl font-bold font-roboto py-5 px-10 min-w-48`, typeStyles].join(" ")}
+      className={[`text-xl font-bold font-roboto py-3 px-6 min-w-full sm:min-w-36`, typeStyles].join(" ")}
       onClick={onClick}
     >
       {text.toUpperCase()}
