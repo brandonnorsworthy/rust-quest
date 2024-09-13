@@ -8,7 +8,7 @@ interface MenuButtonProps {
 const MenuButton: React.FC<MenuButtonProps> = (props) => {
   return (
     <button
-      className="text-5xl font-bold md:text-4xl text-white/50 hover:text-white font-roboto disabled:text-white/20"
+      className="text-3xl font-bold text-white md:text-4xl md:text-white/50 hover:text-white font-roboto disabled:text-white/20"
       onClick={props.onClick}
       disabled={!props.onClick}
     >

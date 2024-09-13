@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+const plugin = require('tailwindcss/plugin')
+
 module.exports = {
   darkMode: ["class"],
   content: [
@@ -20,7 +22,7 @@ module.exports = {
       colors: {
         // figma
         primary: "#24221C",
-        secondary:{
+        secondary: {
           DEFAULT: "#1C211B",
           highlight: "#272820",
         },
@@ -99,5 +101,31 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    plugin(function ({ addUtilities }) {
+      addUtilities({
+        '.scrollbar-none': {
+          'scrollbar-width': '1px',
+          '&::-webkit-scrollbar': {
+            display: 'none',
+          },
+        },
+        '.scrollbar-modern': {
+          'scrollbar-width': 'auto',
+          '&::-webkit-scrollbar': {
+            width: '8px',
+            height: '8px',
+          },
+          '&::-webkit-scrollbar-thumb': {
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            borderRadius: '4px',
+          },
+          '&::-webkit-scrollbar-track': {
+            backgroundColor: 'transparent',
+          },
+        }
+      })
+    })
+  ],
 }

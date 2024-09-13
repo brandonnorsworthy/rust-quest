@@ -61,16 +61,18 @@ const SuggestionsPage = () => {
             <div className="flex flex-col items-center mt-8 text-xl">
               <table className="bg-white">
                 <thead className="font-bold">
-                  <th className="px-4 py-2">ID</th>
-                  <th className="px-4 py-2">Created By</th>
-                  <th className="px-4 py-2">Title</th>
-                  <th className="px-4 py-2">Description</th>
+                  <tr>
+                    <td className="px-4 py-2">ID</td>
+                    <td className="px-4 py-2">Created By</td>
+                    <td className="px-4 py-2">Title</td>
+                    <td className="px-4 py-2">Description</td>
+                  </tr>
                 </thead>
 
                 <tbody>
                   {
-                    suggestions.map((suggestion: Suggestion) => (
-                      <tr className="bg-slate-100 even:bg-slate-200 hover:bg-white hover:cursor-pointer">
+                    suggestions.map((suggestion: Suggestion, index) => (
+                      <tr key={suggestion.id + index} className="bg-slate-100 even:bg-slate-200 hover:bg-white hover:cursor-pointer">
                         <td className="px-2 py-1">{suggestion.id}</td>
                         <td className="px-2 py-1">{suggestion.username}</td>
                         <td className="px-2 py-1">{suggestion.title}</td>
@@ -83,14 +85,14 @@ const SuggestionsPage = () => {
 
               <div className="flex justify-center w-full gap-2 mt-8">
                 <button
-                  className="px-4 py-2 font-bold bg-white border rounded disabled:bg-white/50"
+                  className="px-4 py-2 font-bold bg-white rounded disabled:bg-white/50"
                   disabled={page === 1}
                   onClick={() => setPage((prevPage) => prevPage - 1)}
                 >previous</button>
                 <span
-                  className="px-4 py-2 font-bold bg-white border rounded select-none">page: {page}</span>
+                  className="px-4 py-2 font-bold bg-white rounded select-none">page: {page}</span>
                 <button
-                  className="px-4 py-2 font-bold bg-white border rounded disabled:bg-white/50"
+                  className="px-4 py-2 font-bold bg-white rounded disabled:bg-white/50"
                   disabled={suggestions.length < maxLength}
                   onClick={() => setPage((prevPage) => prevPage + 1)}
                 >next</button>
