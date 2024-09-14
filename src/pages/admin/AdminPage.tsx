@@ -5,7 +5,6 @@ import MenuSpacer from "@/components/MenuSpacer"
 
 import logoImg from '@/assets/placeholder-logo.png'
 import withAuth from "@/hocs/withAuth";
-import { toast } from "@/components/Toaster";
 
 const AdminPage = () => {
   const navigate = useNavigate();
@@ -18,7 +17,6 @@ const AdminPage = () => {
           <MenuButton text="edit suggestions" onClick={() => navigate("/admin/suggestions")} />
           <MenuSpacer />
 
-          <MenuButton text="create quest" onClick={() => toast.error("modal not implemented")} />
           <MenuButton text="edit quests" onClick={() => navigate("/admin/quests")} />
           <MenuSpacer />
 

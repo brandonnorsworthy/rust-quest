@@ -14,4 +14,17 @@ export default {
     endpoint: `${basePath}/completed-quests/${questId}`,
     accessToken
   }),
+
+  updateSettings: async (accessToken: string, settings: {
+    disableAnimations?: boolean,
+    categoryFilters?: number[],
+    instrumentDLC?: boolean,
+    voicePropsDLC?: boolean,
+    sunburnDLC?: boolean,
+  }) => await sendRequest({
+    method: 'PUT',
+    endpoint: `${basePath}/settings`,
+    accessToken,
+    body: settings
+  }),
 }

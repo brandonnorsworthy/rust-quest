@@ -33,6 +33,12 @@ export default {
     }
   }) as Promise<LoginResponse>,
 
+  refreshToken: async (accessToken: string) => await sendRequest({
+    method: 'POST',
+    endpoint: '/auth/token',
+    accessToken
+  }) as Promise<{ token: string }>,
+
   /**
    * logout a user
    * @returns a promise that resolves to the response from the server

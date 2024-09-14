@@ -13,6 +13,7 @@ import CompletedQuestsPage from './pages/AllQuestsPage';
 import './App.css';
 import Background from './components/Background';
 import { useAuth } from './context/useAuth';
+import UsernameBubble from './components/UsernameBubble';
 
 const queryClient = new QueryClient()
 
@@ -45,14 +46,7 @@ function App() {
 
       {
         user &&
-        <div className="fixed flex flex-col justify-end p-2 rounded bottom-8 left-8 text-black/50 bg-white/50">
-          <p className="text-right">
-            <span className="font-bold">{user.username}</span>
-            {
-              user.role !== "user" && <span className="font-bold text-blue-500"> [{user.role}]</span>
-            }
-          </p>
-        </div>
+        <UsernameBubble user={user} />
       }
 
       <Background />

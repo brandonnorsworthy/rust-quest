@@ -14,6 +14,7 @@ import SuggestionsPanel from "@/components/SuggestionsPanel";
 import { useAuth } from "@/context/useAuth";
 import Modal from "@/components/Modal";
 import News from "@/modals/News/News";
+import Settings from "@/modals/Settings";
 
 type ModalTypes = "quest" | "suggestions" | "news" | "settings" | null;
 
@@ -24,6 +25,8 @@ const LandingPage = () => {
   const storedQuests = localStorage.getItem('currentQuest') ? JSON.parse(localStorage.getItem('currentQuest') as string) : null;
   const [currentQuest, setCurrentQuest] = useState<Quest | null>(storedQuests);
   const [currentOpenModal, setCurrentOpenModal] = useState<ModalTypes>(null);
+
+  const disableButtons = currentOpenModal ? true : false;
 
   useEffect(() => {
     if (!currentQuest && currentOpenModal === "quest") {
@@ -94,7 +97,7 @@ const LandingPage = () => {
       case "settings":
         return (
           <Modal onClose={closeModal}>
-            <p>Settings</p>
+            <Settings onClose={closeModal} />
           </Modal>
         )
       case "quest":
@@ -122,27 +125,63 @@ const LandingPage = () => {
         <div className="flex flex-col items-start mt-20">
           {
             currentQuest ?
-              <MenuButton text="current quest" onClick={handleOpenCurrentQuest} /> :
-              <MenuButton text="SPIN WHEEL" onClick={handleSpinWheel} />
+              <MenuButton
+                text="current quest"
+                disabled={disableButtons}
+                onClick={handleOpenCurrentQuest}
+              /> :
+              <MenuButton
+                text="SPIN WHEEL"
+                disabled={disableButtons}
+                onClick={handleSpinWheel}
+              />
           }
           <MenuSpacer />
 
-          <MenuButton text="NEWS" onClick={() => setCurrentOpenModal("news")} />
-          <MenuButton text="all quests" onClick={() => navigate("/all-quests")} />
-          <MenuButton text="SUGGESTIONS" onClick={() => setCurrentOpenModal("suggestions")} />
+          <MenuButton
+            text="NEWS"
+            disabled={disableButtons}
+            onClick={() => setCurrentOpenModal("news")}
+          />
+          <MenuButton
+            text="all quests"
+            disabled={disableButtons}
+            onClick={() => navigate("/all-quests")}
+          />
+          <MenuButton
+            text="SUGGESTIONS"
+            disabled={disableButtons}
+            onClick={() => setCurrentOpenModal("suggestions")}
+          />
           <MenuSpacer />
 
-          <MenuButton text="SETTINGS" onClick={() => setCurrentOpenModal("settings")} />
+          <MenuButton
+            text="SETTINGS"
+            disabled={disableButtons}
+            onClick={() => setCurrentOpenModal("settings")}
+          />
           {
             user && user.role === "admin" &&
-            <MenuButton text="ADMIN" onClick={() => navigate("/admin")} />
+            <MenuButton
+              text="ADMIN"
+              disabled={disableButtons}
+              onClick={() => navigate("/admin")}
+            />
           }
           <MenuSpacer />
 
           {
             !accessToken ?
-              <MenuButton text="LOGIN" onClick={() => navigate("/login")} /> :
-              <MenuButton text="LOGOUT" onClick={clearToken} />
+              <MenuButton
+                text="LOGIN"
+                disabled={disableButtons}
+                onClick={() => navigate("/login")}
+              /> :
+              <MenuButton
+                text="LOGOUT"
+                disabled={disableButtons}
+                onClick={clearToken}
+              />
           }
         </div>
       </div>
