@@ -3,10 +3,11 @@ import React from 'react';
 interface MenuButtonProps {
   text: string;
   type?: 'info' | 'cancel' | 'confirm';
-  onClick: () => void;
+  htmlType?: 'button' | 'submit' | 'reset';
+  onClick?: () => void;
 }
 
-const Button: React.FC<MenuButtonProps> = ({ text, onClick, type }) => {
+const Button: React.FC<MenuButtonProps> = ({ text, onClick, type, htmlType = "button" }) => {
   let typeStyles = "";
   switch (type) {
     case "info":
@@ -27,6 +28,7 @@ const Button: React.FC<MenuButtonProps> = ({ text, onClick, type }) => {
     <button
       className={[`text-xl font-bold font-roboto py-3 px-6 min-w-full sm:min-w-36`, typeStyles].join(" ")}
       onClick={onClick}
+      type={htmlType}
     >
       {text.toUpperCase()}
     </button>

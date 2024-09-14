@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
 import { UserToken } from "@/models/AuthModels/userToken";
+import { toast } from "@/components/Toaster";
 
 const TOKEN_STORAGE_KEY = "token";
 
@@ -17,10 +18,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [user, setUser] = useState<UserToken | null>(null);
 
   useEffect(() => {
-    const storedToken = localStorage.getItem(TOKEN_STORAGE_KEY);
-    if (storedToken) {
-      setAccessToken(storedToken);
-      setUser({ ...JSON.parse(atob(storedToken.split(".")[1])) });
+    try {
+      const storedToken = localStorage.getItem(TOKEN_STORAGE_KEY);
+      if (storedToken) {
+        setAccessToken(storedToken);
+        setUser({ ...JSON.parse(atob(storedToken.split(".")[1])) });
+      }
+    } catch (error) {
+      localStorage.removeItem(TOKEN_STORAGE_KEY);
+      toast.error("Failed to load token, clearing cache", error);
     }
   }, []);
 

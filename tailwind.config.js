@@ -99,10 +99,39 @@ module.exports = {
         'rust': ['"Roboto Condensed"', 'sans-serif'],
         'roboto': ['"Roboto"', 'sans-serif'],
       },
+
+      // styling for the markdown content
+      typography: (theme) => ({
+        DEFAULT: {
+          css: {
+            color: theme('colors.text.DEFAULT'),
+            h1: {
+              color: theme('colors.text.DEFAULT'),
+              textAlign: 'center',
+            },
+            h2: {
+              color: theme('colors.text.DEFAULT'),
+            },
+            a: {
+              color: theme('colors.buttonText.info'),
+              '&:hover': {
+                color: theme('colors.buttonBackground.info'),
+              },
+            },
+            strong: {
+              color: theme('colors.text.secondary.DEFAULT'),
+            },
+            pre: {
+              backgroundColor: theme('colors.secondary.DEFAULT'),
+            }
+          },
+        },
+      }),
     },
   },
   plugins: [
     require("tailwindcss-animate"),
+    require('@tailwindcss/typography'),
     plugin(function ({ addUtilities }) {
       addUtilities({
         '.scrollbar-none': {

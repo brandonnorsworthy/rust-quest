@@ -43,7 +43,7 @@ class Observer {
     return this.create({ message });
   };
 
-  error = (message: string, error: unknown): void => {
+  error = (message: string, error?: unknown): void => {
     if (error) console.error(error);
     return this.create({ type: 'error', message });
   };
@@ -54,6 +54,10 @@ class Observer {
 
   warning = (message: string): void => {
     return this.create({ type: 'warning', message });
+  };
+
+  info = (message: string): void => {
+    return this.create({ type: 'info', message });
   };
 }
 
@@ -75,5 +79,6 @@ const basicToast = toastFunction;
 export const toast = Object.assign(basicToast, {
   success: ToastState.success,
   warning: ToastState.warning,
+  info: ToastState.info,
   error: ToastState.error,
 });

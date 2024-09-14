@@ -7,7 +7,7 @@ const Toaster: React.FC = () => {
   useEffect(() => {
     const unsubscribe = ToastState.subscribe((toast: Toast) => {
       setToasts((prevToasts) => {
-        if (prevToasts.length > 2) {
+        if (prevToasts.length > 5) {
           prevToasts.pop();
         }
         return [toast, ...prevToasts];
@@ -27,7 +27,7 @@ const Toaster: React.FC = () => {
   };
 
   return (
-    <div className="absolute bottom-0 right-0 m-5">
+    <div className="absolute bottom-24 right-8">
       {
         toasts.map((toast, index) => {
           let toastStyle = null;
@@ -48,7 +48,7 @@ const Toaster: React.FC = () => {
           }
 
           return (
-            <div className={`${toastStyle} font-bold font-roboto px-4 py-2 ${index !== 0 ? "mt-4" : ""}`} key={toast.id}>
+            <div className={`${toastStyle} font-bold font-roboto px-4 py-2 ${index !== 0 ? "mt-3" : ""}`} key={toast.id}>
               <span>{toast.message}</span>
             </div>)
         })

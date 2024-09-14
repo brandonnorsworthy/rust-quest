@@ -5,5 +5,9 @@ export interface Quest {
   objectives: string[],
   image_url: string,
   category: string,
-  info_url?: string
+  info_url?: string,
+}
+
+export interface AllQuestsResponse extends Quest {
+  completed: boolean;
 }

@@ -7,11 +7,16 @@ import logoImg from '../assets/placeholder-logo.png'
 import questService from "@/service/questService";
 import { Quest } from "@/models/QuestModels/questResponse";
 import { useEffect, useState } from "react";
-import QuestModal from "@/components/QuestModal";
+import ViewQuest from "@/modals/ViewQuest";
 import userService from "@/service/userService";
 import { toast } from "@/components/Toaster";
 import SuggestionsPanel from "@/components/SuggestionsPanel";
 import { useAuth } from "@/context/useAuth";
+import Modal from "@/components/Modal";
+import News from "@/modals/News";
+import Settings from "@/modals/Settings";
+
+type ModalTypes = "quest" | "suggestions" | "news" | "settings" | null;
 
 const LandingPage = () => {
   const { accessToken, clearToken, user } = useAuth();
@@ -19,19 +24,20 @@ const LandingPage = () => {
 
   const storedQuests = localStorage.getItem('currentQuest') ? JSON.parse(localStorage.getItem('currentQuest') as string) : null;
   const [currentQuest, setCurrentQuest] = useState<Quest | null>(storedQuests);
-  const [isQuestModalOpen, setIsQuestModalOpen] = useState(false);
-  const [isSuggestionsOpen, setIsSuggestionsOpen] = useState(false);
+  const [currentOpenModal, setCurrentOpenModal] = useState<ModalTypes>(null);
+
+  const disableButtons = currentOpenModal ? true : false;
 
   useEffect(() => {
-    if (!currentQuest) {
-      setIsQuestModalOpen(false);
+    if (!currentQuest && currentOpenModal === "quest") {
+      setCurrentOpenModal(null);
     };
-  }, [currentQuest]);
+  }, [currentQuest, currentOpenModal]);
 
   const handleOpenCurrentQuest = () => {
     if (!accessToken) return navigate("/login");
 
-    setIsQuestModalOpen(true);
+    setCurrentOpenModal("quest");
   };
 
   const handleSpinWheel = async () => {
@@ -46,7 +52,7 @@ const LandingPage = () => {
       }
 
       setCurrentQuest(randomQuestResponse);
-      setIsQuestModalOpen(true);
+      setCurrentOpenModal("quest");
       localStorage.setItem('currentQuest', JSON.stringify(randomQuestResponse));
     } catch (error) {
       toast.error("Failed to get random quest", error);
@@ -72,6 +78,45 @@ const LandingPage = () => {
     }
   };
 
+  const closeModal = () => {
+    setCurrentOpenModal(null);
+  }
+
+  const getCurrentModal = () => {
+    switch (currentOpenModal) {
+      case "suggestions":
+        return (
+          <SuggestionsPanel onClose={closeModal} />
+        );
+      case "news":
+        return (
+          <Modal onClose={closeModal}>
+            <News onClose={closeModal} />
+          </Modal>
+        )
+      case "settings":
+        return (
+          <Modal onClose={closeModal}>
+            <Settings onClose={closeModal} />
+          </Modal>
+        )
+      case "quest":
+        if (!currentQuest) return null;
+        return (
+          <Modal onClose={closeModal}>
+            <ViewQuest
+              onClose={closeModal}
+              onSkip={handleQuestSkip}
+              onComplete={handleQuestComplete}
+              quest={currentQuest}
+            />
+          </Modal>
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
     <main className="flex justify-center w-full h-screen overflow-hidden">
       <div className="flex flex-col xl:max-w-[86rem] items-start mt-1 w-full ml-2 text-5xl sm:mt-10 sm:ml-10 text-white/50">
@@ -80,53 +125,71 @@ const LandingPage = () => {
         <div className="flex flex-col items-start mt-20">
           {
             currentQuest ?
-              <MenuButton text="current quest" onClick={handleOpenCurrentQuest} /> :
-              <MenuButton text="SPIN WHEEL" onClick={handleSpinWheel} />
+              <MenuButton
+                text="current quest"
+                disabled={disableButtons}
+                onClick={handleOpenCurrentQuest}
+              /> :
+              <MenuButton
+                text="SPIN WHEEL"
+                disabled={disableButtons}
+                onClick={handleSpinWheel}
+              />
           }
           <MenuSpacer />
 
-          <MenuButton text="NEWS" onClick={undefined} />
-          <MenuButton text="completed quests" onClick={undefined} />
-          <MenuButton text="SUGGESTIONS" onClick={() => setIsSuggestionsOpen(true)} />
+          <MenuButton
+            text="NEWS"
+            disabled={disableButtons}
+            onClick={() => setCurrentOpenModal("news")}
+          />
+          <MenuButton
+            text="all quests"
+            disabled={disableButtons}
+            onClick={() => navigate("/all-quests")}
+          />
+          <MenuButton
+            text="SUGGESTIONS"
+            disabled={disableButtons}
+            onClick={() => setCurrentOpenModal("suggestions")}
+          />
           <MenuSpacer />
 
-          <MenuButton text="SETTINGS" onClick={undefined} />
+          <MenuButton
+            text="SETTINGS"
+            disabled={disableButtons}
+            onClick={() => setCurrentOpenModal("settings")}
+          />
           {
             user && user.role === "admin" &&
-            <MenuButton text="ADMIN" onClick={() => navigate("/admin")} />
+            <MenuButton
+              text="ADMIN"
+              disabled={disableButtons}
+              onClick={() => navigate("/admin")}
+            />
           }
           <MenuSpacer />
 
           {
             !accessToken ?
-              <MenuButton text="LOGIN" onClick={() => navigate("/login")} /> :
-              <MenuButton text="LOGOUT" onClick={clearToken} />
+              <MenuButton
+                text="LOGIN"
+                disabled={disableButtons}
+                onClick={() => navigate("/login")}
+              /> :
+              <MenuButton
+                text="LOGOUT"
+                disabled={disableButtons}
+                onClick={clearToken}
+              />
           }
         </div>
       </div>
 
       {
-        (isQuestModalOpen && currentQuest) &&
-        <QuestModal
-          onClose={() => setIsQuestModalOpen(false)}
-          onSkip={handleQuestSkip}
-          onComplete={handleQuestComplete}
-          isOpen={isQuestModalOpen}
-          imageUrl={currentQuest.image_url}
-          title={currentQuest.title}
-          category={currentQuest.category}
-          description={currentQuest.description}
-          objectives={currentQuest.objectives}
-          infoUrl={currentQuest.info_url}
-        />
+        getCurrentModal()
       }
 
-      {
-        isSuggestionsOpen &&
-        <SuggestionsPanel
-          onClose={() => setIsSuggestionsOpen(false)}
-        />
-      }
     </main>
   );
 }

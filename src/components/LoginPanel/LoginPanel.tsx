@@ -29,6 +29,7 @@ const LoginPanel: React.FC<LoginPanelProps> = (props) => {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [isRegistering, setIsRegistering] = useState(false);
 
@@ -47,6 +48,11 @@ const LoginPanel: React.FC<LoginPanelProps> = (props) => {
       }
 
       if (isRegistering) {
+        if (password !== confirmPassword) {
+          setError("Passwords do not match");
+          return;
+        }
+
         const authResponse = await AuthService.register(username, password);
         saveToken(authResponse.token);
         onRegistrationSuccess();
@@ -78,7 +84,7 @@ const LoginPanel: React.FC<LoginPanelProps> = (props) => {
             Please enter your credentials to continue
           </DialogDescription>
         </DialogHeader>
-        <form className="flex flex-col" onSubmit={handleSubmit} data-testid="login-form">
+        <form className="flex flex-col" onSubmit={handleSubmit}>
           <div className="p-2">
             <label htmlFor="username" className="sr-only">
               Username
@@ -90,7 +96,6 @@ const LoginPanel: React.FC<LoginPanelProps> = (props) => {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               aria-label="Username"
-              data-testid="username-input"
             />
           </div>
           <div className="p-2">
@@ -104,13 +109,29 @@ const LoginPanel: React.FC<LoginPanelProps> = (props) => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               aria-label="Password"
-              data-testid="password-input"
             />
           </div>
+          {
+            isRegistering && (
+              <div className="p-2">
+                <label htmlFor="confirmPassword" className="sr-only">
+                  Confirm Password
+                </label>
+                <Input
+                  id="confirmPassword"
+                  type="password"
+                  placeholder="confirm password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  aria-label="confirmPassword"
+                />
+              </div>
+            )
+          }
           <div className="flex justify-end">
             <div className="flex flex-col items-end">
               {error && (
-                <p className="text-right text-red-500" data-testid="error-message">
+                <p className="text-right text-red-500">
                   {error}
                 </p>
               )}
@@ -118,7 +139,6 @@ const LoginPanel: React.FC<LoginPanelProps> = (props) => {
                 type="submit"
                 className="p-2 mt-2 text-white transition-colors rounded-md bg-slate-500 hover:bg-slate-400"
                 aria-label={isRegistering ? "Register" : "Login"}
-                data-testid="submit-button"
               >
                 {isRegistering ? "Register" : "Login"}
               </button>
@@ -130,7 +150,6 @@ const LoginPanel: React.FC<LoginPanelProps> = (props) => {
             className="border-none text-muted-foreground bg-none test-sm"
             onClick={() => setIsRegistering(!isRegistering)}
             aria-label={isRegistering ? "Switch to Login" : "Switch to Register"}
-            data-testid="toggle-register-button"
           >
             {
               isRegistering ?
