@@ -13,7 +13,7 @@ import { toast } from "@/components/Toaster";
 import SuggestionsPanel from "@/components/SuggestionsPanel";
 import { useAuth } from "@/context/useAuth";
 import Modal from "@/components/Modal";
-import News from "@/modals/News/News";
+import News from "@/modals/News";
 import Settings from "@/modals/Settings";
 
 type ModalTypes = "quest" | "suggestions" | "news" | "settings" | null;

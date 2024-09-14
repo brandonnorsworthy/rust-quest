@@ -1,3 +1,3 @@
-import ViewQuest from "./ViewQuest";
+import News from "./News";
 
-export default ViewQuest;
+export default News;
