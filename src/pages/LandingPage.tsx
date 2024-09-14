@@ -105,12 +105,7 @@ const LandingPage = () => {
               onClose={closeModal}
               onSkip={handleQuestSkip}
               onComplete={handleQuestComplete}
-              imageUrl={currentQuest.image_url}
-              title={currentQuest.title}
-              category={currentQuest.category}
-              description={currentQuest.description}
-              objectives={currentQuest.objectives}
-              infoUrl={currentQuest.info_url}
+              quest={currentQuest}
             />
           </Modal>
         );
@@ -133,7 +128,7 @@ const LandingPage = () => {
           <MenuSpacer />
 
           <MenuButton text="NEWS" onClick={() => setCurrentOpenModal("news")} />
-          <MenuButton text="completed quests" onClick={() => navigate("/completed-quests")} />
+          <MenuButton text="all quests" onClick={() => navigate("/all-quests")} />
           <MenuButton text="SUGGESTIONS" onClick={() => setCurrentOpenModal("suggestions")} />
           <MenuSpacer />
 

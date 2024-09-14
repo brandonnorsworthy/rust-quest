@@ -1,5 +1,5 @@
 import sendRequest from "@/lib/sendRequest";
-import { Quest } from "../models/QuestModels/questResponse"
+import { AllQuestsResponse, Quest } from "../models/QuestModels/questResponse"
 
 const basePath = '/quests';
 
@@ -9,4 +9,17 @@ export default {
     endpoint: `${basePath}/random-quest?filters=pvp,raiding`,
     accessToken
   }) as Promise<Quest>,
+
+  /**
+   * gets all quests (paginated)
+   * @param accessToken - user's access token
+   * @param page - page number
+   * @returns
+   */
+  getQuests: async (accessToken: string, page: number) => await sendRequest({
+    method: 'GET',
+    endpoint: `${basePath}/`,
+    accessToken,
+    queryVariables: [{ key: "page", value: page.toString() }]
+  }) as Promise<AllQuestsResponse[]>,
 }

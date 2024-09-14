@@ -1,5 +1,6 @@
 import sendRequest from "@/lib/sendRequest";
 import CreateSuggestionRequest from "@/models/SuggestionModels/CreateSuggestionRequest";
+import { Suggestion } from "@/models/SuggestionModels/suggestionResponse";
 
 const baseUrl = "/suggestions";
 
@@ -27,5 +28,5 @@ export default {
     endpoint: baseUrl,
     accessToken,
     queryVariables: [{ key: "page", value: page.toString() }]
-  }),
+  }) as Promise<Suggestion[]>,
 }

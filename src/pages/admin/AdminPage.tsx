@@ -5,6 +5,7 @@ import MenuSpacer from "@/components/MenuSpacer"
 
 import logoImg from '@/assets/placeholder-logo.png'
 import withAuth from "@/hocs/withAuth";
+import { toast } from "@/components/Toaster";
 
 const AdminPage = () => {
   const navigate = useNavigate();
@@ -14,9 +15,14 @@ const AdminPage = () => {
         <img src={logoImg} alt="logo" className="h-36 md:h-32" />
 
         <div className="flex flex-col items-start mt-20">
-          <MenuButton text="view suggestions" onClick={() => navigate("/admin/suggestions")} />
-          <MenuButton text="view quests" onClick={() => navigate("/admin/quests")} />
-          <MenuButton text="view users" onClick={() => navigate("/admin/users")} />
+          <MenuButton text="edit suggestions" onClick={() => navigate("/admin/suggestions")} />
+          <MenuSpacer />
+
+          <MenuButton text="create quest" onClick={() => toast.error("modal not implemented")} />
+          <MenuButton text="edit quests" onClick={() => navigate("/admin/quests")} />
+          <MenuSpacer />
+
+          <MenuButton text="edit users" onClick={() => navigate("/admin/users")} />
           <MenuSpacer />
 
           <MenuButton text="back" onClick={() => navigate("/")} />
