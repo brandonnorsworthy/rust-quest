@@ -38,7 +38,7 @@ const SuggestionsPage = () => {
   }, [page, fetchSuggestions]);
 
   return (
-    <main className="h-screen overflow-scroll">
+    <main className="h-screen overflow-hidden">
       <div className="p-8">
         <div className="absolute bottom-8 right-8">
           <Button type="confirm" text="done" onClick={() => navigate("/admin")} />

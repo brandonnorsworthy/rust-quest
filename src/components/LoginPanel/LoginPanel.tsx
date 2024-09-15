@@ -1,18 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { AxiosError } from "axios";
 
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog"
-import { Input } from "../ui/input";
-
 import AuthService from "@/service/authService";
 import { useAuth } from "@/context/useAuth";
+import Button from "../Button";
+import { toast } from "../Toaster";
+import authService from "@/service/authService";
 
 interface LoginPanelProps {
   onLoginSuccess: () => void;
@@ -66,6 +59,10 @@ const LoginPanel: React.FC<LoginPanelProps> = (props) => {
     catch (error: unknown) {
       console.error(error);
       if (error instanceof AxiosError) {
+        if (error.response?.status === 429) {
+          setError("Too many requests. Please try again later.");
+          return;
+        }
         setError(error.response?.data.error || "An error occurred");
         return;
       }
@@ -73,94 +70,113 @@ const LoginPanel: React.FC<LoginPanelProps> = (props) => {
     }
   }
 
+  const loginAsGuest = async () => {
+    try {
+      const loginGuestResponse = await authService.guestLogin();
+      saveToken(loginGuestResponse.token);
+      onRegistrationSuccess();
+    } catch (error: unknown) {
+      toast.error("Failed to log in as guest", error);
+    }
+  };
+
   return (
-    <Dialog open={true} modal>
-      <DialogContent
-        className="bg-slate-100"
-      >
-        <DialogHeader>
-          <DialogTitle className='text-muted-foreground'>{isRegistering ? "Register" : "Login"}</DialogTitle>
-          <DialogDescription>
-            Please enter your credentials to continue
-          </DialogDescription>
-        </DialogHeader>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+      <div className="w-full max-w-md p-2 shadow-lg bg-secondary">
+        <div className="p-2 text-text">
+          <h2 className="text-lg font-semibold text-muted-foreground">{isRegistering ? "Register" : "Login"}</h2>
+          <p className="mt-2 text-sm text-text-secondary">Please enter your credentials to continue or&nbsp;
+            <span
+              onClick={loginAsGuest}
+              className="underline cursor-pointer text-buttonText-info"
+              aria-label="Continue as a guest without registration"
+            >
+              continue as Guest
+            </span>
+          </p>
+        </div>
         <form className="flex flex-col" onSubmit={handleSubmit}>
-          <div className="p-2">
-            <label htmlFor="username" className="sr-only">
-              Username
-            </label>
-            <Input
-              id="username"
-              type="text"
-              placeholder="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              aria-label="Username"
-            />
-          </div>
-          <div className="p-2">
-            <label htmlFor="password" className="sr-only">
-              Password
-            </label>
-            <Input
-              id="password"
-              type="password"
-              placeholder="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              aria-label="Password"
-            />
-          </div>
+          <label htmlFor="username" className="sr-only">
+            Username
+          </label>
+          <input
+            id="username"
+            type="text"
+            placeholder="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            className="w-full p-2 mt-4 border-gray-300 font-semi text-text placeholder:text-text/50 bg-white/25"
+            aria-label="Username"
+          />
+
+          <label htmlFor="password" className="sr-only">
+            Password
+          </label>
+          <input
+            id="password"
+            type="password"
+            placeholder="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full p-2 mt-2 border-gray-300 font-semi text-text placeholder:text-text/50 bg-white/25"
+            aria-label="Password"
+          />
+
           {
             isRegistering && (
-              <div className="p-2">
+              <>
                 <label htmlFor="confirmPassword" className="sr-only">
                   Confirm Password
                 </label>
-                <Input
+                <input
                   id="confirmPassword"
                   type="password"
                   placeholder="confirm password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="w-full p-2 mt-2 border-gray-300 font-semi text-text placeholder:text-text/50 bg-white/25"
                   aria-label="confirmPassword"
                 />
-              </div>
+              </>
             )
           }
-          <div className="flex justify-end">
-            <div className="flex flex-col items-end">
-              {error && (
-                <p className="text-right text-red-500">
-                  {error}
-                </p>
-              )}
-              <button
-                type="submit"
-                className="p-2 mt-2 text-white transition-colors rounded-md bg-slate-500 hover:bg-slate-400"
-                aria-label={isRegistering ? "Register" : "Login"}
-              >
-                {isRegistering ? "Register" : "Login"}
-              </button>
-            </div>
+
+          <div className="flex flex-col items-end justify-center w-full p-2 text-text text-end">
+            <span
+              onClick={() => setIsRegistering(!isRegistering)}
+              className="underline cursor-pointer"
+              aria-label={isRegistering ? "Click here to log in" : "Click here to register"}
+            >
+              {isRegistering ? "Already have an account? Click to Log In" : "New here? Click to Register"}
+            </span>
+
+          </div>
+
+          {
+            error ?
+              <div className="w-full mt-2 text-red-500 text-end">
+                {error}
+              </div> :
+              <div className="w-full mt-2 text-red-500 text-end">
+                &nbsp;
+              </div>
+          }
+
+          <div className="flex justify-between mt-2">
+            <Button
+              text="cancel"
+              htmlType="button"
+            />
+            <Button
+              text={isRegistering ? "Register" : "Login"}
+              htmlType="submit"
+              type="confirm"
+            />
           </div>
         </form>
-        <DialogFooter>
-          <button
-            className="border-none text-muted-foreground bg-none test-sm"
-            onClick={() => setIsRegistering(!isRegistering)}
-            aria-label={isRegistering ? "Switch to Login" : "Switch to Register"}
-          >
-            {
-              isRegistering ?
-                "Click here to Login instead" :
-                "Click here to Register instead"
-            }
-          </button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
-  );
+      </div>
+    </div>
+  )
 };
 
 export default LoginPanel;

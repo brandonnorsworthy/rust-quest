@@ -15,8 +15,9 @@ import { useAuth } from "@/context/useAuth";
 import Modal from "@/components/Modal";
 import News from "@/modals/News";
 import Settings from "@/modals/Settings";
+import RegisterAccount from "@/modals/RegisterAccount";
+import { ModalTypes } from "@/models/modals";
 
-type ModalTypes = "quest" | "suggestions" | "news" | "settings" | null;
 
 const LandingPage = () => {
   const { accessToken, clearToken, user } = useAuth();
@@ -68,11 +69,11 @@ const LandingPage = () => {
     if (!accessToken) return navigate("/login");
 
     try {
-      await userService.completeQuest(accessToken, currentQuest!.id);
+      const completeQuestResponse = await userService.completeQuest(accessToken, currentQuest!.id);
 
       setCurrentQuest(null);
       localStorage.removeItem('currentQuest');
-      toast.success("Quest completed");
+      toast.success(completeQuestResponse);
     } catch (error) {
       toast.error("Failed to complete quest", error);
     }
@@ -112,6 +113,14 @@ const LandingPage = () => {
             />
           </Modal>
         );
+      case "register":
+        return (
+          <Modal onClose={closeModal}>
+            <RegisterAccount
+              onClose={closeModal}
+            />
+          </Modal>
+        );
       default:
         return null;
     }
@@ -146,12 +155,20 @@ const LandingPage = () => {
           <MenuButton
             text="all quests"
             disabled={disableButtons}
-            onClick={() => navigate("/all-quests")}
+            onClick={() => {
+              if (!accessToken || !user) return navigate("/login");
+              if (user.role === "guest") return setCurrentOpenModal("register");
+              navigate("/all-quests")
+            }}
           />
           <MenuButton
             text="SUGGESTIONS"
             disabled={disableButtons}
-            onClick={() => setCurrentOpenModal("suggestions")}
+            onClick={() => {
+              if (!accessToken || !user) return navigate("/login");
+              if (user.role === "guest") return setCurrentOpenModal("register");
+              setCurrentOpenModal("suggestions")
+            }}
           />
           <MenuSpacer />
 

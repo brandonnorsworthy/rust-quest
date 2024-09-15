@@ -43,9 +43,19 @@ module.exports = {
         },
         buttonBackground: {
           DEFAULT: "#2E302E",
-          info: "#154061",
-          cancel: "#873023",
-          confirm: "#657B3C"
+          hover: "hsl(120, 8%, 24%)",
+          info: {
+            DEFAULT: "#154061",
+            hover: "hsl(206, 70%, 29%)"
+          },
+          cancel: {
+            DEFAULT: "#873023",
+            hover: "hsl(8, 66%, 39%)"
+          },
+          confirm: {
+            DEFAULT: "#657B3C",
+            hover: "hsl(81, 40%, 42%)"
+          }
         },
 
         // old

@@ -25,16 +25,12 @@ const News: React.FC<NewsProps> = ({ onClose }) => {
 
   return (
     <>
-      <div className="flex justify-end">
-        <Button text="close" type="confirm" onClick={onClose} />
-      </div>
-
-      <ReactMarkdown className="p-4 mt-2 prose max-w-none text-text bg-secondary-highlight">
+      <ReactMarkdown className="p-4 prose max-w-none text-text bg-secondary-highlight">
         {markdownContent}
       </ReactMarkdown>
 
-      <div className="flex justify-end mt-2">
-        <Button text="close" type="confirm" onClick={onClose} />
+      <div className="flex justify-end w-full mt-2">
+        <Button onClick={onClose} type='confirm' text='okay' />
       </div>
     </>
   );

@@ -7,7 +7,7 @@ interface ModalProps {
 }
 
 const QuestModal: React.FC<ModalProps> = ({ onClose, isOpen = true, children }) => {
-  const modal = useRef<HTMLDivElement>(null);
+  const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
@@ -17,7 +17,7 @@ const QuestModal: React.FC<ModalProps> = ({ onClose, isOpen = true, children }) 
     };
 
     const handleClickOutside = (event: MouseEvent) => {
-      if (modal.current && !modal.current.contains(event.target as Node)) {
+      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
         onClose();
       }
     };
@@ -34,9 +34,9 @@ const QuestModal: React.FC<ModalProps> = ({ onClose, isOpen = true, children }) 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div ref={modal} className="p-2 bg-secondary max-h-[90vh] shadow-lg">
-        <div className="max-w-full m-0 h-full max-h-[85vh] overflow-y-auto sm:m-2 md:m-0  md:max-w-[42rem]  text-text">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+      <div ref={modalRef} className="p-2 bg-secondary max-h-[90dvh] shadow-lg">
+        <div className="max-w-full m-0 h-full max-h-[85dvh] overflow-y-auto sm:m-2 md:m-0  md:max-w-[42rem] text-text scrollbar-modern">
           {children}
         </div>
       </div>

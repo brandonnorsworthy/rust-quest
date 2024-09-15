@@ -7,7 +7,7 @@ export default {
     method: 'POST',
     endpoint: `${basePath}/completed-quests/${questId}`,
     accessToken
-  }),
+  }) as Promise<string>,
 
   incompleteQuest: async (accessToken: string, questId: number) => await sendRequest({
     method: 'DELETE',
