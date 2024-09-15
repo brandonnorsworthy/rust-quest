@@ -99,15 +99,17 @@ const SuggestionsPanel: React.FC<SuggestionsPanelProps> = (props) => {
 
           <div className="flex justify-between mt-2">
             <Button
-              text="cancel"
               htmlType="button"
               onClick={onClose}
-            />
+            >
+              cancel
+            </Button>
             <Button
-              text="submit"
               htmlType="submit"
               type="confirm"
-            />
+            >
+              submit
+            </Button>
           </div>
         </form>
       </div>

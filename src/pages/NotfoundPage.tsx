@@ -10,7 +10,12 @@ const NotfoundPage: React.FC = () => {
       <div className="flex flex-col p-4 rounded-md bg-secondary text-text">
         <h2 className="text-2xl font-bold">Error: 404</h2>
         <span className="py-2">Looks like you got lost</span>
-        <Button type="confirm" text="back to base" onClick={() => navigate("/")} />
+        <Button
+          type="confirm"
+          onClick={() => navigate("/")}
+        >
+          confirm
+        </Button>
       </div>
     </div>
   );

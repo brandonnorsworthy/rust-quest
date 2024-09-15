@@ -6,6 +6,7 @@ import { useAuth } from "@/context/useAuth";
 import Button from "../Button";
 import { toast } from "../Toaster";
 import authService from "@/service/authService";
+import { useNavigate } from "react-router-dom";
 
 interface LoginPanelProps {
   onLoginSuccess: () => void;
@@ -19,7 +20,7 @@ const LoginPanel: React.FC<LoginPanelProps> = (props) => {
   } = props;
 
   const { saveToken } = useAuth();
-
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -164,14 +165,17 @@ const LoginPanel: React.FC<LoginPanelProps> = (props) => {
 
           <div className="flex justify-between mt-2">
             <Button
-              text="cancel"
               htmlType="button"
-            />
+              onClick={() => navigate("/")}
+            >
+              cancel
+            </Button>
             <Button
-              text={isRegistering ? "Register" : "Login"}
               htmlType="submit"
               type="confirm"
-            />
+            >
+              {isRegistering ? "register" : "login"}
+            </Button>
           </div>
         </form>
       </div>

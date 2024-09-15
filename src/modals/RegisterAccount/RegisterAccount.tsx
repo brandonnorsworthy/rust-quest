@@ -55,10 +55,10 @@ const RegisterAccount: React.FC<RegisterAccountProps> = ({ onClose }) => {
   }
 
   return (
-    <div className="min-w-[24rem]">
+    <div className="w-full md:w-[24rem]">
       <div className="p-2 text-text">
-        <h2 className="text-lg font-semibold text-muted-foreground">Register</h2>
-        <p className="text-sm text-text-secondary">Please enter your desired credentials to continue</p>
+        <h2 className="text-lg font-semibold text-muted-foreground">Register Guest User</h2>
+        <p className="text-sm text-text-secondary">In order to use this feature please complete your account registration</p>
       </div>
       <form className="flex flex-col" onSubmit={handleSubmit}>
         <label htmlFor="username" className="sr-only">
@@ -112,15 +112,17 @@ const RegisterAccount: React.FC<RegisterAccountProps> = ({ onClose }) => {
 
         <div className="flex justify-between mt-2 space-x-2">
           <Button
-            text="cancel"
             htmlType="button"
             onClick={onClose}
-          />
+          >
+            Cancel
+          </Button>
           <Button
-            text={"Register"}
             htmlType="submit"
             type="confirm"
-          />
+          >
+            register
+          </Button>
         </div>
       </form>
     </div>

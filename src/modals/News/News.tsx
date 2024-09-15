@@ -30,7 +30,12 @@ const News: React.FC<NewsProps> = ({ onClose }) => {
       </ReactMarkdown>
 
       <div className="flex justify-end w-full mt-2">
-        <Button onClick={onClose} type='confirm' text='okay' />
+        <Button
+          onClick={onClose}
+          type='confirm'
+        >
+          okay
+        </Button>
       </div>
     </>
   );

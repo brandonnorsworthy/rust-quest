@@ -41,7 +41,9 @@ const SuggestionsPage = () => {
     <main className="h-screen overflow-hidden">
       <div className="p-8">
         <div className="absolute bottom-8 right-8">
-          <Button type="confirm" text="done" onClick={() => navigate("/admin")} />
+          <Button type="confirm" onClick={() => navigate("/admin")}>
+            done
+          </Button>
         </div>
 
         <div className="flex justify-center w-full mt-8">

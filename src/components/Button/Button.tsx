@@ -1,14 +1,14 @@
 import React from 'react';
 
 interface MenuButtonProps {
-  text: string;
   type?: 'info' | 'cancel' | 'confirm';
   htmlType?: 'button' | 'submit' | 'reset';
   onClick?: () => void;
   disabled?: boolean;
+  children?: React.ReactNode;
 }
 
-const Button: React.FC<MenuButtonProps> = ({ text, onClick, type, htmlType = "button", disabled }) => {
+const Button: React.FC<MenuButtonProps> = ({ onClick, type, htmlType = "button", disabled, children }) => {
   let typeStyles = "";
   switch (type) {
     case "info":
@@ -25,6 +25,13 @@ const Button: React.FC<MenuButtonProps> = ({ text, onClick, type, htmlType = "bu
       break;
   }
 
+  const renderChildren = () => {
+    if (typeof children === 'string') {
+      return children.toUpperCase();
+    }
+    return children;
+  };
+
   return (
     <button
       className={`text-xl font-bold font-roboto py-3 px-6 min-w-full sm:min-w-36 transition-colors ${typeStyles}`}
@@ -32,7 +39,7 @@ const Button: React.FC<MenuButtonProps> = ({ text, onClick, type, htmlType = "bu
       disabled={disabled}
       type={htmlType}
     >
-      {text.toUpperCase()}
+      {renderChildren()}
     </button>
   );
 };

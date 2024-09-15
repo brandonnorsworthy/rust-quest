@@ -164,8 +164,17 @@ const Settings: React.FC<SettingsProps> = ({ onClose }) => {
 
         {/* Buttons */}
         <div className="flex justify-between mt-6">
-          <Button text="Close" onClick={onClose} />
-          <Button text="Save" htmlType="submit" type="confirm" />
+          <Button
+            onClick={onClose}
+          >
+            close
+          </Button>
+          <Button
+            htmlType="submit"
+            type="confirm"
+          >
+            save
+          </Button>
         </div>
       </form>
     </div>

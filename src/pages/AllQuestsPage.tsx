@@ -75,7 +75,12 @@ const AllQuestsPage: React.FC = () => {
     <main className="h-screen overflow-hidden bg-secondary/50">
       <div className="p-8">
         <div className="absolute bottom-8 right-8">
-          <Button type="confirm" text="done" onClick={() => navigate("/")} />
+          <Button
+            type="confirm"
+            onClick={() => navigate("/")}
+          >
+            done
+          </Button>
         </div>
 
         <div className="flex justify-center w-full mt-8">

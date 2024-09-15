@@ -55,23 +55,23 @@ const Table = <T extends { id: number | string }>({
 
           <div className="flex justify-center w-full gap-2 mt-8">
             <Button
-              // className="px-4 py-2 font-bold bg-white rounded disabled:bg-white/50"
               disabled={page === 1}
-              text="Previous"
               onClick={() => setPage(page - 1)}
-            />
+            >
+              Previous
+            </Button>
             <Button
-              // className="px-4 py-2 font-bold bg-white rounded disabled:bg-white/50"
-              disabled={page === 1}
-              text={`Page: ${page}`}
+              disabled={true}
               onClick={() => setPage(page - 1)}
-            />
+            >
+              {`Page: ${page}`}
+            </Button>
             <Button
-              // className="px-4 py-2 font-bold bg-white rounded disabled:bg-white/50"
               disabled={data.length < maxLength}
-              text="Next"
               onClick={() => setPage(page + 1)}
-            />
+            >
+              Next
+            </Button>
           </div>
         </div>
       )}
