@@ -27,7 +27,7 @@ const Button: React.FC<MenuButtonProps> = ({ text, onClick, type, htmlType = "bu
 
   return (
     <button
-      className={`text-xl font-bold font-roboto py-3 px-6 min-w-full sm:min-w-36 ${typeStyles}`}
+      className={`text-xl font-bold font-roboto py-3 px-6 min-w-full sm:min-w-36 transition-colors ${typeStyles}`}
       onClick={onClick}
       disabled={disabled}
       type={htmlType}
