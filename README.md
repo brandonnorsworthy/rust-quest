@@ -1,10 +1,6 @@
 # Rust Strat Roulette
 
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-
 design: [Figma Design Cards](https://www.figma.com/file/l73SeO5BDi8eN1KM0nBGjJ/rust-strat-roulette?node-id=0%3A1)
-
-deployment: [Github Pages Deployment](https://brandonnorsworthy.github.io/rust-strat-roulette/)
 
 ## Introduction
 
@@ -17,25 +13,11 @@ Picks a random event to do in the Sandbox MMO Game **Rust** developed by **Facep
  - [Todos](#todos)
  - [Questions](#questions)
 
-## Demo
-
-<!-- ![demo gif here]() -->
-
 ## Contribution Guidelines
-
-### Submitting a new mission
-
-+ Create a new issue
-+ Title your issue
-```Mission Suggestion:<your mission name>```
-+ Describe what event should be added
-+ Completion Criteria
-+ Image Banner suggestion (if you have one in mind)
-+ label your issue with the **Mission Suggestion** label
 
 ### Pull Requests
 
-No pull requests will be approved as this is a personal project for my portfolio. sorry
+No pull requests will be approved. sorry
 
 ## Todos
 
@@ -47,12 +29,6 @@ Then wheel in the center would only show around the top of the whell kinda like 
     + green farm
     + red pvp
     + purple roleplayer
-
-2. left side will loke like the rust main menu
-    + spin wheel
-    + missions
-    + settings (filters and options)
-    + credits?
 
 ### Mission Screen TODOS
 
@@ -72,16 +48,8 @@ Then wheel in the center would only show around the top of the whell kinda like 
 ### Option Screen TODOS
 1. options
     + disable sound
-    + disable animation
-    
-2. filters:  
+
+2. filters:
     + category adjustments (disable categories like raid or roleplayer stuff)
     + change weigths (sliders maybe like if raid is too rare can make it heavier in weight to show more)
     + disable events that are time based (cargo, heli, airdrops) stuff that can only happen if event is currently going on
-
-## Questions
-
-  Easiest way for stuff pertaining to this project is open a issue  
-  
-  Reach out to me at [brandonknorsworthy@gmail.com](mailto:brandonknorsworthy@gmail.com)
-  
