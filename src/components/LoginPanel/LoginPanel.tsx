@@ -71,8 +71,8 @@ const LoginPanel: React.FC<LoginPanelProps> = (props) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
-      <div className="w-full max-w-md p-4 rounded-md shadow-lg bg-secondary">
-        <div className="mb-4 text-text">
+      <div className="w-full max-w-md p-2 rounded-md shadow-lg bg-secondary">
+        <div className="p-2 text-text">
           <h2 className="text-lg font-semibold text-muted-foreground">{isRegistering ? "Register" : "Login"}</h2>
           <p className="text-sm text-text-secondary">Please enter your credentials to continue or&nbsp;
             <span
@@ -85,7 +85,7 @@ const LoginPanel: React.FC<LoginPanelProps> = (props) => {
           </p>
         </div>
         <form className="flex flex-col" onSubmit={handleSubmit}>
-          <div className="p-2">
+          <div className="mt-4">
             <label htmlFor="username" className="sr-only">
               Username
             </label>
@@ -95,11 +95,11 @@ const LoginPanel: React.FC<LoginPanelProps> = (props) => {
               placeholder="username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-md"
+              className="w-full p-2 border-gray-300 font-semi text-text placeholder:text-text/50 bg-white/25"
               aria-label="Username"
             />
           </div>
-          <div className="p-2">
+          <div className="mt-4">
             <label htmlFor="password" className="sr-only">
               Password
             </label>
@@ -109,13 +109,13 @@ const LoginPanel: React.FC<LoginPanelProps> = (props) => {
               placeholder="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-md"
+              className="w-full p-2 border-gray-300 font-semi text-text placeholder:text-text/50 bg-white/25"
               aria-label="Password"
             />
           </div>
           {
             isRegistering && (
-              <div className="p-2">
+              <div className="mt-4">
                 <label htmlFor="confirmPassword" className="sr-only">
                   Confirm Password
                 </label>
@@ -125,14 +125,14 @@ const LoginPanel: React.FC<LoginPanelProps> = (props) => {
                   placeholder="confirm password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded-md"
+                  className="w-full p-2 border-gray-300 font-semi text-text placeholder:text-text/50 bg-white/25"
                   aria-label="confirmPassword"
                 />
               </div>
             )
           }
 
-          <div className="flex flex-col items-end justify-center w-full py-2 text-text text-end">
+          <div className="flex flex-col items-end justify-center w-full p-2 text-text text-end">
             <span
               onClick={() => setIsRegistering(!isRegistering)}
               className="underline cursor-pointer"
@@ -156,8 +156,8 @@ const LoginPanel: React.FC<LoginPanelProps> = (props) => {
             />
           </div>
         </form>
-      </div >
-    </div >
+      </div>
+    </div>
   )
 };
 
