@@ -9,20 +9,25 @@ import { AllQuestsResponse } from "@/models/QuestModels/questResponse";
 import Modal from "@/components/Modal";
 import ViewQuest from "@/modals/ViewQuest";
 import userService from "@/service/userService";
+import { AxiosError } from "axios";
 
 const AllQuestsPage: React.FC = () => {
   const { accessToken } = useAuth();
   const navigate = useNavigate();
-  const [suggestions, setSuggestions] = useState<AllQuestsResponse[]>([]);
+  const [quest, setSuggestions] = useState<AllQuestsResponse[]>([]);
   const [page, setPage] = useState(1);
   const maxLength = 20;
   const [selectedQuest, setSelectedQuest] = useState<AllQuestsResponse | null>(null);
 
   const fetchQuests: () => Promise<void> = useCallback(async () => {
     try {
-      const suggestionsResponse = await questService.getQuests(accessToken!, page);
+      if (!accessToken) return;
+      const suggestionsResponse = await questService.getQuests(accessToken, page);
       setSuggestions(suggestionsResponse);
-    } catch (error) {
+    } catch (error: unknown) {
+      if (error instanceof AxiosError && error.response?.data) {
+        return toast.error(error.response.data, error);
+      }
       toast.error("Failed to get quests", error);
     }
   }, [accessToken, page]);
@@ -40,7 +45,7 @@ const AllQuestsPage: React.FC = () => {
   }, [page, fetchQuests]);
 
   const handleRowClick = (index: number) => {
-    setSelectedQuest(suggestions[index]);
+    setSelectedQuest(quest[index]);
   }
 
   const closeModal = () => {
@@ -50,11 +55,15 @@ const AllQuestsPage: React.FC = () => {
   const handleQuestComplete = async () => {
     if (!selectedQuest) return;
     try {
-      await userService.completeQuest(accessToken!, selectedQuest.id);
+      if (!accessToken) return;
+      await userService.completeQuest(accessToken, selectedQuest.id);
       fetchQuests();
       toast.success("Quest completed successfully");
       closeModal();
-    } catch (error) {
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        return toast.error(error.response?.data.message, error);
+      }
       toast.error("Failed to complete quest", error);
     }
   }
@@ -62,39 +71,55 @@ const AllQuestsPage: React.FC = () => {
   const handleQuestIncomplete = async () => {
     if (!selectedQuest) return;
     try {
-      await userService.incompleteQuest(accessToken!, selectedQuest.id);
+      if (!accessToken) return;
+      await userService.incompleteQuest(accessToken, selectedQuest.id);
       fetchQuests();
       toast.success("Quest marked incomplete successfully");
       closeModal();
-    } catch (error) {
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        return toast.error(error.response?.data.message, error);
+      }
       toast.error("Failed to mark quest incomplete", error);
     }
   }
 
   return (
-    <main className="h-screen overflow-hidden bg-secondary/50">
-      <div className="p-8">
-        <div className="absolute bottom-8 right-8">
-          <Button type="confirm" text="done" onClick={() => navigate("/")} />
+    <main className="h-dvh w-dvw">
+      <div className="absolute h-dvh w-dvw overflow-hidden z-[-1] bg-secondary/50">
+      </div>
+
+      <div className="w-full h-full p-8">
+        <div className="absolute top-8 left-8">
+          <Button
+            type="confirm"
+            onClick={() => navigate("/")}
+          >
+            done
+          </Button>
         </div>
 
-        <div className="flex justify-center w-full mt-8">
-          <h1 className="text-4xl font-bold text-white">All Quests</h1>
-        </div>
+        <div className="w-full h-full">
+          <div className="flex items-center justify-center w-full h-1/6">
+            <h1 className="text-4xl font-bold text-white">All Quests</h1>
+          </div>
 
-        <Table
-          data={suggestions}
-          columns={[
-            { header: "Title", accessor: "title" },
-            { header: "Category", accessor: "category" },
-            { header: "Description", accessor: "description" },
-            { header: "completed", accessor: "completed" }
-          ]}
-          page={page}
-          maxLength={maxLength}
-          setPage={setPage}
-          rowClick={handleRowClick}
-        />
+          <div className="w-full h-5/6">
+            <Table
+              data={quest}
+              columns={[
+                { header: "Title", accessor: "title" },
+                { header: "Category", accessor: "category" },
+                { header: "Description", accessor: "description" },
+                { header: "completed", accessor: "completed" }
+              ]}
+              page={page}
+              maxLength={maxLength}
+              setPage={setPage}
+              rowClick={handleRowClick}
+            />
+          </div>
+        </div>
       </div>
 
       {

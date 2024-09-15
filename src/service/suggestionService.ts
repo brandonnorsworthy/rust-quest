@@ -1,5 +1,6 @@
 import sendRequest from "@/lib/sendRequest";
 import CreateSuggestionRequest from "@/models/SuggestionModels/CreateSuggestionRequest";
+import { convertSuggestionIntoQuestBodyRequest } from "@/models/SuggestionModels/suggestionRequests";
 import { Suggestion } from "@/models/SuggestionModels/suggestionResponse";
 
 const baseUrl = "/suggestions";
@@ -29,4 +30,16 @@ export default {
     accessToken,
     queryVariables: [{ key: "page", value: page.toString() }]
   }) as Promise<Suggestion[]>,
+
+  /**
+   * converts a suggestion into a quest
+   * @param suggestionId {number}
+   * @returns a promise that resolves to the response from the server
+   */
+  convertSuggestionIntoQuest: async (accessToken: string, suggestionId: number, convertSuggestionIntoQuestBody: convertSuggestionIntoQuestBodyRequest) => await sendRequest({
+    method: "POST",
+    endpoint: `${baseUrl}/${suggestionId}/quest`,
+    accessToken,
+    body: convertSuggestionIntoQuestBody
+  }),
 }

@@ -1,5 +1,5 @@
 export interface Suggestion {
-  id: string;
+  id: number;
   username: string;
   title: string;
   description: string;

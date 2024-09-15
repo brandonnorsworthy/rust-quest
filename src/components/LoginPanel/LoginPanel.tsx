@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { AxiosError } from "axios";
 
-import AuthService from "@/service/authService";
 import { useAuth } from "@/context/useAuth";
 import Button from "../Button";
 import { toast } from "../Toaster";
 import authService from "@/service/authService";
+import { useNavigate } from "react-router-dom";
 
 interface LoginPanelProps {
   onLoginSuccess: () => void;
@@ -19,45 +19,48 @@ const LoginPanel: React.FC<LoginPanelProps> = (props) => {
   } = props;
 
   const { saveToken } = useAuth();
-
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const navigate = useNavigate();
   const [error, setError] = useState("");
   const [isRegistering, setIsRegistering] = useState(false);
+  const [disableButtons, setDisableButtons] = useState(false);
 
   useEffect(() => {
     setTimeout(() => {
       setError("");
-    }, 5000);
+    }, 10000);
   }, [error]);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const form = event.target as HTMLFormElement;
+
     try {
-      if (!username || !password) {
-        setError("Please enter a username and password");
-        return;
-      }
+      let username = (form.elements.namedItem("username") as HTMLInputElement).value;
+      let password = (form.elements.namedItem("password") as HTMLInputElement).value;
+      let confirmPassword = (form.elements.namedItem("confirmPassword") as HTMLInputElement)?.value;
+
+      if (disableButtons) return;
+      if (!username || !password) return setError("Please enter a username and password");
+
+      username = username.trim();
+      password = password.trim();
 
       if (isRegistering) {
-        if (password !== confirmPassword) {
-          setError("Passwords do not match");
-          return;
-        }
+        if (!confirmPassword) return setError("Please confirm your password");
+        confirmPassword = confirmPassword.trim();
 
-        const authResponse = await AuthService.register(username, password);
+        if (password !== confirmPassword) return setError("Passwords do not match");
+
+        const authResponse = await authService.register(username, password);
         saveToken(authResponse.token);
         onRegistrationSuccess();
         return;
       }
 
-      const authResponse = await AuthService.login(username, password);
+      const authResponse = await authService.login(username, password);
       saveToken(authResponse.token);
       onLoginSuccess();
-    }
-    catch (error: unknown) {
-      console.error(error);
+    } catch (error: unknown) {
       if (error instanceof AxiosError) {
         if (error.response?.status === 429) {
           setError("Too many requests. Please try again later.");
@@ -66,14 +69,17 @@ const LoginPanel: React.FC<LoginPanelProps> = (props) => {
         setError(error.response?.data.error || "An error occurred");
         return;
       }
-      setError("An unkown error occurred");
+      setError("An unknown error occurred");
     }
   }
 
   const loginAsGuest = async () => {
     try {
-      const loginGuestResponse = await authService.guestLogin();
+      setDisableButtons(true);
+
+      const loginGuestResponse = await authService.loginGuest();
       saveToken(loginGuestResponse.token);
+
       onRegistrationSuccess();
     } catch (error: unknown) {
       toast.error("Failed to log in as guest", error);
@@ -88,7 +94,7 @@ const LoginPanel: React.FC<LoginPanelProps> = (props) => {
           <p className="mt-2 text-sm text-text-secondary">Please enter your credentials to continue or&nbsp;
             <span
               onClick={loginAsGuest}
-              className="underline cursor-pointer text-buttonText-info"
+              className="font-bold underline cursor-pointer text-buttonText-info"
               aria-label="Continue as a guest without registration"
             >
               continue as Guest
@@ -103,8 +109,6 @@ const LoginPanel: React.FC<LoginPanelProps> = (props) => {
             id="username"
             type="text"
             placeholder="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
             className="w-full p-2 mt-4 border-gray-300 font-semi text-text placeholder:text-text/50 bg-white/25"
             aria-label="Username"
           />
@@ -116,8 +120,6 @@ const LoginPanel: React.FC<LoginPanelProps> = (props) => {
             id="password"
             type="password"
             placeholder="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
             className="w-full p-2 mt-2 border-gray-300 font-semi text-text placeholder:text-text/50 bg-white/25"
             aria-label="Password"
           />
@@ -132,8 +134,6 @@ const LoginPanel: React.FC<LoginPanelProps> = (props) => {
                   id="confirmPassword"
                   type="password"
                   placeholder="confirm password"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
                   className="w-full p-2 mt-2 border-gray-300 font-semi text-text placeholder:text-text/50 bg-white/25"
                   aria-label="confirmPassword"
                 />
@@ -164,14 +164,17 @@ const LoginPanel: React.FC<LoginPanelProps> = (props) => {
 
           <div className="flex justify-between mt-2">
             <Button
-              text="cancel"
               htmlType="button"
-            />
+              onClick={() => navigate("/")}
+            >
+              cancel
+            </Button>
             <Button
-              text={isRegistering ? "Register" : "Login"}
               htmlType="submit"
               type="confirm"
-            />
+            >
+              {isRegistering ? "register" : "login"}
+            </Button>
           </div>
         </form>
       </div>

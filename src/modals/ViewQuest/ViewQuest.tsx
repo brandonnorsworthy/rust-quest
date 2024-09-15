@@ -18,7 +18,7 @@ const ViewQuest: React.FC<ModalProps> = (props) => {
     onIncomplete,
     quest
   } = props;
-  const { title, description, objectives, image_url, category, info_url } = quest;
+  const { title, description, objectives, image_url, category, info_url, suggested_by } = quest;
 
   return (
     <>
@@ -38,6 +38,7 @@ const ViewQuest: React.FC<ModalProps> = (props) => {
 
       <div className="w-full p-4 mt-2 overflow-x-hidden overflow-y-auto text-lg font-bold max-h-48 text-text-secondary-highlight bg-secondary-highlight scrollbar-modern">
         <p style={{ lineHeight: '1.1' }} className="text-pretty">{description}</p>
+
         {
           (objectives && objectives.length > 0) &&
           <div className="flex flex-col justify-start w-full mt-4">
@@ -55,29 +56,56 @@ const ViewQuest: React.FC<ModalProps> = (props) => {
             }
           </div>
         }
+
+        {
+          suggested_by &&
+          <div className="flex flex-col justify-start w-full mt-4">
+            <hr className='my-2 border-t-2'></hr>
+            <p className="mt-2">Suggested by: <span className='text-buttonBackground-confirm'>{suggested_by}</span></p>
+          </div>
+        }
       </div>
 
       <div className="flex justify-end mt-2">
         <div className="flex flex-col items-start w-full sm:items-center sm:flex-row sm:justify-between">
           <div className="flex justify-start w-full sm:w-fit">
-            <Button text="close" onClick={onClose} />
+            <Button
+              onClick={onClose}>
+              close
+            </Button>
             {
               info_url &&
-              <Button text="learn more" type="info" onClick={() => window.open(info_url, '_blank', 'noopener,noreferrer')} />
+              <Button
+                type="info"
+                onClick={() => window.open(info_url, '_blank', 'noopener,noreferrer')}>
+                learn more
+              </Button>
             }
           </div>
           <div className="flex flex-col w-full gap-2 mt-2 sm:w-fit sm:mt-0 sm:flex-row sm:justify-end">
             {
               onSkip &&
-              <Button text="Skip" type="cancel" onClick={onSkip} />
+              <Button
+                type="cancel"
+                onClick={onSkip}>
+                skip
+              </Button>
             }
             {
               onComplete &&
-              <Button text="complete" type="confirm" onClick={onComplete} />
+              <Button
+                type="confirm"
+                onClick={onComplete}>
+                complete
+              </Button>
             }
             {
               onIncomplete &&
-              <Button text="mark incomplete" type="cancel" onClick={onIncomplete} />
+              <Button
+                type="cancel"
+                onClick={onIncomplete}>
+                mark incomplete
+              </Button>
             }
           </div>
         </div>

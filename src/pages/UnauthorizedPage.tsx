@@ -10,7 +10,11 @@ const NotfoundPage: React.FC = () => {
       <div className="flex flex-col p-4 rounded-md bg-secondary text-text">
         <h2 className="text-2xl font-bold">Error: 429</h2>
         <span className="py-2">Hey, stay out of places your shouldn't be</span>
-        <Button type="confirm" text="I concede" onClick={() => navigate("/")} />
+        <Button
+          type="confirm"
+          onClick={() => navigate("/")}>
+          i concede
+        </Button>
       </div>
     </div>
   );
