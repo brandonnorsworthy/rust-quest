@@ -49,7 +49,7 @@ const Table = <T extends { id: number | string }>({
                     key={row.id + rowIndex.toString()}
                     onClick={() => rowClick && rowClick(rowIndex)}
                     aria-disabled={!rowClick}
-                    className={`bg-secondary/50 even:bg-secondary/25 hover:bg-buttonBackground-confirm ${rowClick ? "hover:cursor-pointer" : "*:"}`}
+                    className={`bg-secondary/50 even:bg-secondary/25 hover:bg-buttonBackground-confirm ${rowClick ? "hover:cursor-pointer select-none" : ""}`}
                   >
                     {columns.map((column, colIndex) => (
                       <td key={colIndex} className="p-2">

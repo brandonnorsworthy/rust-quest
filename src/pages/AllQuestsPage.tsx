@@ -14,7 +14,7 @@ import { AxiosError } from "axios";
 const AllQuestsPage: React.FC = () => {
   const { accessToken } = useAuth();
   const navigate = useNavigate();
-  const [suggestions, setSuggestions] = useState<AllQuestsResponse[]>([]);
+  const [quest, setSuggestions] = useState<AllQuestsResponse[]>([]);
   const [page, setPage] = useState(1);
   const maxLength = 20;
   const [selectedQuest, setSelectedQuest] = useState<AllQuestsResponse | null>(null);
@@ -45,7 +45,7 @@ const AllQuestsPage: React.FC = () => {
   }, [page, fetchQuests]);
 
   const handleRowClick = (index: number) => {
-    setSelectedQuest(suggestions[index]);
+    setSelectedQuest(quest[index]);
   }
 
   const closeModal = () => {
@@ -55,7 +55,8 @@ const AllQuestsPage: React.FC = () => {
   const handleQuestComplete = async () => {
     if (!selectedQuest) return;
     try {
-      await userService.completeQuest(accessToken!, selectedQuest.id);
+      if (!accessToken) return;
+      await userService.completeQuest(accessToken, selectedQuest.id);
       fetchQuests();
       toast.success("Quest completed successfully");
       closeModal();
@@ -70,7 +71,8 @@ const AllQuestsPage: React.FC = () => {
   const handleQuestIncomplete = async () => {
     if (!selectedQuest) return;
     try {
-      await userService.incompleteQuest(accessToken!, selectedQuest.id);
+      if (!accessToken) return;
+      await userService.incompleteQuest(accessToken, selectedQuest.id);
       fetchQuests();
       toast.success("Quest marked incomplete successfully");
       closeModal();
@@ -104,7 +106,7 @@ const AllQuestsPage: React.FC = () => {
 
           <div className="w-full h-5/6">
             <Table
-              data={suggestions}
+              data={quest}
               columns={[
                 { header: "Title", accessor: "title" },
                 { header: "Category", accessor: "category" },
