@@ -69,11 +69,11 @@ const LandingPage = () => {
     if (!accessToken) return navigate("/login");
 
     try {
-      await userService.completeQuest(accessToken, currentQuest!.id);
+      const completeQuestResponse = await userService.completeQuest(accessToken, currentQuest!.id);
 
       setCurrentQuest(null);
       localStorage.removeItem('currentQuest');
-      toast.success("Quest completed");
+      toast.success(completeQuestResponse);
     } catch (error) {
       toast.error("Failed to complete quest", error);
     }

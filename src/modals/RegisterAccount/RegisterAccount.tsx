@@ -10,7 +10,7 @@ interface RegisterAccountProps {
 }
 
 const RegisterAccount: React.FC<RegisterAccountProps> = ({ onClose }) => {
-  const { saveToken } = useAuth();
+  const { saveToken, accessToken } = useAuth();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -26,6 +26,7 @@ const RegisterAccount: React.FC<RegisterAccountProps> = ({ onClose }) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
+      if (!accessToken) return;
       if (!username || !password) {
         setError("Please enter a username and password");
         return;
@@ -36,7 +37,7 @@ const RegisterAccount: React.FC<RegisterAccountProps> = ({ onClose }) => {
         return;
       }
 
-      const authResponse = await AuthService.register(username, password);
+      const authResponse = await AuthService.registerGuest(accessToken, username, password);
       saveToken(authResponse.token);
       onClose();
       return;

@@ -5,6 +5,7 @@ import AuthService from "@/service/authService";
 import { useAuth } from "@/context/useAuth";
 import Button from "../Button";
 import { toast } from "../Toaster";
+import authService from "@/service/authService";
 
 interface LoginPanelProps {
   onLoginSuccess: () => void;
@@ -69,6 +70,16 @@ const LoginPanel: React.FC<LoginPanelProps> = (props) => {
     }
   }
 
+  const loginAsGuest = async () => {
+    try {
+      const loginGuestResponse = await authService.guestLogin();
+      saveToken(loginGuestResponse.token);
+      onRegistrationSuccess();
+    } catch (error: unknown) {
+      toast.error("Failed to log in as guest", error);
+    }
+  };
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
       <div className="w-full max-w-md p-2 shadow-lg bg-secondary">
@@ -76,7 +87,7 @@ const LoginPanel: React.FC<LoginPanelProps> = (props) => {
           <h2 className="text-lg font-semibold text-muted-foreground">{isRegistering ? "Register" : "Login"}</h2>
           <p className="mt-2 text-sm text-text-secondary">Please enter your credentials to continue or&nbsp;
             <span
-              onClick={() => toast.warning("This feature is not available yet.")}
+              onClick={loginAsGuest}
               className="underline cursor-pointer text-buttonText-info"
               aria-label="Continue as a guest without registration"
             >

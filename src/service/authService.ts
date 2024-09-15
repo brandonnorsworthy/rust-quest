@@ -1,5 +1,4 @@
 import sendRequest from "@/lib/sendRequest";
-import { LoginResponse } from "@/models/AuthModels/loginResponse";
 import { RegisterResponse } from "@/models/AuthModels/registerResponse";
 
 export default {
@@ -48,7 +47,7 @@ export default {
       username,
       password
     }
-  }) as Promise<LoginResponse>,
+  }) as Promise<{ token: string }>,
 
   /**
  * login a guest user
@@ -57,7 +56,7 @@ export default {
   guestLogin: async () => await sendRequest({
     method: 'POST',
     endpoint: '/auth/login-guest',
-  }) as Promise<LoginResponse>,
+  }) as Promise<{ token: string }>,
 
   refreshToken: async (accessToken: string) => await sendRequest({
     method: 'POST',
