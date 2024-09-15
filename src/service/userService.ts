@@ -1,4 +1,5 @@
 import sendRequest from "@/lib/sendRequest";
+import { User } from "@/models/UserModels/userResponse";
 
 const basePath = '/users';
 
@@ -27,4 +28,10 @@ export default {
     accessToken,
     body: settings
   }),
+
+  getUsers: async (accessToken: string) => await sendRequest({
+    method: 'GET',
+    endpoint: `${basePath}`,
+    accessToken
+  }) as Promise<User[]>,
 }

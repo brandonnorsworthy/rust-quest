@@ -2,24 +2,25 @@ import { useNavigate } from "react-router-dom";
 
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "@/components/Toaster";
-import suggestionService from "@/service/suggestionService";
 import { useAuth } from "@/context/useAuth";
 import withAuth from "@/hocs/withAuth";
 import Table from "@/components/Table";
 import Button from "@/components/Button";
-import { Suggestion } from "@/models/SuggestionModels/suggestionResponse";
+import { User } from "@/models/UserModels/userResponse";
+import userService from "@/service/userService";
 
-const SuggestionsPage = () => {
+const AdminUsersPage = () => {
   const navigate = useNavigate();
   const { accessToken } = useAuth();
-  const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
   const [page, setPage] = useState(1);
   const maxLength = 20;
 
-  const fetchSuggestions: () => Promise<void> = useCallback(async () => {
+  const fetchUsers: () => Promise<void> = useCallback(async () => {
     try {
-      const suggestionsResponse = await suggestionService.getSuggestions(accessToken!, page) as Suggestion[];
-      setSuggestions(suggestionsResponse);
+      if (!accessToken) return;
+      const usersResponse = await userService.getUsers(accessToken);
+      setUsers(usersResponse);
     } catch (error) {
       toast.error("Failed to get suggestions", error);
     }
@@ -30,12 +31,12 @@ const SuggestionsPage = () => {
       navigate("/login");
       return;
     }
-    fetchSuggestions();
-  }, [accessToken, navigate, fetchSuggestions]);
+    fetchUsers();
+  }, [accessToken, navigate, fetchUsers]);
 
   useEffect(() => {
-    fetchSuggestions();
-  }, [page, fetchSuggestions]);
+    fetchUsers();
+  }, [page, fetchUsers]);
 
   return (
     <main className="h-dvh w-dvw">
@@ -51,17 +52,18 @@ const SuggestionsPage = () => {
 
         <div className="w-full h-full">
           <div className="flex items-center justify-center w-full h-1/6">
-            <h1 className="text-4xl font-bold text-white">All Suggestions</h1>
+            <h1 className="text-4xl font-bold text-white">All User</h1>
           </div>
 
           <div className="w-full h-5/6">
             <Table
-              data={suggestions}
+              data={users}
               columns={[
                 { header: "ID", accessor: "id" },
-                { header: "Created By", accessor: "username" },
-                { header: "Title", accessor: "title" },
-                { header: "Description", accessor: "description" }
+                { header: "Username", accessor: "username" },
+                { header: "role", accessor: "role" },
+                { header: "last login", accessor: "last_login" },
+                { header: "logins", accessor: "login_count" },
               ]}
               page={page}
               maxLength={maxLength}
@@ -74,6 +76,6 @@ const SuggestionsPage = () => {
   );
 }
 
-const AuthenticatedSuggestionsPage = withAuth(SuggestionsPage, "admin");
+const AuthenticatedAdminUsersPage = withAuth(AdminUsersPage, "admin");
 
-export default AuthenticatedSuggestionsPage;
+export default AuthenticatedAdminUsersPage;

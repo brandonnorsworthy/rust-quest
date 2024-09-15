@@ -7,13 +7,14 @@ import LoginPage from './pages/LoginPage';
 import NotfoundPage from './pages/NotfoundPage';
 import UnauthorizedPage from './pages/UnauthorizedPage';
 import AuthenticatedAdminPage from './pages/admin/AdminPage';
-import AuthenticatedSuggestionsPage from './pages/admin/SuggestionsPage';
+import AuthenticatedAdminSuggestionsPage from './pages/admin/AdminSuggestionsPage';
 import CompletedQuestsPage from './pages/AllQuestsPage';
 
 import './App.css';
 import Background from './components/Background';
 import { useAuth } from './context/useAuth';
 import UsernameBubble from './components/UsernameBubble';
+import AuthenticatedAdminUsersPage from './pages/admin/AdminUsersPage';
 
 const queryClient = new QueryClient()
 
@@ -35,9 +36,9 @@ function App() {
 
           {/* admin routes */}
           <Route path="/admin" element={<AuthenticatedAdminPage />} />
-          <Route path="/admin/suggestions" element={<AuthenticatedSuggestionsPage />} />
-          {/* <Route path="/admin/quests" element={<div>Admin Quests</div>} /> */}
-          {/* <Route path="/admin/users" element={<div>Admin Users</div>} /> */}
+          <Route path="/admin/suggestions" element={<AuthenticatedAdminSuggestionsPage />} />
+          <Route path="/admin/quests" element={<div>Admin Quests</div>} />
+          <Route path="/admin/users" element={<AuthenticatedAdminUsersPage />} />
 
           {/* user routes */}
           <Route path="*" element={<NotfoundPage />} />
