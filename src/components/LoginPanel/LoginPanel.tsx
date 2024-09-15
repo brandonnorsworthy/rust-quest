@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { AxiosError } from "axios";
 
-import AuthService from "@/service/authService";
 import { useAuth } from "@/context/useAuth";
 import Button from "../Button";
 import { toast } from "../Toaster";
@@ -26,6 +25,7 @@ const LoginPanel: React.FC<LoginPanelProps> = (props) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [isRegistering, setIsRegistering] = useState(false);
+  const [disableButtons, setDisableButtons] = useState(false);
 
   useEffect(() => {
     setTimeout(() => {
@@ -36,29 +36,22 @@ const LoginPanel: React.FC<LoginPanelProps> = (props) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      if (!username || !password) {
-        setError("Please enter a username and password");
-        return;
-      }
+      if (disableButtons) return;
+      if (!username || !password) return setError("Please enter a username and password");
 
       if (isRegistering) {
-        if (password !== confirmPassword) {
-          setError("Passwords do not match");
-          return;
-        }
+        if (password !== confirmPassword) return setError("Passwords do not match");
 
-        const authResponse = await AuthService.register(username, password);
+        const authResponse = await authService.register(username, password);
         saveToken(authResponse.token);
         onRegistrationSuccess();
         return;
       }
 
-      const authResponse = await AuthService.login(username, password);
+      const authResponse = await authService.login(username, password);
       saveToken(authResponse.token);
       onLoginSuccess();
-    }
-    catch (error: unknown) {
-      console.error(error);
+    } catch (error: unknown) {
       if (error instanceof AxiosError) {
         if (error.response?.status === 429) {
           setError("Too many requests. Please try again later.");
@@ -67,14 +60,17 @@ const LoginPanel: React.FC<LoginPanelProps> = (props) => {
         setError(error.response?.data.error || "An error occurred");
         return;
       }
-      setError("An unkown error occurred");
+      setError("An unknown error occurred");
     }
   }
 
   const loginAsGuest = async () => {
     try {
-      const loginGuestResponse = await authService.guestLogin();
+      setDisableButtons(true);
+
+      const loginGuestResponse = await authService.loginGuest();
       saveToken(loginGuestResponse.token);
+
       onRegistrationSuccess();
     } catch (error: unknown) {
       toast.error("Failed to log in as guest", error);
@@ -89,7 +85,7 @@ const LoginPanel: React.FC<LoginPanelProps> = (props) => {
           <p className="mt-2 text-sm text-text-secondary">Please enter your credentials to continue or&nbsp;
             <span
               onClick={loginAsGuest}
-              className="underline cursor-pointer text-buttonText-info"
+              className="font-bold underline cursor-pointer text-buttonText-info"
               aria-label="Continue as a guest without registration"
             >
               continue as Guest

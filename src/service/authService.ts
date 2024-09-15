@@ -26,7 +26,7 @@ export default {
    */
   registerGuest: async (accessToken: string, username: string, password: string) => await sendRequest({
     method: 'POST',
-    endpoint: '/auth/register-guest',
+    endpoint: '/auth/register/guest',
     accessToken,
     body: {
       username,
@@ -53,9 +53,9 @@ export default {
  * login a guest user
  * @returns a promise that resolves to the response from the server
  */
-  guestLogin: async () => await sendRequest({
+  loginGuest: async () => await sendRequest({
     method: 'POST',
-    endpoint: '/auth/login-guest',
+    endpoint: '/auth/login/guest',
   }) as Promise<{ token: string }>,
 
   refreshToken: async (accessToken: string) => await sendRequest({

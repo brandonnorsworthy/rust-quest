@@ -1,16 +1,15 @@
 import React from 'react';
 
 import backgroundImg from '@/assets/background.png'
+import background2Img from '@/assets/background-2.jpg'
 
 const Background: React.FC = () => {
-  return (
-    <div className="absolute top-0 left-0 w-full h-full z-[-1]">
-      {/* Image Background */}
-      <img src={backgroundImg} alt="background" className="absolute top-0 left-0 object-cover w-full h-full" />
+  const randomBackground = Math.random() > 0.5 ? backgroundImg : background2Img;
 
-      {/* Gradient Overlay */}
-      <div className="absolute top-0 left-0 w-full h-full" style={{ backgroundImage: "radial-gradient(circle, rgba(36, 34, 28, 0), rgba(36, 34, 28, 0.5))" }}>
-      </div>
+  return (
+    <div className="absolute top-0 left-0 w-full h-full z-[-1] bg-black">
+      {/* Image Background */}
+      <img src={randomBackground} alt="background" className="absolute top-0 left-0 object-cover w-full h-full opacity-75" />
     </div>
   );
 };

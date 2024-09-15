@@ -17,6 +17,7 @@ import News from "@/modals/News";
 import Settings from "@/modals/Settings";
 import RegisterAccount from "@/modals/RegisterAccount";
 import { ModalTypes } from "@/models/modals";
+import ConfirmDialog from "@/components/ConfirmDialog";
 
 
 const LandingPage = () => {
@@ -83,6 +84,14 @@ const LandingPage = () => {
     setCurrentOpenModal(null);
   }
 
+  const handleLogout = () => {
+    if (user?.role === "guest") {
+      setCurrentOpenModal("logout");
+      return;
+    }
+    clearToken();
+  };
+
   const getCurrentModal = () => {
     switch (currentOpenModal) {
       case "suggestions":
@@ -121,6 +130,18 @@ const LandingPage = () => {
             />
           </Modal>
         );
+      case "logout":
+        return (
+          <ConfirmDialog
+            onCancel={closeModal}
+            onConfirm={() => {
+              clearToken();
+              closeModal();
+            }}
+            title="Are you sure?"
+            description="Warning! If you logout as a guest, YOU WILL LOSE ALL PROGRESS. Are you sure you want to logout?"
+          />
+        )
       default:
         return null;
     }
@@ -175,7 +196,10 @@ const LandingPage = () => {
           <MenuButton
             text="SETTINGS"
             disabled={disableButtons}
-            onClick={() => setCurrentOpenModal("settings")}
+            onClick={() => {
+              if (!accessToken) return navigate("/login");
+              setCurrentOpenModal("settings")
+            }}
           />
           {
             user && user.role === "admin" &&
@@ -197,7 +221,7 @@ const LandingPage = () => {
               <MenuButton
                 text="LOGOUT"
                 disabled={disableButtons}
-                onClick={clearToken}
+                onClick={handleLogout}
               />
           }
         </div>
