@@ -15,6 +15,7 @@ import Background from './components/Background';
 import { useAuth } from './context/useAuth';
 import UsernameBubble from './components/UsernameBubble';
 import AuthenticatedAdminUsersPage from './pages/admin/AdminUsersPage';
+import AuthenticatedAdminQuestsPage from './pages/admin/AdminQuestsPage';
 
 const queryClient = new QueryClient()
 
@@ -37,7 +38,7 @@ function App() {
           {/* admin routes */}
           <Route path="/admin" element={<AuthenticatedAdminPage />} />
           <Route path="/admin/suggestions" element={<AuthenticatedAdminSuggestionsPage />} />
-          <Route path="/admin/quests" element={<div>Admin Quests</div>} />
+          <Route path="/admin/quests" element={<AuthenticatedAdminQuestsPage />} />
           <Route path="/admin/users" element={<AuthenticatedAdminUsersPage />} />
 
           {/* user routes */}

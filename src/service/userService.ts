@@ -29,9 +29,10 @@ export default {
     body: settings
   }),
 
-  getUsers: async (accessToken: string) => await sendRequest({
+  getUsers: async (accessToken: string, page: number) => await sendRequest({
     method: 'GET',
     endpoint: `${basePath}`,
-    accessToken
+    accessToken,
+    queryVariables: [{ key: 'page', value: page.toString() }]
   }) as Promise<User[]>,
 }

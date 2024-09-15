@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import Button from "../Button";
 
 type TableProps<T> = {
@@ -17,6 +18,12 @@ const Table = <T extends { id: number | string }>({
   maxLength,
   setPage
 }: TableProps<T>) => {
+  const theadRef = useRef<HTMLTableSectionElement>(null);
+
+  useEffect(() => {
+    theadRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [page]);
+
   return (
     <div className="w-full h-full">
       {data.length === 0 ? (
@@ -27,7 +34,7 @@ const Table = <T extends { id: number | string }>({
         <div className="flex flex-col items-center h-full mt-8 text-xl">
           <div className="flex items-start justify-center w-full max-h-[80%] overflow-y-auto">
             <table className="text-gray-200 bg-secondary/50">
-              <thead>
+              <thead ref={theadRef}>
                 <tr>
                   {columns.map((column, index) => (
                     <td key={index} className="px-4 py-2">
@@ -42,7 +49,7 @@ const Table = <T extends { id: number | string }>({
                     key={row.id + rowIndex.toString()}
                     onClick={() => rowClick && rowClick(rowIndex)}
                     aria-disabled={!rowClick}
-                    className="bg-secondary/50 even:bg-secondary/25 hover:bg-buttonBackground-confirm hover:cursor-pointer"
+                    className={`bg-secondary/50 even:bg-secondary/25 hover:bg-buttonBackground-confirm ${rowClick ? "hover:cursor-pointer" : "*:"}`}
                   >
                     {columns.map((column, colIndex) => (
                       <td key={colIndex} className="p-2">
