@@ -28,6 +28,14 @@ const SuggestionsPanel: React.FC<SuggestionsPanelProps> = (props) => {
         description: (form.elements.namedItem("description") as HTMLTextAreaElement).value,
       } as CreateSuggestionRequest;
 
+      if (!newSuggestion.title || !newSuggestion.description) {
+        setError("Please enter a title and description.");
+        return;
+      }
+
+      newSuggestion.title = newSuggestion.title.trim();
+      newSuggestion.description = newSuggestion.description.trim();
+
       await suggestionService.createSuggestion(newSuggestion, accessToken!);
       setError("Suggestion submitted successfully!");
       onClose();

@@ -20,9 +20,6 @@ const LoginPanel: React.FC<LoginPanelProps> = (props) => {
 
   const { saveToken } = useAuth();
   const navigate = useNavigate();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [isRegistering, setIsRegistering] = useState(false);
   const [disableButtons, setDisableButtons] = useState(false);
@@ -30,16 +27,28 @@ const LoginPanel: React.FC<LoginPanelProps> = (props) => {
   useEffect(() => {
     setTimeout(() => {
       setError("");
-    }, 5000);
+    }, 10000);
   }, [error]);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const form = event.target as HTMLFormElement;
+
     try {
+      let username = (form.elements.namedItem("username") as HTMLInputElement).value;
+      let password = (form.elements.namedItem("password") as HTMLInputElement).value;
+      let confirmPassword = (form.elements.namedItem("confirmPassword") as HTMLInputElement)?.value;
+
       if (disableButtons) return;
       if (!username || !password) return setError("Please enter a username and password");
 
+      username = username.trim();
+      password = password.trim();
+
       if (isRegistering) {
+        if (!confirmPassword) return setError("Please confirm your password");
+        confirmPassword = confirmPassword.trim();
+
         if (password !== confirmPassword) return setError("Passwords do not match");
 
         const authResponse = await authService.register(username, password);
@@ -100,8 +109,6 @@ const LoginPanel: React.FC<LoginPanelProps> = (props) => {
             id="username"
             type="text"
             placeholder="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
             className="w-full p-2 mt-4 border-gray-300 font-semi text-text placeholder:text-text/50 bg-white/25"
             aria-label="Username"
           />
@@ -113,8 +120,6 @@ const LoginPanel: React.FC<LoginPanelProps> = (props) => {
             id="password"
             type="password"
             placeholder="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
             className="w-full p-2 mt-2 border-gray-300 font-semi text-text placeholder:text-text/50 bg-white/25"
             aria-label="Password"
           />
@@ -129,8 +134,6 @@ const LoginPanel: React.FC<LoginPanelProps> = (props) => {
                   id="confirmPassword"
                   type="password"
                   placeholder="confirm password"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
                   className="w-full p-2 mt-2 border-gray-300 font-semi text-text placeholder:text-text/50 bg-white/25"
                   aria-label="confirmPassword"
                 />

@@ -20,7 +20,7 @@ const RegisterAccount: React.FC<RegisterAccountProps> = ({ onClose }) => {
   useEffect(() => {
     setTimeout(() => {
       setError("");
-    }, 5000);
+    }, 10000);
   }, [error]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
