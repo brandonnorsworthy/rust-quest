@@ -45,9 +45,7 @@ const SuggestionsPanel: React.FC<SuggestionsPanelProps> = (props) => {
       <div className="w-full max-w-md p-4 rounded-md shadow-lg bg-slate-100">
         <div className="mb-4">
           <h2 className="text-lg font-semibold text-muted-foreground">Suggestions</h2>
-          <p className="text-sm text-gray-600">
-            Suggest a quest or feature
-          </p>
+          <p className="text-sm text-gray-600">Suggest a quest or feature</p>
         </div>
         <form className="flex flex-col" onSubmit={handleSubmit}>
           <div className="p-2">

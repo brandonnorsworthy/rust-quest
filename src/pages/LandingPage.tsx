@@ -146,12 +146,18 @@ const LandingPage = () => {
           <MenuButton
             text="all quests"
             disabled={disableButtons}
-            onClick={() => navigate("/all-quests")}
+            onClick={() => {
+              if (!accessToken) return navigate("/login");
+              navigate("/all-quests")
+            }}
           />
           <MenuButton
             text="SUGGESTIONS"
             disabled={disableButtons}
-            onClick={() => setCurrentOpenModal("suggestions")}
+            onClick={() => {
+              if (!accessToken) return navigate("/login");
+              setCurrentOpenModal("suggestions")
+            }}
           />
           <MenuSpacer />
 

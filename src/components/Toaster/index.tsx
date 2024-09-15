@@ -27,7 +27,7 @@ const Toaster: React.FC = () => {
   };
 
   return (
-    <div className="absolute bottom-24 right-8">
+    <div className="absolute bottom-8 right-8">
       {
         toasts.map((toast, index) => {
           let toastStyle = null;
