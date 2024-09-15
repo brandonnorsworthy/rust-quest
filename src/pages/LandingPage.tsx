@@ -15,8 +15,9 @@ import { useAuth } from "@/context/useAuth";
 import Modal from "@/components/Modal";
 import News from "@/modals/News";
 import Settings from "@/modals/Settings";
+import RegisterAccount from "@/modals/RegisterAccount";
+import { ModalTypes } from "@/models/modals";
 
-type ModalTypes = "quest" | "suggestions" | "news" | "settings" | null;
 
 const LandingPage = () => {
   const { accessToken, clearToken, user } = useAuth();
@@ -109,6 +110,14 @@ const LandingPage = () => {
               onSkip={handleQuestSkip}
               onComplete={handleQuestComplete}
               quest={currentQuest}
+            />
+          </Modal>
+        );
+      case "register":
+        return (
+          <Modal onClose={closeModal}>
+            <RegisterAccount
+              onClose={closeModal}
             />
           </Modal>
         );

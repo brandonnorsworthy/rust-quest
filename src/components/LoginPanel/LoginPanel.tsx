@@ -70,11 +70,11 @@ const LoginPanel: React.FC<LoginPanelProps> = (props) => {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
-      <div className="w-full max-w-md p-2 rounded-md shadow-lg bg-secondary">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+      <div className="w-full max-w-md p-2 shadow-lg bg-secondary">
         <div className="p-2 text-text">
           <h2 className="text-lg font-semibold text-muted-foreground">{isRegistering ? "Register" : "Login"}</h2>
-          <p className="text-sm text-text-secondary">Please enter your credentials to continue or&nbsp;
+          <p className="mt-2 text-sm text-text-secondary">Please enter your credentials to continue or&nbsp;
             <span
               onClick={() => toast.warning("This feature is not available yet.")}
               className="underline cursor-pointer text-buttonText-info"
@@ -85,37 +85,35 @@ const LoginPanel: React.FC<LoginPanelProps> = (props) => {
           </p>
         </div>
         <form className="flex flex-col" onSubmit={handleSubmit}>
-          <div className="mt-4">
-            <label htmlFor="username" className="sr-only">
-              Username
-            </label>
-            <input
-              id="username"
-              type="text"
-              placeholder="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              className="w-full p-2 border-gray-300 font-semi text-text placeholder:text-text/50 bg-white/25"
-              aria-label="Username"
-            />
-          </div>
-          <div className="mt-4">
-            <label htmlFor="password" className="sr-only">
-              Password
-            </label>
-            <input
-              id="password"
-              type="password"
-              placeholder="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-2 border-gray-300 font-semi text-text placeholder:text-text/50 bg-white/25"
-              aria-label="Password"
-            />
-          </div>
+          <label htmlFor="username" className="sr-only">
+            Username
+          </label>
+          <input
+            id="username"
+            type="text"
+            placeholder="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            className="w-full p-2 mt-4 border-gray-300 font-semi text-text placeholder:text-text/50 bg-white/25"
+            aria-label="Username"
+          />
+
+          <label htmlFor="password" className="sr-only">
+            Password
+          </label>
+          <input
+            id="password"
+            type="password"
+            placeholder="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full p-2 mt-2 border-gray-300 font-semi text-text placeholder:text-text/50 bg-white/25"
+            aria-label="Password"
+          />
+
           {
             isRegistering && (
-              <div className="mt-4">
+              <>
                 <label htmlFor="confirmPassword" className="sr-only">
                   Confirm Password
                 </label>
@@ -125,10 +123,10 @@ const LoginPanel: React.FC<LoginPanelProps> = (props) => {
                   placeholder="confirm password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="w-full p-2 border-gray-300 font-semi text-text placeholder:text-text/50 bg-white/25"
+                  className="w-full p-2 mt-2 border-gray-300 font-semi text-text placeholder:text-text/50 bg-white/25"
                   aria-label="confirmPassword"
                 />
-              </div>
+              </>
             )
           }
 
@@ -143,8 +141,17 @@ const LoginPanel: React.FC<LoginPanelProps> = (props) => {
 
           </div>
 
+          {
+            error ?
+              <div className="w-full mt-2 text-red-500 text-end">
+                {error}
+              </div> :
+              <div className="w-full mt-2 text-red-500 text-end">
+                &nbsp;
+              </div>
+          }
 
-          <div className="flex justify-between mt-2 space-x-2">
+          <div className="flex justify-between mt-2">
             <Button
               text="cancel"
               htmlType="button"

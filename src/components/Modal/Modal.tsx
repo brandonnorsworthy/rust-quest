@@ -34,7 +34,7 @@ const QuestModal: React.FC<ModalProps> = ({ onClose, isOpen = true, children }) 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
       <div ref={modalRef} className="p-2 bg-secondary max-h-[90dvh] shadow-lg">
         <div className="max-w-full m-0 h-full max-h-[85dvh] overflow-y-auto sm:m-2 md:m-0  md:max-w-[42rem] text-text scrollbar-modern">
           {children}

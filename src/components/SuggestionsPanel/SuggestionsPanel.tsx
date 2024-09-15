@@ -1,8 +1,7 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import CreateSuggestionRequest from "@/models/SuggestionModels/CreateSuggestionRequest";
 import suggestionService from "@/service/suggestionService";
-import { toast } from "../Toaster";
 import { AxiosError } from "axios";
 import { useAuth } from "@/context/useAuth";
 import Button from "../Button";
@@ -16,6 +15,7 @@ const SuggestionsPanel: React.FC<SuggestionsPanelProps> = (props) => {
     onClose,
   } = props;
   const { accessToken } = useAuth();
+  const [error, setError] = useState("");
   const panelRef = useRef<HTMLDivElement>(null);
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -29,13 +29,13 @@ const SuggestionsPanel: React.FC<SuggestionsPanelProps> = (props) => {
       } as CreateSuggestionRequest;
 
       await suggestionService.createSuggestion(newSuggestion, accessToken!);
-      toast.success("Suggestion submitted successfully!");
+      setError("Suggestion submitted successfully!");
       onClose();
     } catch (error: unknown) {
       if (error instanceof AxiosError && error.response) {
-        toast.error(error.response.data.error);
+        setError(error.response.data.error);
       } else {
-        toast.error("An unexpected error occurred.");
+        setError("An unexpected error occurred.");
       }
     }
   };
@@ -63,34 +63,41 @@ const SuggestionsPanel: React.FC<SuggestionsPanelProps> = (props) => {
   }, [onClose]);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
-      <div ref={panelRef} className="w-full max-w-md p-2 rounded-md shadow-lg bg-secondary">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+      <div ref={panelRef} className="w-full max-w-md p-2 shadow-lg bg-secondary">
         <div className="p-2 text-text">
           <h2 className="text-lg font-semibold text-muted-foreground">Suggestions</h2>
-          <p className="text-sm text-text-secondary">Suggest a quest or feature, if you are suggesting a quest please include examples of the objectives</p>
+          <p className="mt-2 text-sm text-text-secondary">Suggest a quest or feature, if you are suggesting a quest please include examples of the objectives</p>
         </div>
         <form className="flex flex-col" onSubmit={handleSubmit}>
-          <div className="mt-4">
-            <label htmlFor="title" className="sr-only">Title</label>
-            <input
-              id="title"
-              name="title"
-              type="text"
-              placeholder="Title"
-              className="w-full p-2 font-semi text-text bg-white/25 placeholder:text-text/50"
-            />
-          </div>
-          <div className="mt-4">
-            <label htmlFor="description" className="sr-only">Suggestion</label>
-            <textarea
-              id="description"
-              name="description"
-              placeholder="Details of Suggestion"
-              className="w-full p-2 rounded-md resize-none font-semi text-text placeholder:text-text/50 bg-white/25"
-            />
-          </div>
+          <label htmlFor="title" className="sr-only">Title</label>
+          <input
+            id="title"
+            name="title"
+            type="text"
+            placeholder="Title"
+            className="w-full p-2 mt-2 font-semi text-text bg-white/25 placeholder:text-text/50"
+          />
 
-          <div className="flex justify-between mt-2 space-x-2">
+          <label htmlFor="description" className="sr-only">Suggestion</label>
+          <textarea
+            id="description"
+            name="description"
+            placeholder="Details of Suggestion"
+            className="w-full p-2 mt-2 resize-none font-semi text-text placeholder:text-text/50 bg-white/25"
+          />
+
+          {
+            error ?
+              <div className="w-full mt-2 text-red-500 text-end">
+                {error}
+              </div> :
+              <div className="w-full mt-2 text-red-500 text-end">
+                &nbsp;
+              </div>
+          }
+
+          <div className="flex justify-between mt-2">
             <Button
               text="cancel"
               htmlType="button"
