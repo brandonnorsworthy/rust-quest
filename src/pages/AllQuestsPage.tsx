@@ -72,7 +72,7 @@ const AllQuestsPage: React.FC = () => {
   }
 
   return (
-    <main className="h-screen overflow-hidden">
+    <main className="h-screen overflow-hidden bg-secondary/50">
       <div className="p-8">
         <div className="absolute bottom-8 right-8">
           <Button type="confirm" text="done" onClick={() => navigate("/")} />

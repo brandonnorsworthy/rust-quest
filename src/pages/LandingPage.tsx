@@ -156,7 +156,8 @@ const LandingPage = () => {
             text="all quests"
             disabled={disableButtons}
             onClick={() => {
-              if (!accessToken) return navigate("/login");
+              if (!accessToken || !user) return navigate("/login");
+              if (user.role === "guest") return setCurrentOpenModal("register");
               navigate("/all-quests")
             }}
           />
@@ -164,7 +165,8 @@ const LandingPage = () => {
             text="SUGGESTIONS"
             disabled={disableButtons}
             onClick={() => {
-              if (!accessToken) return navigate("/login");
+              if (!accessToken || !user) return navigate("/login");
+              if (user.role === "guest") return setCurrentOpenModal("register");
               setCurrentOpenModal("suggestions")
             }}
           />
