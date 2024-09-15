@@ -38,30 +38,37 @@ const SuggestionsPage = () => {
   }, [page, fetchSuggestions]);
 
   return (
-    <main className="h-screen overflow-hidden">
-      <div className="p-8">
-        <div className="absolute bottom-8 right-8">
+    <main className="h-dvh w-dvw">
+      <div className="absolute h-dvh w-dvw overflow-hidden z-[-1] bg-secondary/50">
+      </div>
+
+      <div className="w-full h-full p-8">
+        <div className="absolute top-8 left-8">
           <Button type="confirm" onClick={() => navigate("/admin")}>
             done
           </Button>
         </div>
 
-        <div className="flex justify-center w-full mt-8">
-          <h1 className="text-4xl font-bold text-white">All Suggestions</h1>
-        </div>
+        <div className="w-full h-full">
+          <div className="flex items-center justify-center w-full h-1/6">
+            <h1 className="text-4xl font-bold text-white">All Suggestions</h1>
+          </div>
 
-        <Table
-          data={suggestions}
-          columns={[
-            { header: "ID", accessor: "id" },
-            { header: "Created By", accessor: "username" },
-            { header: "Title", accessor: "title" },
-            { header: "Description", accessor: "description" }
-          ]}
-          page={page}
-          maxLength={maxLength}
-          setPage={setPage}
-        />
+          <div className="w-full h-5/6">
+            <Table
+              data={suggestions}
+              columns={[
+                { header: "ID", accessor: "id" },
+                { header: "Created By", accessor: "username" },
+                { header: "Title", accessor: "title" },
+                { header: "Description", accessor: "description" }
+              ]}
+              page={page}
+              maxLength={maxLength}
+              setPage={setPage}
+            />
+          </div>
+        </div>
       </div>
     </main>
   );
