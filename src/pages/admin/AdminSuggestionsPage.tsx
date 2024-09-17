@@ -15,16 +15,20 @@ import categoryServices from "@/service/categoryServices";
 import { Category } from "@/models/CategoryModels/categoryResponse";
 import ConfirmDialog from "@/components/ConfirmDialog";
 import { convertSuggestionIntoQuestBodyRequest } from "@/models/SuggestionModels/suggestionRequests";
+import Loader from "@/components/Loader";
 
 const AdminSuggestionsPage = () => {
   const navigate = useNavigate();
   const { accessToken } = useAuth();
+
   const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
   const [page, setPage] = useState(1);
-  const maxLength = 20;
   const [selectedSuggestion, setSelectedSuggestion] = useState<Suggestion | null>(null);
   const [categories, setCategories] = useState<Category[]>([]);
   const [confirmDialog, setConfirmDialog] = useState<{ title: string; description: string; onConfirm: () => void; } | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const maxLength = 20;
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -32,6 +36,7 @@ const AdminSuggestionsPage = () => {
         if (!accessToken) return;
 
         const categoriesResponse = await categoryServices.getCategories(accessToken);
+
         setCategories(categoriesResponse);
       } catch (error) {
         toast.error("Failed to get categories", error);
@@ -44,12 +49,15 @@ const AdminSuggestionsPage = () => {
   const fetchSuggestions: () => Promise<void> = useCallback(async () => {
     try {
       if (!accessToken) return;
+      setIsLoading(true);
 
       const suggestionsResponse = await suggestionService.getSuggestions(accessToken, page);
 
       setSuggestions(suggestionsResponse);
     } catch (error) {
       toast.error("Failed to get suggestions", error);
+    } finally {
+      setIsLoading(false);
     }
   }, [accessToken, page]);
 
@@ -144,20 +152,24 @@ const AdminSuggestionsPage = () => {
             <h1 className="text-4xl font-bold text-white">All Suggestions</h1>
           </div>
 
-          <div className="w-full h-5/6">
-            <Table
-              data={suggestions}
-              columns={[
-                { header: "ID", accessor: "id" },
-                { header: "Title", accessor: "title" },
-                { header: "Description", accessor: "description" },
-              ]}
-              page={page}
-              maxLength={maxLength}
-              rowClick={handleRowClick}
-              setPage={setPage}
-            />
-          </div>
+          {
+            isLoading ?
+              <Loader /> :
+              <div className="w-full h-5/6">
+                <Table
+                  data={suggestions}
+                  columns={[
+                    { header: "ID", accessor: "id" },
+                    { header: "Title", accessor: "title" },
+                    { header: "Description", accessor: "description" },
+                  ]}
+                  page={page}
+                  maxLength={maxLength}
+                  rowClick={handleRowClick}
+                  setPage={setPage}
+                />
+              </div>
+          }
         </div>
       </div>
 

@@ -8,21 +8,30 @@ import Table from "@/components/Table";
 import Button from "@/components/Button";
 import questService from "@/service/questService";
 import { Quest } from "@/models/QuestModels/questResponse";
+import Loader from "@/components/Loader";
 
 const AdminQuestsPage = () => {
   const navigate = useNavigate();
   const { accessToken } = useAuth();
+
   const [quests, setQuests] = useState<Quest[]>([]);
   const [page, setPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
+
   const maxLength = 20;
 
   const fetchQuests: () => Promise<void> = useCallback(async () => {
     try {
       if (!accessToken) return;
+      setIsLoading(true);
+
       const questsResponse = await questService.getQuests(accessToken, page);
+
       setQuests(questsResponse);
     } catch (error) {
       toast.error("Failed to get suggestions", error);
+    } finally {
+      setIsLoading(false);
     }
   }, [accessToken, page]);
 
@@ -55,20 +64,24 @@ const AdminQuestsPage = () => {
             <h1 className="text-4xl font-bold text-white">Viewing All Quests</h1>
           </div>
 
-          <div className="w-full h-5/6">
-            <Table
-              data={quests}
-              columns={[
-                { header: "ID", accessor: "id" },
-                { header: "Title", accessor: "title" },
-                { header: "Description", accessor: "description" },
-                { header: "category", accessor: "category" },
-              ]}
-              page={page}
-              maxLength={maxLength}
-              setPage={setPage}
-            />
-          </div>
+          {
+            isLoading ?
+              <Loader /> :
+              <div className="w-full h-5/6">
+                <Table
+                  data={quests}
+                  columns={[
+                    { header: "ID", accessor: "id" },
+                    { header: "Title", accessor: "title" },
+                    { header: "Description", accessor: "description" },
+                    { header: "category", accessor: "category" },
+                  ]}
+                  page={page}
+                  maxLength={maxLength}
+                  setPage={setPage}
+                />
+              </div>
+          }
         </div>
       </div>
     </main>

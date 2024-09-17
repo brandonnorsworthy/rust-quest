@@ -8,21 +8,30 @@ import Table from "@/components/Table";
 import Button from "@/components/Button";
 import { User } from "@/models/UserModels/userResponse";
 import userService from "@/service/userService";
+import Loader from "@/components/Loader";
 
 const AdminUsersPage = () => {
   const navigate = useNavigate();
   const { accessToken } = useAuth();
+
   const [users, setUsers] = useState<User[]>([]);
   const [page, setPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
+
   const maxLength = 20;
 
   const fetchUsers: () => Promise<void> = useCallback(async () => {
     try {
       if (!accessToken) return;
+      setIsLoading(true);
+
       const usersResponse = await userService.getUsers(accessToken, page);
+
       setUsers(usersResponse);
     } catch (error) {
       toast.error("Failed to get suggestions", error);
+    } finally {
+      setIsLoading(false);
     }
   }, [accessToken, page]);
 
@@ -55,21 +64,25 @@ const AdminUsersPage = () => {
             <h1 className="text-4xl font-bold text-white">All User</h1>
           </div>
 
-          <div className="w-full h-5/6">
-            <Table
-              data={users}
-              columns={[
-                { header: "ID", accessor: "id" },
-                { header: "Username", accessor: "username" },
-                { header: "role", accessor: "role" },
-                { header: "last login", accessor: "last_login" },
-                { header: "logins", accessor: "login_count" },
-              ]}
-              page={page}
-              maxLength={maxLength}
-              setPage={setPage}
-            />
-          </div>
+          {
+            isLoading ?
+              <Loader /> :
+              <div className="w-full h-5/6">
+                <Table
+                  data={users}
+                  columns={[
+                    { header: "ID", accessor: "id" },
+                    { header: "Username", accessor: "username" },
+                    { header: "role", accessor: "role" },
+                    { header: "last login", accessor: "last_login" },
+                    { header: "logins", accessor: "login_count" },
+                  ]}
+                  page={page}
+                  maxLength={maxLength}
+                  setPage={setPage}
+                />
+              </div>
+          }
         </div>
       </div>
     </main>
