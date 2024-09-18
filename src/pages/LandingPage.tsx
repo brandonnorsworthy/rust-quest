@@ -18,6 +18,7 @@ import Settings from "@/modals/Settings";
 import RegisterAccount from "@/modals/RegisterAccount";
 import { ModalTypes } from "@/models/modals";
 import ConfirmDialog from "@/components/ConfirmDialog";
+import SpinningWheel from "@/components/SpinningWheel";
 
 
 const LandingPage = () => {
@@ -27,6 +28,7 @@ const LandingPage = () => {
   const storedQuests = localStorage.getItem('currentQuest') ? JSON.parse(localStorage.getItem('currentQuest') as string) : null;
   const [currentQuest, setCurrentQuest] = useState<Quest | null>(storedQuests);
   const [currentOpenModal, setCurrentOpenModal] = useState<ModalTypes>(null);
+  const [spinning, setSpinning] = useState(false);
 
   const disableButtons = currentOpenModal ? true : false;
 
@@ -54,6 +56,7 @@ const LandingPage = () => {
       }
 
       setCurrentQuest(randomQuestResponse);
+      setSpinning(true);
       setCurrentOpenModal("quest");
       localStorage.setItem('currentQuest', JSON.stringify(randomQuestResponse));
     } catch (error) {
@@ -112,6 +115,16 @@ const LandingPage = () => {
         )
       case "quest":
         if (!currentQuest) return null;
+        if (spinning && !user?.metadata?.disableAnimations) {
+          return (
+            <Modal hideContainer={true} onClose={closeModal}>
+              <SpinningWheel
+                onClick={() => setSpinning(false)}
+                onDoneSpinning={() => setSpinning(false)}
+              />
+            </Modal>
+          );
+        }
         return (
           <Modal onClose={closeModal}>
             <ViewQuest
@@ -166,6 +179,10 @@ const LandingPage = () => {
                 onClick={handleSpinWheel}
               />
           }
+          <MenuButton
+            text="test"
+            onClick={() => navigate("/test")}
+          />
           <MenuSpacer />
 
           <MenuButton
