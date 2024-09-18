@@ -55,7 +55,6 @@ const SpinningWheel: React.FC<SpinningWheelProps> = ({ size = 500, onDoneSpinnin
     const numWedges = wedges.length;
     const arcSize = (2 * Math.PI) / numWedges;
     const borderWidth = 5;
-    console.log(velocity)
 
     wedges.forEach((wedge, i) => {
       const angle = i * arcSize;
@@ -130,8 +129,11 @@ const SpinningWheel: React.FC<SpinningWheelProps> = ({ size = 500, onDoneSpinnin
     }
 
     if (phase === 'decelerating') {
-      if (velocity > 0.0005) {
+      if (velocity > 0.02) {
         velocity = velocity * deceleration;
+      } else if (velocity > 0.001) {
+        const fastDeceleration = 3;
+        velocity = velocity * (1 - ((1 - deceleration) * fastDeceleration));
       } else {
         phase = 'stopped';
         spinning = false;
