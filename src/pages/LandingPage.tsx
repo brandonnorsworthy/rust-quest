@@ -179,10 +179,6 @@ const LandingPage = () => {
                 onClick={handleSpinWheel}
               />
           }
-          <MenuButton
-            text="test"
-            onClick={() => navigate("/test")}
-          />
           <MenuSpacer />
 
           <MenuButton

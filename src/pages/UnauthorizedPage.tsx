@@ -2,7 +2,7 @@ import React from "react";
 import Button from "@/components/Button";
 import { useNavigate } from "react-router-dom";
 
-const NotfoundPage: React.FC = () => {
+const UnauthorizedPage: React.FC = () => {
   const navigate = useNavigate();
 
   return (
@@ -20,4 +20,4 @@ const NotfoundPage: React.FC = () => {
   );
 }
 
-export default NotfoundPage;
+export default UnauthorizedPage;

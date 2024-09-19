@@ -61,7 +61,7 @@ const AdminUsersPage = () => {
 
         <div className="w-full h-full">
           <div className="flex items-center justify-center w-full h-1/6">
-            <h1 className="text-4xl font-bold text-white">All User</h1>
+            <h1 className="text-4xl font-bold text-white">Admin All User</h1>
           </div>
 
           {

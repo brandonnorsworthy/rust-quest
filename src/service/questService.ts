@@ -22,4 +22,17 @@ export default {
     accessToken,
     queryVariables: [{ key: "page", value: page.toString() }]
   }) as Promise<AllQuestsResponse[]>,
+
+  editQuest: async (accessToken: string, questId: number, questData: Partial<Quest>) => await sendRequest({
+    method: 'PUT',
+    endpoint: `${basePath}/${questId}`,
+    accessToken,
+    body: questData
+  }) as Promise<Quest>,
+
+  deleteQuest: async (accessToken: string, questId: number) => await sendRequest({
+    method: 'DELETE',
+    endpoint: `${basePath}/${questId}`,
+    accessToken
+  }) as Promise<void>
 }

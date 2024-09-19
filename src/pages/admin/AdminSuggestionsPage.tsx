@@ -10,7 +10,7 @@ import Button from "@/components/Button";
 import { Suggestion } from "@/models/SuggestionModels/suggestionResponse";
 import { AxiosError } from "axios";
 import Modal from "@/components/Modal";
-import ViewSuggestion from "@/modals/ViewSuggestions";
+import EditSuggestion from "@/modals/EditSuggestions";
 import categoryServices from "@/service/categoryServices";
 import { Category } from "@/models/CategoryModels/categoryResponse";
 import ConfirmDialog from "@/components/ConfirmDialog";
@@ -149,7 +149,7 @@ const AdminSuggestionsPage = () => {
 
         <div className="w-full h-full">
           <div className="flex items-center justify-center w-full h-1/6">
-            <h1 className="text-4xl font-bold text-white">All Suggestions</h1>
+            <h1 className="text-4xl font-bold text-white">Admin All Suggestions</h1>
           </div>
 
           {
@@ -176,7 +176,7 @@ const AdminSuggestionsPage = () => {
       {
         selectedSuggestion &&
         <Modal onClose={handleCloseSuggestion}>
-          <ViewSuggestion
+          <EditSuggestion
             onClose={handleCloseSuggestion}
             suggestion={selectedSuggestion}
             onCreateQuest={handleCreateQuest}

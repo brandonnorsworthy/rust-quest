@@ -18,7 +18,7 @@ const ViewQuest: React.FC<ModalProps> = (props) => {
     onIncomplete,
     quest
   } = props;
-  const { title, description, objectives, image_url, category, info_url, suggested_by } = quest;
+  const { title, description, objectives, image_url, category, info_url, username } = quest;
 
   return (
     <>
@@ -58,10 +58,10 @@ const ViewQuest: React.FC<ModalProps> = (props) => {
         }
 
         {
-          suggested_by &&
+          username &&
           <div className="flex flex-col justify-start w-full mt-4">
             <hr className='my-2 border-t-2'></hr>
-            <p className="mt-2">Suggested by: <span className='text-buttonBackground-confirm'>{suggested_by}</span></p>
+            <p className="mt-2">Suggested by: <span className='text-buttonBackground-confirm'>{username}</span></p>
           </div>
         }
       </div>

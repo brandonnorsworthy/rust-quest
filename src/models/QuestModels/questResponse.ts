@@ -6,7 +6,7 @@ export interface Quest {
   image_url: string,
   category: string,
   info_url?: string,
-  suggested_by?: string,
+  username?: string,
 }
 
 export interface AllQuestsResponse extends Quest {

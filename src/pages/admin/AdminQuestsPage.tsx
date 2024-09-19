@@ -9,6 +9,13 @@ import Button from "@/components/Button";
 import questService from "@/service/questService";
 import { Quest } from "@/models/QuestModels/questResponse";
 import Loader from "@/components/Loader";
+import Modal from "@/components/Modal";
+import EditQuest from "@/modals/EditQuest";
+import categoryServices from "@/service/categoryServices";
+import { Category } from "@/models/CategoryModels/categoryResponse";
+import { AxiosError } from "axios";
+import ConfirmDialog from "@/components/ConfirmDialog";
+import { EditQuestRequest } from "@/models/QuestModels/questRequests";
 
 const AdminQuestsPage = () => {
   const navigate = useNavigate();
@@ -16,9 +23,28 @@ const AdminQuestsPage = () => {
 
   const [quests, setQuests] = useState<Quest[]>([]);
   const [page, setPage] = useState(1);
+  const [selectedQuest, setSelectedQuest] = useState<Quest | null>(null);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [confirmDialog, setConfirmDialog] = useState<{ title: string; description: string; onConfirm: () => void; } | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   const maxLength = 20;
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        if (!accessToken) return;
+
+        const categoriesResponse = await categoryServices.getCategories(accessToken);
+
+        setCategories(categoriesResponse);
+      } catch (error) {
+        toast.error("Failed to get categories", error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   const fetchQuests: () => Promise<void> = useCallback(async () => {
     try {
@@ -29,7 +55,7 @@ const AdminQuestsPage = () => {
 
       setQuests(questsResponse);
     } catch (error) {
-      toast.error("Failed to get suggestions", error);
+      toast.error("Failed to get quests", error);
     } finally {
       setIsLoading(false);
     }
@@ -47,6 +73,66 @@ const AdminQuestsPage = () => {
     fetchQuests();
   }, [page, fetchQuests]);
 
+  const handleRowClick = (index: number) => {
+    setSelectedQuest(quests[index]);
+  };
+
+  const handleModalClose = () => {
+    setSelectedQuest(null);
+  }
+
+  const handleDeleteQuest = async () => {
+    if (!selectedQuest || !accessToken) return;
+
+    const onConfirm = async () => {
+      await questService.deleteQuest(accessToken, selectedQuest.id)
+      fetchQuests();
+    };
+
+    setConfirmDialog({
+      title: "Are you sure?",
+      description: "If you delete this suggestion, you will lose all changes.",
+      onConfirm: async () => {
+        await onConfirm();
+        setConfirmDialog(null);
+      }
+    });
+  };
+
+  const handleEditQuest = async (newQuest: EditQuestRequest) => {
+    const editQuest = async () => {
+      try {
+        if (!selectedQuest) return;
+        if (!accessToken) return;
+
+        if (newQuest?.objectives) {
+          newQuest.objectives = newQuest.objectives
+            .filter((objective): objective is string => !(objective === ""));
+        }
+
+        await questService.editQuest(accessToken, selectedQuest.id, newQuest);
+        fetchQuests();
+
+        toast.success("Quest updated successfully");
+        handleModalClose();
+      } catch (error: unknown) {
+        if (error instanceof AxiosError && error.response?.data) {
+          return toast.error(error.response?.data.message, error);
+        }
+        toast.error("Failed to update quest", error);
+      }
+    }
+
+    setConfirmDialog({
+      title: "Are you sure?",
+      description: "Overwrite the current quest with the new data",
+      onConfirm: async () => {
+        await editQuest();
+        setConfirmDialog(null);
+      }
+    });
+  };
+
   return (
     <main className="h-dvh w-dvw">
       <div className="absolute h-dvh w-dvw overflow-hidden z-[-1] bg-secondary/50">
@@ -61,7 +147,7 @@ const AdminQuestsPage = () => {
 
         <div className="w-full h-full">
           <div className="flex items-center justify-center w-full h-1/6">
-            <h1 className="text-4xl font-bold text-white">Viewing All Quests</h1>
+            <h1 className="text-4xl font-bold text-white">Admin All Quests</h1>
           </div>
 
           {
@@ -77,6 +163,7 @@ const AdminQuestsPage = () => {
                     { header: "category", accessor: "category" },
                   ]}
                   page={page}
+                  rowClick={handleRowClick}
                   maxLength={maxLength}
                   setPage={setPage}
                 />
@@ -84,6 +171,33 @@ const AdminQuestsPage = () => {
           }
         </div>
       </div>
+
+      {
+        selectedQuest &&
+        <Modal onClose={handleModalClose}>
+          <EditQuest
+            quest={selectedQuest}
+            onClose={handleModalClose}
+            categories={categories}
+            onEditQuest={handleEditQuest}
+            onDeleteQuest={handleDeleteQuest}
+          />
+        </Modal>
+      }
+
+      {
+        confirmDialog &&
+        <Modal
+          onClose={() => setConfirmDialog(null)}
+        >
+          <ConfirmDialog
+            title={confirmDialog.title}
+            description={confirmDialog.description}
+            onConfirm={confirmDialog.onConfirm}
+            onCancel={() => setConfirmDialog(null)}
+          />
+        </Modal>
+      }
     </main>
   );
 }
