@@ -12,7 +12,7 @@ interface ModalProps {
   categories: Category[];
 }
 
-const ViewSuggestion: React.FC<ModalProps> = (props) => {
+const EditSuggestion: React.FC<ModalProps> = (props) => {
   const {
     onClose,
     onDeleteSuggestion,
@@ -185,4 +185,4 @@ const ViewSuggestion: React.FC<ModalProps> = (props) => {
   );
 };
 
-export default ViewSuggestion;
+export default EditSuggestion;

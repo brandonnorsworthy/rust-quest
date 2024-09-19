@@ -5,6 +5,7 @@ import suggestionService from "@/service/suggestionService";
 import { AxiosError } from "axios";
 import { useAuth } from "@/context/useAuth";
 import Button from "../Button";
+import { toast } from "../Toaster";
 
 type SuggestionsPanelProps = {
   onClose: () => void;
@@ -37,7 +38,7 @@ const SuggestionsPanel: React.FC<SuggestionsPanelProps> = (props) => {
       newSuggestion.description = newSuggestion.description.trim();
 
       await suggestionService.createSuggestion(newSuggestion, accessToken!);
-      setError("Suggestion submitted successfully!");
+      toast.success("Suggestion submitted successfully!");
       onClose();
     } catch (error: unknown) {
       if (error instanceof AxiosError && error.response) {

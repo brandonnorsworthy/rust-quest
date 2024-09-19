@@ -10,14 +10,18 @@ import Modal from "@/components/Modal";
 import ViewQuest from "@/modals/ViewQuest";
 import userService from "@/service/userService";
 import { AxiosError } from "axios";
+import Loader from "@/components/Loader";
 
 const AllQuestsPage: React.FC = () => {
   const { accessToken } = useAuth();
   const navigate = useNavigate();
+
   const [quest, setSuggestions] = useState<AllQuestsResponse[]>([]);
   const [page, setPage] = useState(1);
-  const maxLength = 20;
   const [selectedQuest, setSelectedQuest] = useState<AllQuestsResponse | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const maxLength = 20;
 
   const fetchQuests: () => Promise<void> = useCallback(async () => {
     try {
@@ -29,6 +33,8 @@ const AllQuestsPage: React.FC = () => {
         return toast.error(error.response.data, error);
       }
       toast.error("Failed to get quests", error);
+    } finally {
+      setIsLoading(false);
     }
   }, [accessToken, page]);
 
@@ -104,21 +110,25 @@ const AllQuestsPage: React.FC = () => {
             <h1 className="text-4xl font-bold text-white">All Quests</h1>
           </div>
 
-          <div className="w-full h-5/6">
-            <Table
-              data={quest}
-              columns={[
-                { header: "Title", accessor: "title" },
-                { header: "Category", accessor: "category" },
-                { header: "Description", accessor: "description" },
-                { header: "completed", accessor: "completed" }
-              ]}
-              page={page}
-              maxLength={maxLength}
-              setPage={setPage}
-              rowClick={handleRowClick}
-            />
-          </div>
+          {
+            isLoading ?
+              <Loader /> :
+              <div className="w-full h-5/6">
+                <Table
+                  data={quest}
+                  columns={[
+                    { header: "Title", accessor: "title" },
+                    { header: "Category", accessor: "category" },
+                    { header: "Description", accessor: "description" },
+                    { header: "completed", accessor: "completed" }
+                  ]}
+                  page={page}
+                  maxLength={maxLength}
+                  setPage={setPage}
+                  rowClick={handleRowClick}
+                />
+              </div>
+          }
         </div>
       </div>
 
