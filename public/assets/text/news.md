@@ -18,3 +18,9 @@ __^^ let us know if this is a feature you'd like to see! ^^__
 
 ## About
 This website was created by discord user **zcog** hope you enjoy it!
+
+## Credits
+Thanks to the following people for their contributions:
+- **notacoconut** (developer)
+- **Gilbert** (moderator)
+- **wall2wall3** (feedback)
