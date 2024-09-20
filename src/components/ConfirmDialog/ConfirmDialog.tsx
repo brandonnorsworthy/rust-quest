@@ -42,7 +42,7 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = ({ title, description, onCan
               <h2 className="text-lg font-semibold text-muted-foreground">{title}</h2>
               <p className="text-text-secondary">{description}</p>
             </div>
-            <div className="flex justify-between w-full mt-2">
+            <div className="flex flex-col items-start w-full gap-2 mt-2 sm:items-center sm:flex-row sm:justify-between">
               <Button onClick={onCancel}>
                 Cancel
               </Button>

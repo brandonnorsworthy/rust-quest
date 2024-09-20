@@ -9,7 +9,7 @@ type UsernameBubbleProps = {
 
 const UsernameBubble: React.FC<UsernameBubbleProps> = ({ user }) => {
   return (
-    <div className="fixed flex flex-col justify-end p-2 rounded top-8 right-8 text-black/50 bg-white/50">
+    <div className="fixed flex flex-col justify-end p-2 rounded top-4 md:top-8 right-4 md:right-8 text-black/50 bg-white/50">
       <p className="text-right">
         <span className="font-bold">Hello, {user.username}</span>
         {

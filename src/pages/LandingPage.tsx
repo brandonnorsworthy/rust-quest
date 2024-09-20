@@ -56,7 +56,7 @@ const LandingPage = () => {
       }
 
       setCurrentQuest(randomQuestResponse);
-      setSpinning(true);
+      // setSpinning(true);
       setCurrentOpenModal("quest");
       localStorage.setItem('currentQuest', JSON.stringify(randomQuestResponse));
     } catch (error) {

@@ -8,17 +8,17 @@ interface MarkdownViewerProps {
 const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ markdownFile }) => {
   const [markdownContent, setMarkdownContent] = useState<string>('');
 
-  const loadMarkdown = async () => {
-    try {
-      const response = await fetch(markdownFile);
-      const text = await response.text();
-      setMarkdownContent(text);
-    } catch (error) {
-      console.error('Error loading markdown file:', error);
-    }
-  };
-
   useEffect(() => {
+    const loadMarkdown = async () => {
+      try {
+        const response = await fetch(markdownFile);
+        const text = await response.text();
+        setMarkdownContent(text);
+      } catch (error) {
+        console.error('Error loading markdown file:', error);
+      }
+    };
+
     loadMarkdown();
   }, [markdownFile]);
 

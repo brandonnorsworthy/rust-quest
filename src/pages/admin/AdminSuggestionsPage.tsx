@@ -11,7 +11,7 @@ import { Suggestion } from "@/models/SuggestionModels/suggestionResponse";
 import { AxiosError } from "axios";
 import Modal from "@/components/Modal";
 import EditSuggestion from "@/modals/EditSuggestions";
-import categoryServices from "@/service/categoryServices";
+import categoryService from "@/service/categoryService";
 import { Category } from "@/models/CategoryModels/categoryResponse";
 import ConfirmDialog from "@/components/ConfirmDialog";
 import { convertSuggestionIntoQuestBodyRequest } from "@/models/SuggestionModels/suggestionRequests";
@@ -35,7 +35,7 @@ const AdminSuggestionsPage = () => {
       try {
         if (!accessToken) return;
 
-        const categoriesResponse = await categoryServices.getCategories(accessToken);
+        const categoriesResponse = await categoryService.getCategories(accessToken);
 
         setCategories(categoriesResponse);
       } catch (error) {
@@ -44,7 +44,7 @@ const AdminSuggestionsPage = () => {
     };
 
     fetchCategories();
-  }, []);
+  }, [accessToken]);
 
   const fetchSuggestions: () => Promise<void> = useCallback(async () => {
     try {
@@ -140,15 +140,15 @@ const AdminSuggestionsPage = () => {
       <div className="absolute h-dvh w-dvw overflow-hidden z-[-1] bg-secondary/50">
       </div>
 
-      <div className="w-full h-full p-8">
-        <div className="absolute top-8 left-8">
+      <div className="w-full h-full p-2 md:p-8">
+        <div className="absolute top-4 left-4 md:top-8 md:left-4">
           <Button type="confirm" onClick={() => navigate("/admin")}>
             done
           </Button>
         </div>
 
         <div className="w-full h-full">
-          <div className="flex items-center justify-center w-full h-1/6">
+          <div className="flex items-end justify-center w-full h-1/6">
             <h1 className="text-4xl font-bold text-white">Admin All Suggestions</h1>
           </div>
 

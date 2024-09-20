@@ -17,4 +17,4 @@ __^^ let us know if this is a feature you'd like to see! ^^__
 # Other
 
 ## About
-This website was created by discord @[zcog] hope you enjoy it!
+This website was created by discord user **zcog** hope you enjoy it!

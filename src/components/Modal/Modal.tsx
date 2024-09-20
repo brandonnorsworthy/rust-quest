@@ -37,7 +37,7 @@ const QuestModal: React.FC<ModalProps> = ({ onClose, isOpen = true, children, hi
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
       <div ref={modalRef} className={`p-2 max-h-[90dvh] shadow-lg ${hideContainer ? "" : "bg-secondary"}`}>
-        <div className="max-w-full m-0 h-full max-h-[85dvh] overflow-y-auto sm:m-2 md:m-0  md:max-w-[42rem] text-text scrollbar-modern">
+        <div className="max-w-full m-0 h-full max-h-[85dvh] overflow-y-auto sm:m-2 md:m-0 overflow-x-hidden md:max-w-[42rem] text-text scrollbar-modern">
           {children}
         </div>
       </div>

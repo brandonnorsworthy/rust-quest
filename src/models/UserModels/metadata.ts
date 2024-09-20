@@ -1,6 +1,6 @@
 type metadata = {
   disableAnimations: boolean;
-  categoryFilters?: string[];
+  categoryFilters?: number[];
   instrumentDLCQuests: boolean;
   voicePropsDLCQuests: boolean;
   sunburnDLCQuests: boolean;
