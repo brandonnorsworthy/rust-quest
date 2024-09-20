@@ -186,7 +186,7 @@ const LandingPage = () => {
             disabled={disableButtons}
             onClick={() => setCurrentOpenModal("news")}
           />
-          <MenuButton
+          {/* <MenuButton
             text="all quests"
             disabled={disableButtons}
             onClick={() => {
@@ -194,7 +194,7 @@ const LandingPage = () => {
               if (user.role === "guest") return setCurrentOpenModal("register");
               navigate("/all-quests")
             }}
-          />
+          /> */}
           <MenuButton
             text="SUGGESTIONS"
             disabled={disableButtons}

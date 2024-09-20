@@ -56,7 +56,7 @@ const EditSuggestion: React.FC<ModalProps> = (props) => {
             <input
               type="text"
               value={title.toUpperCase()}
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={(e) => setTitle(e.target.value.toUpperCase())}
               className="w-full text-3xl font-bold text-center text-text bg-white/25 placeholder:text-text/50"
             />
         }
@@ -69,11 +69,11 @@ const EditSuggestion: React.FC<ModalProps> = (props) => {
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="w-full text-xl font-bold text-center hover:cursor-pointer text-text bg-white/25 placeholder:text-text/50"
+              className="w-full text-xl font-bold text-center text-text hover:cursor-pointer bg-white/25 placeholder:text-text/50"
             >
               {
                 categories.map((category) => (
-                  <option key={category.id} value={category.name}>Category: {category.name.toUpperCase()}</option>
+                  <option className='text-black' key={category.id} value={category.name}>Category: {category.name.toUpperCase()}</option>
                 ))
               }
             </select>
