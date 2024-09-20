@@ -4,9 +4,9 @@ import Button from "../Button";
 type TableProps<T> = {
   data: T[];
   columns: Array<{ header: string; accessor: keyof T }>;
-  page: number;
-  maxLength: number;
-  setPage: (page: number) => void;
+  page?: number;
+  maxLength?: number;
+  setPage?: (page: number) => void;
   rowClick?: (index: number) => void;
 };
 
@@ -62,25 +62,31 @@ const Table = <T extends { id: number | string }>({
             </table>
           </div>
 
-          <div className="flex flex-col items-start w-full sm:items-center sm:flex-row sm:justify-center gap-2 py-2 max-h-[25%] md:max-h-[20%]">
-            <Button
-              type="confirm"
-              disabled={page === 1}
-              onClick={() => setPage(page - 1)}
-            >
-              Previous
-            </Button>
-            <Button>
-              {`Page: ${page}`}
-            </Button>
-            <Button
-              type="confirm"
-              disabled={data.length < maxLength}
-              onClick={() => setPage(page + 1)}
-            >
-              Next
-            </Button>
-          </div>
+          {
+            (page && setPage) &&
+            <div className="flex flex-col items-start w-full sm:items-center sm:flex-row sm:justify-center gap-2 py-2 max-h-[25%] md:max-h-[20%]">
+              <Button
+                type="confirm"
+                disabled={page === 1}
+                onClick={() => setPage(page - 1)}
+              >
+                Previous
+              </Button>
+              <Button>
+                {`Page: ${page}`}
+              </Button>
+              {
+                maxLength &&
+                <Button
+                  type="confirm"
+                  disabled={data.length < maxLength}
+                  onClick={() => setPage(page + 1)}
+                >
+                  Next
+                </Button>
+              }
+            </div>
+          }
         </div>
       )}
     </div>

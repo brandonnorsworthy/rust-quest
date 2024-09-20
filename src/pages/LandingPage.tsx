@@ -204,6 +204,14 @@ const LandingPage = () => {
               setCurrentOpenModal("suggestions")
             }}
           />
+          <MenuButton
+            text="leaderboard"
+            disabled={disableButtons}
+            onClick={() => {
+              if (!accessToken || !user) return navigate("/login");
+              navigate("/leaderboard")
+            }}
+          />
           <MenuSpacer />
 
           <MenuButton

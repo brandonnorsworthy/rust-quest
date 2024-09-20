@@ -1,7 +1,7 @@
 import sendRequest from "@/lib/sendRequest";
 import CreateSuggestionRequest from "@/models/SuggestionModels/CreateSuggestionRequest";
 import { convertSuggestionIntoQuestBodyRequest } from "@/models/SuggestionModels/suggestionRequests";
-import { Suggestion } from "@/models/SuggestionModels/suggestionResponse";
+import { LeaderboardResponse, Suggestion } from "@/models/SuggestionModels/suggestionResponse";
 
 const baseUrl = "/suggestions";
 
@@ -42,4 +42,10 @@ export default {
     accessToken,
     body: convertSuggestionIntoQuestBody
   }),
+
+  getLeaderboard: async (accessToken: string) => await sendRequest({
+    method: "GET",
+    endpoint: `${baseUrl}/leaderboard`,
+    accessToken
+  }) as Promise<LeaderboardResponse[]>,
 }

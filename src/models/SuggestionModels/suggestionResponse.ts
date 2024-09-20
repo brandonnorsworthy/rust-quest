@@ -4,3 +4,9 @@ export interface Suggestion {
   title: string;
   description: string;
 }
+
+export interface LeaderboardResponse {
+  id: number;
+  username: string;
+  suggestions: number;
+}

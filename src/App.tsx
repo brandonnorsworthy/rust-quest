@@ -15,6 +15,7 @@ import { useAuth } from './context/useAuth';
 import UsernameBubble from './components/UsernameBubble';
 import AuthenticatedAdminUsersPage from './pages/admin/AdminUsersPage';
 import AuthenticatedAdminQuestsPage from './pages/admin/AdminQuestsPage';
+import LeaderboardPage from './pages/Leaderboard';
 
 const queryClient = new QueryClient()
 
@@ -30,6 +31,7 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/unauthorized" element={<UnauthorizedPage />} />
+          <Route path="/leaderboard" element={<LeaderboardPage />} />
 
           {/* authorized routes */}
           {/* <Route path="/all-quests" element={<CompletedQuestsPage />} /> */}

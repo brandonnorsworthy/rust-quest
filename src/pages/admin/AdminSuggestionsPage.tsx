@@ -141,7 +141,7 @@ const AdminSuggestionsPage = () => {
       </div>
 
       <div className="w-full h-full p-2 md:p-8">
-        <div className="absolute top-4 left-4 md:top-8 md:left-4">
+        <div className="absolute top-4 left-4 md:top-8 md:left-8">
           <Button type="confirm" onClick={() => navigate("/admin")}>
             done
           </Button>
