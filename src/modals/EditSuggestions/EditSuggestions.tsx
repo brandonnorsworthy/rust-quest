@@ -3,6 +3,7 @@ import Button from '../../components/Button';
 import { Suggestion } from '@/models/SuggestionModels/suggestionResponse';
 import { Category } from '@/models/CategoryModels/categoryResponse';
 import { convertSuggestionIntoQuestBodyRequest } from '@/models/SuggestionModels/suggestionRequests';
+import { DEFAULT_IMG_URL } from '@/constants';
 
 interface ModalProps {
   onClose: () => void;
@@ -22,7 +23,7 @@ const EditSuggestion: React.FC<ModalProps> = (props) => {
   } = props;
 
   const [previewQuest, setPreviewQuest] = useState(true);
-  const [imageUrl] = useState("https://questsandbox.s3.amazonaws.com/mission.png");
+  const [imageUrl] = useState(DEFAULT_IMG_URL);
   const [title, setTitle] = useState(suggestion.title);
   const [description, setDescription] = useState(suggestion.description);
   const [objectives, setObjectives] = useState<string[]>([]);

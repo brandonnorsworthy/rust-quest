@@ -161,7 +161,7 @@ const LandingPage = () => {
   };
 
   return (
-    <main className="flex justify-center w-full h-screen overflow-hidden">
+    <main className="flex justify-center overflow-hidden h-dvh">
       <div className="flex flex-col xl:max-w-[86rem] items-start mt-1 w-full ml-2 text-5xl sm:mt-10 sm:ml-10 text-white/50">
         <img src={logoImg} alt="logo" className="h-36 md:h-32" />
 

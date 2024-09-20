@@ -3,6 +3,7 @@ import Button from '../../components/Button';
 import { Category } from '@/models/CategoryModels/categoryResponse';
 import { Quest } from '@/models/QuestModels/questResponse';
 import { EditQuestRequest } from '@/models/QuestModels/questRequests';
+import { DEFAULT_IMG_URL } from '@/constants';
 
 interface ModalProps {
   onClose: () => void;
@@ -23,7 +24,7 @@ const EditQuest: React.FC<ModalProps> = (props) => {
 
   const [previewQuest, setPreviewQuest] = useState(true);
 
-  const [imageUrl] = useState(quest.image_url);
+  const [imageUrl] = useState(quest?.image_url || DEFAULT_IMG_URL);
   const [title, setTitle] = useState(quest.title);
   const [description, setDescription] = useState(quest.description);
   const [objectives, setObjectives] = useState<string[]>(quest.objectives);

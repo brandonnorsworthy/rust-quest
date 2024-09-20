@@ -136,7 +136,7 @@ const AdminSuggestionsPage = () => {
   };
 
   return (
-    <main className="h-dvh w-dvw">
+    <main className="overflow-hidden h-dvh w-dvw">
       <div className="absolute h-dvh w-dvw overflow-hidden z-[-1] bg-secondary/50">
       </div>
 
