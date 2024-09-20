@@ -24,7 +24,7 @@ const EditSuggestion: React.FC<ModalProps> = (props) => {
 
   const [previewQuest, setPreviewQuest] = useState(true);
   const [imageUrl] = useState(DEFAULT_IMG_URL);
-  const [title, setTitle] = useState(suggestion.title);
+  const [title, setTitle] = useState(suggestion.title.toUpperCase());
   const [description, setDescription] = useState(suggestion.description);
   const [objectives, setObjectives] = useState<string[]>([]);
   const [category, setCategory] = useState(categories[0].name);
@@ -147,7 +147,7 @@ const EditSuggestion: React.FC<ModalProps> = (props) => {
 
       <div className="flex justify-end mt-2">
         <div className="flex flex-col items-start w-full sm:items-center sm:flex-row sm:justify-between">
-          <div className="flex justify-start w-full gap-2 sm:w-fit">
+          <div className="flex flex-col w-full gap-2 mt-2 sm:w-fit sm:mt-0 sm:flex-row sm:justify-start">
             <Button
               onClick={onClose}>
               close

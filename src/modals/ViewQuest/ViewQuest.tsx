@@ -69,7 +69,7 @@ const ViewQuest: React.FC<ModalProps> = (props) => {
 
       <div className="flex justify-end mt-2">
         <div className="flex flex-col items-start w-full sm:items-center sm:flex-row sm:justify-between">
-          <div className="flex justify-start w-full sm:w-fit">
+          <div className="flex flex-col w-full gap-2 mt-2 sm:w-fit sm:mt-0 sm:flex-row sm:justify-start">
             <Button
               onClick={onClose}>
               close

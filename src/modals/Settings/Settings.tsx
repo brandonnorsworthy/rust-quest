@@ -4,6 +4,9 @@ import { toast } from "@/components/Toaster";
 import userService from "@/service/userService";
 import { useAuth } from "@/context/useAuth";
 import authService from "@/service/authService";
+import categoryService from "@/service/categoryService";
+import { Category } from "@/models/CategoryModels/categoryResponse";
+import MultiSelect from "@/components/MultiSelect";
 
 interface SettingsProps {
   onClose: () => void;
@@ -13,13 +16,24 @@ const Settings: React.FC<SettingsProps> = ({ onClose }) => {
   const { accessToken, user, saveToken } = useAuth();
 
   const [disableAnimations, setDisableAnimations] = useState(false);
-  const [categoryFilters, setCategoryFilters] = useState<string[]>([]);
   const [instrumentDLCQuests, setInstrumentDLCQuests] = useState(false);
   const [voicePropsDLCQuests, setVoicePropsDLCQuests] = useState(false);
   const [sunburnDLCQuests, setSunburnDLCQuests] = useState(false);
-  // const [email, setEmail] = useState(user?.email || "");
+  const [categoryFilters, setCategoryFilters] = useState<number[]>([]);
+
+  const [categories, setCategories] = useState<Category[]>([]);
 
   const formRef = useRef<HTMLFormElement>(null);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      if (!accessToken) return;
+      const fetchedCategories = await categoryService.getCategories(accessToken);
+      setCategories(fetchedCategories);
+    };
+
+    fetchCategories();
+  }, [accessToken]);
 
   useEffect(() => {
     if (user?.metadata) {
@@ -41,11 +55,10 @@ const Settings: React.FC<SettingsProps> = ({ onClose }) => {
 
       const settingsData = {
         disableAnimations,
-        // categoryFilters,
+        categoryFilters: categoryFilters.length === categories.length ? [] : categoryFilters,
         instrumentDLCQuests,
         voicePropsDLCQuests,
         sunburnDLCQuests,
-        // email,
       };
 
       await userService.updateSettings(accessToken, settingsData);
@@ -61,13 +74,13 @@ const Settings: React.FC<SettingsProps> = ({ onClose }) => {
   };
 
   return (
-    <div className="p-2 w-96">
-      <h1 className="mb-4 text-xl font-semibold">Settings</h1>
-
+    <div className="max-h-full w-full md:w-[500px]">
       <form onSubmit={handleSubmit} ref={formRef}>
+        <h1 className="text-xl font-semibold">Settings</h1>
+
         {/* General Settings */}
-        <h2 className="font-medium">General Settings</h2>
-        <div className="mt-2 space-y-4">
+        <div className="w-full p-2 mt-2 space-y-4 rounded bg-secondary-highlight">
+          <h2 className="font-medium">General Settings</h2>
           <label className="flex items-center space-x-2">
             <input
               type="checkbox"
@@ -75,18 +88,6 @@ const Settings: React.FC<SettingsProps> = ({ onClose }) => {
               onChange={() => setDisableAnimations(!disableAnimations)}
             />
             <span>Disable Animations</span>
-          </label>
-
-          <label className="block">
-            <span>Category Filters</span>
-            <input
-              type="text"
-              value={categoryFilters}
-              disabled={true}
-              placeholder="this is disabled"
-              onChange={(e) => setCategoryFilters(e.target.value.split(","))}
-              className="block w-full p-2 mt-1 border rounded"
-            />
           </label>
 
           <label className="flex items-center space-x-2">
@@ -117,42 +118,54 @@ const Settings: React.FC<SettingsProps> = ({ onClose }) => {
           </label>
         </div>
 
+        {/* Category Filters */}
+        <div className="p-2 mt-2 space-y-4 rounded bg-secondary-highlight">
+          <h2 className="font-medium">Category Filters</h2>
+          <p>Pick and choose if you only want some categories, the categories selected are the ones you will get quests for, selecting none will give you all quests.</p>
+          <MultiSelect
+            categories={categories}
+            selectedCategories={categoryFilters}
+            setSelectedCategories={setCategoryFilters} />
+        </div>
+
+
         {/* Account Settings */}
-        <h2 className="mt-6 font-medium">Account Settings</h2>
-        <div className="mt-2 space-y-4">
-          <p>commented out for now</p>
-          {/* <label className="block">
-            <span>Email</span>
-            <input
+        {/* <div className="p-2 mt-2 space-y-4 rounded bg-secondary-highlight">
+          <h2 className="font-medium">Account Settings</h2>
+          <div className="mt-2 space-y-4">
+            <label className="block">
+              <span>Email</span>
+              <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="block w-full p-2 mt-1 border rounded"
             />
-          </label> */}
+            </label>
 
-          {/* <label className="block">
-            <span>Password</span>
-            <input
-              type="password"
-              placeholder="Enter new password"
-              className="block w-full p-2 mt-1 border rounded"
-            />
-          </label>
+            <label className="block">
+              <span>Password</span>
+              <input
+                type="password"
+                placeholder="Enter new password"
+                className="block w-full p-2 mt-1 border rounded"
+              />
+            </label>
 
-          <label className="block">
-            <span>Confirm Password</span>
-            <input
-              type="password"
-              placeholder="Confirm new password"
-              className="block w-full p-2 mt-1 border rounded"
-            />
-          </label> */}
-        </div>
+            <label className="block">
+              <span>Confirm Password</span>
+              <input
+                type="password"
+                placeholder="Confirm new password"
+                className="block w-full p-2 mt-1 border rounded"
+              />
+            </label>
+          </div>
+        </div> */}
 
         {/* Danger Zone */}
-        <h2 className="mt-6 font-medium text-red-500">Danger Zone</h2>
-        <div className="mt-2 space-y-4">
+        {/* <div className="p-2 mt-2 space-y-4 rounded bg-secondary-highlight">
+          <h2 className="font-medium text-red-500">Danger Zone</h2>
           <button
             type="button"
             className="px-4 py-2 bg-red-500 rounded text-white-500"
@@ -160,10 +173,10 @@ const Settings: React.FC<SettingsProps> = ({ onClose }) => {
           >
             Reset all Quests
           </button>
-        </div>
+        </div> */}
 
         {/* Buttons */}
-        <div className="flex justify-between mt-6">
+        <div className="flex flex-col items-start w-full gap-2 mt-2 sm:items-center sm:flex-row sm:justify-between">
           <Button
             onClick={onClose}
           >

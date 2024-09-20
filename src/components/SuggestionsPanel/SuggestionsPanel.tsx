@@ -106,7 +106,7 @@ const SuggestionsPanel: React.FC<SuggestionsPanelProps> = (props) => {
               </div>
           }
 
-          <div className="flex justify-between mt-2">
+          <div className="flex flex-col items-start w-full gap-2 mt-2 sm:items-center sm:flex-row sm:justify-between">
             <Button
               htmlType="button"
               onClick={onClose}

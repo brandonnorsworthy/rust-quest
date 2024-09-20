@@ -52,15 +52,15 @@ const AdminUsersPage = () => {
       <div className="absolute h-dvh w-dvw overflow-hidden z-[-1] bg-secondary/50">
       </div>
 
-      <div className="w-full h-full p-8">
-        <div className="absolute top-8 left-8">
+      <div className="w-full h-full p-2 md:p-8">
+        <div className="absolute top-4 left-4 md:top-8 md:left-4">
           <Button type="confirm" onClick={() => navigate("/admin")}>
             done
           </Button>
         </div>
 
         <div className="w-full h-full">
-          <div className="flex items-center justify-center w-full h-1/6">
+          <div className="flex items-end justify-center w-full h-1/6">
             <h1 className="text-4xl font-bold text-white">Admin All User</h1>
           </div>
 

@@ -25,14 +25,14 @@ const Table = <T extends { id: number | string }>({
   }, [page]);
 
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full p-2">
       {data.length === 0 ? (
         <div className="flex justify-center w-full mt-8">
           <h1 className="text-2xl font-bold text-white">No data available</h1>
         </div>
       ) : (
         <div className="flex flex-col items-center h-full mt-8 text-xl">
-          <div className="flex items-start justify-center w-full max-h-[80%] overflow-y-auto">
+          <div className="flex items-start justify-center w-full max-h-[80%] overflow-auto">
             <table className="text-gray-200 bg-secondary/50">
               <thead ref={theadRef}>
                 <tr>
@@ -49,10 +49,10 @@ const Table = <T extends { id: number | string }>({
                     key={row.id + rowIndex.toString()}
                     onClick={() => rowClick && rowClick(rowIndex)}
                     aria-disabled={!rowClick}
-                    className={`bg-secondary/50 even:bg-secondary/25 hover:bg-buttonBackground-confirm ${rowClick ? "hover:cursor-pointer select-none" : ""}`}
+                    className={`bg-secondary/90 even:bg-secondary/25 hover:bg-buttonBackground-confirm ${rowClick ? "hover:cursor-pointer select-none" : ""}`}
                   >
                     {columns.map((column, colIndex) => (
-                      <td key={colIndex} className="p-2">
+                      <td key={colIndex} className="p-1 md:p-2">
                         {String(row[column.accessor])}
                       </td>
                     ))}
@@ -62,7 +62,7 @@ const Table = <T extends { id: number | string }>({
             </table>
           </div>
 
-          <div className="flex justify-center w-full gap-2 mt-8 max-h-[20%]">
+          <div className="flex flex-col items-start w-full sm:items-center sm:flex-row sm:justify-center gap-2 py-2 max-h-[25%] md:max-h-[20%]">
             <Button
               type="confirm"
               disabled={page === 1}
