@@ -1,6 +1,7 @@
 import React from 'react';
 import Button from '../../components/Button';
 import { Quest } from '@/models/QuestModels/questResponse';
+import { DEFAULT_IMG_URL } from '@/constants';
 
 interface ModalProps {
   onClose: () => void;
@@ -23,7 +24,7 @@ const ViewQuest: React.FC<ModalProps> = (props) => {
   return (
     <>
       <img
-        src={image_url}
+        src={image_url ? image_url : DEFAULT_IMG_URL}
         alt="logo"
         className='w-full max-h-[16rem] object-cover'
       />

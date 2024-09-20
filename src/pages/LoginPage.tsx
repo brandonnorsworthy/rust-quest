@@ -13,7 +13,7 @@ const LoginPage: React.FC = () => {
   }
 
   return (
-    <main className="h-screen overflow-hidden">
+    <main className="overflow-hidden h-dvh w-dvw">
       <LoginPanel
         onLoginSuccess={() => navigate("/")}
         onRegistrationSuccess={() => navigate("/")}
