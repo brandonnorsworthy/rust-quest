@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
+import { toast } from '../Toaster';
 
 interface MarkdownViewerProps {
   markdownFile: string;
@@ -15,7 +16,7 @@ const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ markdownFile }) => {
         const text = await response.text();
         setMarkdownContent(text);
       } catch (error) {
-        console.error('Error loading markdown file:', error);
+        toast.error('Error loading markdown file:', error);
       }
     };
 

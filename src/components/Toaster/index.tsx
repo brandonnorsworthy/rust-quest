@@ -27,7 +27,7 @@ const Toaster: React.FC = () => {
   };
 
   return (
-    <div className="absolute bottom-8 right-8 z-[1000] flex flex-col items-end">
+    <div className="absolute bottom-4 md:bottom-8 right-4 md:right-8 z-[1000] flex flex-col items-end">
       {
         toasts.reverse().map((toast, index) => {
           let toastStyle = null;
