@@ -57,7 +57,7 @@ const EditQuest: React.FC<ModalProps> = (props) => {
             <input
               type="text"
               value={title.toUpperCase()}
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={(e) => setTitle(e.target.value.toUpperCase())}
               className="w-full text-3xl font-bold text-center text-text bg-white/25 placeholder:text-text/50"
             />
         }
@@ -74,7 +74,7 @@ const EditQuest: React.FC<ModalProps> = (props) => {
             >
               {
                 categories.map((category) => (
-                  <option key={category.id} value={category.name}>Category: {category.name.toUpperCase()}</option>
+                  <option className='text-black' key={category.id} value={category.name}>Category: {category.name.toUpperCase()}</option>
                 ))
               }
             </select>

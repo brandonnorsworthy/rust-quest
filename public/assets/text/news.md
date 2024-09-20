@@ -11,13 +11,10 @@
 
 ## Future Updates
 - Light/Dark mode toggle
-- Bingo card generator with a code to share with friends to compete or collaborate
+- Bingo card generator with a code to share with friends to compete or collaborate  
 __^^ let us know if this is a feature you'd like to see! ^^__
 
 # Other
 
-## Professional Contact
-For professional inquiries, please email hello@email.com
-
 ## About
-This website was created by [zcog](http://www.steamcommunity.com/id/zcog) and [Jered]() as a hobby project. We hope you enjoy it!
+This website was created by discord @[zcog] hope you enjoy it!

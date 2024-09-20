@@ -8,7 +8,6 @@ import NotfoundPage from './pages/NotfoundPage';
 import UnauthorizedPage from './pages/UnauthorizedPage';
 import AuthenticatedAdminPage from './pages/admin/AdminPage';
 import AuthenticatedAdminSuggestionsPage from './pages/admin/AdminSuggestionsPage';
-import CompletedQuestsPage from './pages/AllQuestsPage';
 
 import './App.css';
 import Background from './components/Background';
@@ -33,7 +32,7 @@ function App() {
           <Route path="/unauthorized" element={<UnauthorizedPage />} />
 
           {/* authorized routes */}
-          <Route path="/all-quests" element={<CompletedQuestsPage />} />
+          {/* <Route path="/all-quests" element={<CompletedQuestsPage />} /> */}
 
           {/* admin routes */}
           <Route path="/admin" element={<AuthenticatedAdminPage />} />
