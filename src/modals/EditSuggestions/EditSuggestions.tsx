@@ -7,10 +7,11 @@ import { DEFAULT_IMG_URL } from '@/constants';
 
 interface ModalProps {
   onClose: () => void;
-  onDeleteSuggestion: () => void;
+  onDeleteSuggestion?: () => void;
   onCreateQuest: (newQuest: convertSuggestionIntoQuestBodyRequest) => void;
   suggestion: Suggestion;
   categories: Category[];
+  viewOnly?: boolean;
 }
 
 const EditSuggestion: React.FC<ModalProps> = (props) => {
@@ -19,7 +20,8 @@ const EditSuggestion: React.FC<ModalProps> = (props) => {
     onDeleteSuggestion,
     onCreateQuest,
     suggestion,
-    categories
+    categories,
+    viewOnly = false
   } = props;
 
   const [previewQuest, setPreviewQuest] = useState(true);
@@ -152,16 +154,21 @@ const EditSuggestion: React.FC<ModalProps> = (props) => {
               onClick={onClose}>
               close
             </Button>
-            <Button
-              type='cancel'
-              onClick={onDeleteSuggestion}
-            >
-              delete
-            </Button>
+            {
+              onDeleteSuggestion &&
+              <Button
+                type='cancel'
+                disabled={viewOnly}
+                onClick={onDeleteSuggestion}
+              >
+                delete
+              </Button>
+            }
           </div>
           <div className="flex flex-col w-full gap-2 mt-2 sm:w-fit sm:mt-0 sm:flex-row sm:justify-end">
             <Button
               type="info"
+              disabled={viewOnly}
               onClick={() => setPreviewQuest(prev => !prev)}>
               {previewQuest ? 'edit' : 'preview'}
             </Button>
@@ -169,6 +176,7 @@ const EditSuggestion: React.FC<ModalProps> = (props) => {
               onCreateQuest &&
               <Button
                 type="confirm"
+                disabled={viewOnly}
                 onClick={() => onCreateQuest({
                   title,
                   description,

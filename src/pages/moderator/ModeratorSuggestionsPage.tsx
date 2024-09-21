@@ -19,7 +19,7 @@ import Loader from "@/components/Loader";
 
 const ModeratorSuggestionsPage = () => {
   const navigate = useNavigate();
-  const { accessToken } = useAuth();
+  const { accessToken, user } = useAuth();
 
   const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
   const [page, setPage] = useState(1);
@@ -94,7 +94,7 @@ const ModeratorSuggestionsPage = () => {
     })
   };
 
-  const handleDeleteSuggestion = async () => {
+  const onDeleteSuggestion = async () => {
     const onConfirm = () => {
       try {
         if (!selectedSuggestion) return;
@@ -192,8 +192,9 @@ const ModeratorSuggestionsPage = () => {
             onClose={handleCloseSuggestion}
             suggestion={selectedSuggestion}
             onCreateQuest={handleCreateQuest}
-            onDeleteSuggestion={handleDeleteSuggestion}
+            onDeleteSuggestion={onDeleteSuggestion}
             categories={categories}
+            viewOnly={user?.username === selectedSuggestion.username}
           />
         </Modal>
       }
