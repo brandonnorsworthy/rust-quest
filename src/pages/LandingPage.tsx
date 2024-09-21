@@ -223,7 +223,15 @@ const LandingPage = () => {
             }}
           />
           {
-            user && user.role === "admin" &&
+            user && (user.role === "admin" || user.role === "moderator") &&
+            <MenuButton
+              text="MODERATOR"
+              disabled={disableButtons}
+              onClick={() => navigate("/moderator")}
+            />
+          }
+          {
+            user && (user.role === "admin") &&
             <MenuButton
               text="ADMIN"
               disabled={disableButtons}

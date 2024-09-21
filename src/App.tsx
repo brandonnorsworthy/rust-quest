@@ -16,6 +16,9 @@ import UsernameBubble from './components/UsernameBubble';
 import AuthenticatedAdminUsersPage from './pages/admin/AdminUsersPage';
 import AuthenticatedAdminQuestsPage from './pages/admin/AdminQuestsPage';
 import LeaderboardPage from './pages/Leaderboard';
+import AuthenticatedModeratorPage from './pages/moderator/ModeratorPage';
+import AuthenticatedModeratorSuggestionsPage from './pages/moderator/ModeratorSuggestionsPage';
+import AuthenticatedModeratorQuestsPage from './pages/moderator/ModeratorQuestsPage';
 
 const queryClient = new QueryClient()
 
@@ -35,6 +38,11 @@ function App() {
 
           {/* authorized routes */}
           {/* <Route path="/all-quests" element={<CompletedQuestsPage />} /> */}
+
+          {/* moderator routes */}
+          <Route path="/moderator" element={<AuthenticatedModeratorPage />} />
+          <Route path="/moderator/suggestions" element={<AuthenticatedModeratorSuggestionsPage />} />
+          <Route path="/moderator/quests" element={<AuthenticatedModeratorQuestsPage />} />
 
           {/* admin routes */}
           <Route path="/admin" element={<AuthenticatedAdminPage />} />

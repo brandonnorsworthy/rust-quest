@@ -14,7 +14,7 @@ const UsernameBubble: React.FC<UsernameBubbleProps> = ({ user }) => {
         <span className="font-bold">Hello, {user.username}</span>
         {
           (user.role === "admin" || user.role === "moderator") &&
-          <span className="font-bold text-red-500"> [{user.role}]</span>
+          <span className={`font-bold ${user.role === "admin" ? "text-red-500" : user.role === "moderator" ? "text-blue-500"  : ""}`}> [{user.role}]</span>
         }
       </p>
     </div>
