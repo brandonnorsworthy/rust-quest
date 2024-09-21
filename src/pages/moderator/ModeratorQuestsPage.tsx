@@ -17,7 +17,7 @@ import { AxiosError } from "axios";
 import ConfirmDialog from "@/components/ConfirmDialog";
 import { EditQuestRequest } from "@/models/QuestModels/questRequests";
 
-const AdminQuestsPage = () => {
+const ModeratorQuestsPage = () => {
   const navigate = useNavigate();
   const { accessToken } = useAuth();
 
@@ -77,24 +77,27 @@ const AdminQuestsPage = () => {
     setSelectedQuest(quests[index]);
   };
 
-  const handleModalClose = () => {
+  const closeModal = () => {
     setSelectedQuest(null);
   }
 
   const handleDeleteQuest = async () => {
-    if (!selectedQuest || !accessToken) return;
-
-    const onConfirm = async () => {
+    const onConfirm = () => {
       try {
-        await questService.deleteQuest(accessToken, selectedQuest.id)
+        if (!selectedQuest) return;
+        if (!accessToken) return;
+
+        questService.deleteQuest(accessToken, selectedQuest.id);
+        closeModal();
         fetchQuests();
+
+        toast.success("Suggestion deleted successfully");
       } catch (error) {
-        toast.error("Failed to delete quest", error);
+        toast.error("Failed to delete suggestion", error);
       } finally {
         setConfirmDialog(null);
       }
     };
-
     setConfirmDialog({
       title: "Are you sure?",
       description: "If you delete this suggestion, you will lose all changes.",
@@ -115,9 +118,9 @@ const AdminQuestsPage = () => {
 
         await questService.editQuest(accessToken, selectedQuest.id, newQuest);
         fetchQuests();
+        closeModal();
 
         toast.success("Quest updated successfully");
-        handleModalClose();
       } catch (error: unknown) {
         if (error instanceof AxiosError && error.response?.data) {
           return toast.error(error.response?.data.message, error);
@@ -142,14 +145,14 @@ const AdminQuestsPage = () => {
 
       <div className="w-full h-full md:p-8">
         <div className="absolute top-4 left-4 md:top-8 md:left-8">
-          <Button type="confirm" onClick={() => navigate("/admin")}>
+          <Button type="confirm" onClick={() => navigate("/moderator")}>
             done
           </Button>
         </div>
 
         <div className="w-full h-full">
           <div className="flex items-end justify-center w-full h-1/6">
-            <h1 className="text-4xl font-bold text-white">Admin All Quests</h1>
+            <h1 className="text-4xl font-bold text-white">All Quests</h1>
           </div>
 
           {
@@ -176,10 +179,10 @@ const AdminQuestsPage = () => {
 
       {
         selectedQuest &&
-        <Modal onClose={handleModalClose}>
+        <Modal onClose={closeModal}>
           <EditQuest
             quest={selectedQuest}
-            onClose={handleModalClose}
+            onClose={closeModal}
             categories={categories}
             onEditQuest={handleEditQuest}
             onDeleteQuest={handleDeleteQuest}
@@ -204,6 +207,6 @@ const AdminQuestsPage = () => {
   );
 }
 
-const AuthenticatedAdminQuestsPage = withAuth(AdminQuestsPage, "admin");
+const AuthenticatedModeratorQuestsPage = withAuth(ModeratorQuestsPage, "moderator");
 
-export default AuthenticatedAdminQuestsPage;
+export default AuthenticatedModeratorQuestsPage;

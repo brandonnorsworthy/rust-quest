@@ -48,4 +48,10 @@ export default {
     endpoint: `${baseUrl}/leaderboard`,
     accessToken
   }) as Promise<LeaderboardResponse[]>,
+
+  deleteSuggestion: async (accessToken: string, suggestionId: number) => await sendRequest({
+    method: "DELETE",
+    endpoint: `${baseUrl}/${suggestionId}`,
+    accessToken
+  }) as Promise<void>,
 }

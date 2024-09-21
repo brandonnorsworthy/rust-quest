@@ -3,7 +3,9 @@ import metadata from '../UserModels/metadata';
 export interface UserToken {
   userId: number;
   username: string;
-  role: "user" | "admin" | "moderator" | "guest";
+  role: role;
   iat: number;
-  metadata?: metadata
+  metadata?: metadata;
 }
+
+export type role = "user" | "admin" | "moderator" | "guest";

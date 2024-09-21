@@ -1,8 +1,8 @@
-import { UserToken } from "@/models/AuthModels/userToken";
+import { role, UserToken } from "@/models/AuthModels/userToken";
 import React, { useEffect, useState, ComponentType } from "react";
 import { useNavigate } from "react-router-dom";
 
-const withAuth = <P extends object>(WrappedComponent: ComponentType<P>, requiredRole?: "admin") => {
+const withAuth = <P extends object>(WrappedComponent: ComponentType<P>, requiredRole?: role) => {
   const ComponentWithAuth: React.FC<P> = (props) => {
     const navigate = useNavigate();
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
@@ -23,7 +23,7 @@ const withAuth = <P extends object>(WrappedComponent: ComponentType<P>, required
       return null;
     }
 
-    if (requiredRole && user.role !== requiredRole) {
+    if (user.role !== "admin" && user.role !== requiredRole) {
       navigate("/unauthorized");
       return null;
     }

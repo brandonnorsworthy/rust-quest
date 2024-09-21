@@ -7,7 +7,7 @@ import { DEFAULT_IMG_URL } from '@/constants';
 
 interface ModalProps {
   onClose: () => void;
-  onDeleteQuest: () => void;
+  onDeleteQuest?: () => void;
   onEditQuest: (newQuest: EditQuestRequest) => void;
   quest: Quest;
   categories: Category[];
@@ -153,12 +153,15 @@ const EditQuest: React.FC<ModalProps> = (props) => {
               onClick={onClose}>
               close
             </Button>
-            <Button
-              type='cancel'
-              onClick={onDeleteQuest}
-            >
-              delete
-            </Button>
+            {
+              onDeleteQuest &&
+              <Button
+                type='cancel'
+                onClick={onDeleteQuest}
+              >
+                delete
+              </Button>
+            }
           </div>
           <div className="flex flex-col w-full gap-2 mt-2 sm:w-fit sm:mt-0 sm:flex-row sm:justify-end">
             <Button

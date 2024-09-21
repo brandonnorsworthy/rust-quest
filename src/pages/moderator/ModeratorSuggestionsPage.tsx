@@ -2,28 +2,28 @@ import { useNavigate } from "react-router-dom";
 
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "@/components/Toaster";
+import suggestionService from "@/service/suggestionService";
 import { useAuth } from "@/context/useAuth";
 import withAuth from "@/hocs/withAuth";
 import Table from "@/components/Table";
 import Button from "@/components/Button";
-import questService from "@/service/questService";
-import { Quest } from "@/models/QuestModels/questResponse";
-import Loader from "@/components/Loader";
+import { Suggestion } from "@/models/SuggestionModels/suggestionResponse";
+import { AxiosError } from "axios";
 import Modal from "@/components/Modal";
-import EditQuest from "@/modals/EditQuest";
+import EditSuggestion from "@/modals/EditSuggestions";
 import categoryService from "@/service/categoryService";
 import { Category } from "@/models/CategoryModels/categoryResponse";
-import { AxiosError } from "axios";
 import ConfirmDialog from "@/components/ConfirmDialog";
-import { EditQuestRequest } from "@/models/QuestModels/questRequests";
+import { convertSuggestionIntoQuestBodyRequest } from "@/models/SuggestionModels/suggestionRequests";
+import Loader from "@/components/Loader";
 
-const AdminQuestsPage = () => {
+const ModeratorSuggestionsPage = () => {
   const navigate = useNavigate();
   const { accessToken } = useAuth();
 
-  const [quests, setQuests] = useState<Quest[]>([]);
+  const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
   const [page, setPage] = useState(1);
-  const [selectedQuest, setSelectedQuest] = useState<Quest | null>(null);
+  const [selectedSuggestion, setSelectedSuggestion] = useState<Suggestion | null>(null);
   const [categories, setCategories] = useState<Category[]>([]);
   const [confirmDialog, setConfirmDialog] = useState<{ title: string; description: string; onConfirm: () => void; } | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -46,55 +46,71 @@ const AdminQuestsPage = () => {
     fetchCategories();
   }, [accessToken]);
 
-  const fetchQuests: () => Promise<void> = useCallback(async () => {
+  const fetchSuggestions: () => Promise<void> = useCallback(async () => {
     try {
       if (!accessToken) return;
       setIsLoading(true);
 
-      const questsResponse = await questService.getQuests(accessToken, page);
+      const suggestionsResponse = await suggestionService.getSuggestions(accessToken, page);
 
-      setQuests(questsResponse);
+      setSuggestions(suggestionsResponse);
     } catch (error) {
-      toast.error("Failed to get quests", error);
+      toast.error("Failed to get suggestions", error);
     } finally {
       setIsLoading(false);
     }
   }, [accessToken, page]);
 
   useEffect(() => {
+    fetchSuggestions();
+  }, [page, fetchSuggestions]);
+
+  useEffect(() => {
     if (!accessToken) {
       navigate("/login");
       return;
     }
-    fetchQuests();
-  }, [accessToken, navigate, fetchQuests]);
-
-  useEffect(() => {
-    fetchQuests();
-  }, [page, fetchQuests]);
+    fetchSuggestions();
+  }, [accessToken, navigate, fetchSuggestions]);
 
   const handleRowClick = (index: number) => {
-    setSelectedQuest(quests[index]);
-  };
-
-  const handleModalClose = () => {
-    setSelectedQuest(null);
+    setSelectedSuggestion(suggestions[index]);
   }
 
-  const handleDeleteQuest = async () => {
-    if (!selectedQuest || !accessToken) return;
+  const closeModal = () => {
+    setSelectedSuggestion(null);
+  }
 
-    const onConfirm = async () => {
+  const handleCloseSuggestion = async () => {
+    if (confirmDialog) return;
+
+    setConfirmDialog({
+      title: "Are you sure?",
+      description: "If you close this suggestion, you will lose all changes.",
+      onConfirm: () => {
+        closeModal();
+        setConfirmDialog(null);
+      }
+    })
+  };
+
+  const handleDeleteSuggestion = async () => {
+    const onConfirm = () => {
       try {
-        await questService.deleteQuest(accessToken, selectedQuest.id)
-        fetchQuests();
+        if (!selectedSuggestion) return;
+        if (!accessToken) return;
+
+        suggestionService.deleteSuggestion(accessToken, selectedSuggestion.id);
+        closeModal();
+        fetchSuggestions();
+
+        toast.success("Suggestion deleted successfully");
       } catch (error) {
-        toast.error("Failed to delete quest", error);
+        toast.error("Failed to delete suggestion", error);
       } finally {
         setConfirmDialog(null);
       }
     };
-
     setConfirmDialog({
       title: "Are you sure?",
       description: "If you delete this suggestion, you will lose all changes.",
@@ -102,36 +118,32 @@ const AdminQuestsPage = () => {
     });
   };
 
-  const handleEditQuest = async (newQuest: EditQuestRequest) => {
-    const editQuest = async () => {
+  const handleCreateQuest = async (newQuest: convertSuggestionIntoQuestBodyRequest) => {
+    const handleConvertSuggestionToQuest = async () => {
       try {
-        if (!selectedQuest) return;
+        if (!selectedSuggestion) return;
         if (!accessToken) return;
 
-        if (newQuest?.objectives) {
-          newQuest.objectives = newQuest.objectives
-            .filter((objective): objective is string => !(objective === ""));
-        }
+        await suggestionService.convertSuggestionIntoQuest(accessToken, selectedSuggestion.id, newQuest);
+        fetchSuggestions();
 
-        await questService.editQuest(accessToken, selectedQuest.id, newQuest);
-        fetchQuests();
-
-        toast.success("Quest updated successfully");
-        handleModalClose();
+        toast.success("Suggestion converted to quest");
+        closeModal();
       } catch (error: unknown) {
         if (error instanceof AxiosError && error.response?.data) {
           return toast.error(error.response?.data.message, error);
         }
-        toast.error("Failed to update quest", error);
-      } finally {
-        setConfirmDialog(null);
+        toast.error("Failed to convert suggestion to quest", error);
       }
     }
 
     setConfirmDialog({
       title: "Are you sure?",
-      description: "Overwrite the current quest with the new data",
-      onConfirm: editQuest,
+      description: "If you create a quest, suggestion will be deleted.",
+      onConfirm: async () => {
+        await handleConvertSuggestionToQuest();
+        setConfirmDialog(null);
+      }
     });
   };
 
@@ -140,16 +152,16 @@ const AdminQuestsPage = () => {
       <div className="absolute h-dvh w-dvw overflow-hidden z-[-1] bg-secondary/50">
       </div>
 
-      <div className="w-full h-full md:p-8">
+      <div className="w-full h-full p-2 md:p-8">
         <div className="absolute top-4 left-4 md:top-8 md:left-8">
-          <Button type="confirm" onClick={() => navigate("/admin")}>
+          <Button type="confirm" onClick={() => navigate("/moderator")}>
             done
           </Button>
         </div>
 
         <div className="w-full h-full">
           <div className="flex items-end justify-center w-full h-1/6">
-            <h1 className="text-4xl font-bold text-white">Admin All Quests</h1>
+            <h1 className="text-4xl font-bold text-white">All Suggestions</h1>
           </div>
 
           {
@@ -157,16 +169,15 @@ const AdminQuestsPage = () => {
               <Loader /> :
               <div className="w-full h-5/6">
                 <Table
-                  data={quests}
+                  data={suggestions}
                   columns={[
                     { header: "ID", accessor: "id" },
                     { header: "Title", accessor: "title" },
                     { header: "Description", accessor: "description" },
-                    { header: "category", accessor: "category" },
                   ]}
                   page={page}
-                  rowClick={handleRowClick}
                   maxLength={maxLength}
+                  rowClick={handleRowClick}
                   setPage={setPage}
                 />
               </div>
@@ -175,14 +186,14 @@ const AdminQuestsPage = () => {
       </div>
 
       {
-        selectedQuest &&
-        <Modal onClose={handleModalClose}>
-          <EditQuest
-            quest={selectedQuest}
-            onClose={handleModalClose}
+        selectedSuggestion &&
+        <Modal onClose={handleCloseSuggestion}>
+          <EditSuggestion
+            onClose={handleCloseSuggestion}
+            suggestion={selectedSuggestion}
+            onCreateQuest={handleCreateQuest}
+            onDeleteSuggestion={handleDeleteSuggestion}
             categories={categories}
-            onEditQuest={handleEditQuest}
-            onDeleteQuest={handleDeleteQuest}
           />
         </Modal>
       }
@@ -204,6 +215,6 @@ const AdminQuestsPage = () => {
   );
 }
 
-const AuthenticatedAdminQuestsPage = withAuth(AdminQuestsPage, "admin");
+const AuthenticatedModeratorSuggestionsPage = withAuth(ModeratorSuggestionsPage, "moderator");
 
-export default AuthenticatedAdminQuestsPage;
+export default AuthenticatedModeratorSuggestionsPage;
