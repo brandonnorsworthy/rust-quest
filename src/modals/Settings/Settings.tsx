@@ -7,6 +7,7 @@ import authService from "@/service/authService";
 import categoryService from "@/service/categoryService";
 import { Category } from "@/models/CategoryModels/categoryResponse";
 import MultiSelect from "@/components/MultiSelect";
+import Loader from "@/components/Loader";
 
 interface SettingsProps {
   onClose: () => void;
@@ -22,14 +23,21 @@ const Settings: React.FC<SettingsProps> = ({ onClose }) => {
   const [categoryFilters, setCategoryFilters] = useState<number[]>([]);
 
   const [categories, setCategories] = useState<Category[]>([]);
+  const [isCategoriesLoading, setIsCategoriesLoading] = useState(true);
 
   const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     const fetchCategories = async () => {
       if (!accessToken) return;
-      const fetchedCategories = await categoryService.getCategories(accessToken);
-      setCategories(fetchedCategories);
+      try {
+        const fetchedCategories = await categoryService.getCategories(accessToken);
+        setCategories(fetchedCategories);
+      } catch (error) {
+        toast.error("Failed to fetch categories", error);
+      } finally {
+        setIsCategoriesLoading(false);
+      }
     };
 
     fetchCategories();
@@ -122,10 +130,14 @@ const Settings: React.FC<SettingsProps> = ({ onClose }) => {
         <div className="p-2 mt-2 space-y-4 rounded bg-secondary-highlight">
           <h2 className="font-medium">Category Filters</h2>
           <p>Pick and choose if you only want some categories, the categories selected are the ones you will get quests for, selecting none will give you all quests.</p>
-          <MultiSelect
-            categories={categories}
-            selectedCategories={categoryFilters}
-            setSelectedCategories={setCategoryFilters} />
+          {
+            isCategoriesLoading ?
+              <Loader /> :
+              <MultiSelect
+                categories={categories}
+                selectedCategories={categoryFilters}
+                setSelectedCategories={setCategoryFilters} />
+          }
         </div>
 
 
