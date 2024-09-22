@@ -1,5 +1,5 @@
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
 import LoginPanel from "@/components/LoginPanel";
 import { useAuth } from "@/context/useAuth";
 
@@ -7,8 +7,13 @@ const LoginPage: React.FC = () => {
   const navigate = useNavigate();
   const { accessToken } = useAuth();
 
+  useEffect(() => {
+    if (accessToken) {
+      navigate("/");
+    }
+  }, [accessToken, navigate]);
+
   if (accessToken) {
-    navigate("/");
     return null;
   }
 
@@ -20,6 +25,6 @@ const LoginPage: React.FC = () => {
       />
     </main>
   );
-}
+};
 
 export default LoginPage;

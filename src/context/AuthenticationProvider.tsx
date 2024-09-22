@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect, useCallback } from "react";
 import { UserToken } from "@/models/AuthModels/userToken";
 import { toast } from "@/components/Toaster";
 
@@ -17,34 +17,46 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [user, setUser] = useState<UserToken | null>(null);
 
+  // Load token from localStorage once during component mount
   useEffect(() => {
-    try {
-      const storedToken = localStorage.getItem(TOKEN_STORAGE_KEY);
-      if (storedToken) {
+    const storedToken = localStorage.getItem(TOKEN_STORAGE_KEY);
+    if (storedToken) {
+      try {
         setAccessToken(storedToken);
-        setUser({ ...JSON.parse(atob(storedToken.split(".")[1])) });
+        const parsedUser = JSON.parse(atob(storedToken.split(".")[1]));
+        setUser(parsedUser);
+      } catch (error) {
+        localStorage.removeItem(TOKEN_STORAGE_KEY);
+        toast.error("Failed to load token, clearing cache", error);
       }
-    } catch (error) {
-      localStorage.removeItem(TOKEN_STORAGE_KEY);
-      toast.error("Failed to load token, clearing cache", error);
     }
   }, []);
 
+  // Update user whenever accessToken changes
   useEffect(() => {
-    if (!accessToken) return setUser(null);
+    if (!accessToken) {
+      setUser(null);
+      return;
+    }
 
-    setUser({ ...JSON.parse(atob(accessToken.split(".")[1])) });
+    try {
+      const parsedUser = JSON.parse(atob(accessToken.split(".")[1]));
+      setUser(parsedUser);
+    } catch (error) {
+      setUser(null);
+      toast.error("Invalid token format", error);
+    }
   }, [accessToken]);
 
-  const saveToken = (newToken: string) => {
+  const saveToken = useCallback((newToken: string) => {
     localStorage.setItem(TOKEN_STORAGE_KEY, newToken);
     setAccessToken(newToken);
-  };
+  }, []);
 
-  const clearToken = () => {
+  const clearToken = useCallback(() => {
     localStorage.removeItem(TOKEN_STORAGE_KEY);
     setAccessToken(null);
-  };
+  }, []);
 
   return (
     <AuthContext.Provider value={{ accessToken, user, saveToken, clearToken }}>
