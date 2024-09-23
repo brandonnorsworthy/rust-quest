@@ -54,6 +54,8 @@ const LandingPage = () => {
 
       if (!randomQuestResponse) {
         toast.warning("No quests available, add new filters or reset your progress to see more quests.");
+        setCurrentOpenModal(null);
+        setCurrentQuest(null);
         return;
       }
 
@@ -62,6 +64,8 @@ const LandingPage = () => {
       setCurrentOpenModal("quest");
       localStorage.setItem('currentQuest', JSON.stringify(randomQuestResponse));
     } catch (error) {
+      setCurrentOpenModal(null);
+      setCurrentQuest(null);
       toast.error("Failed to get random quest", error);
     } finally {
       setIsModalLoading(false);
