@@ -6,6 +6,7 @@ import { AxiosError } from "axios";
 import { useAuth } from "@/context/useAuth";
 import Button from "../Button";
 import { toast } from "../Toaster";
+import { trackSuggestionCreation } from "@/analytics";
 
 type SuggestionsPanelProps = {
   onClose: () => void;
@@ -37,6 +38,7 @@ const SuggestionsPanel: React.FC<SuggestionsPanelProps> = (props) => {
       newSuggestion.title = newSuggestion.title.trim();
       newSuggestion.description = newSuggestion.description.trim();
 
+      trackSuggestionCreation();
       await suggestionService.createSuggestion(newSuggestion, accessToken!);
       toast.success("Suggestion submitted successfully!");
       onClose();

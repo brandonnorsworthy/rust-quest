@@ -5,7 +5,15 @@ import Button from "../Button";
 import { toast } from "../Toaster";
 import authService from "@/service/authService";
 import { useNavigate } from "react-router-dom";
-
+import {
+  trackLoginAttempt,
+  trackLoginSuccess,
+  trackLoginFailure,
+  trackRegistrationAttempt,
+  trackRegistrationSuccess,
+  trackRegistrationFailure,
+  trackGuestLogin,
+} from '@/analytics';
 interface LoginPanelProps {
   onLoginSuccess: () => void;
   onRegistrationSuccess: () => void;
@@ -45,17 +53,28 @@ const LoginPanel: React.FC<LoginPanelProps> = ({ onLoginSuccess, onRegistrationS
     setDisableButtons(true);
     try {
       let authResponse;
+
       if (isRegistering) {
+        trackRegistrationAttempt();
         authResponse = await authService.register(username, password);
+        trackRegistrationSuccess();
         onRegistrationSuccess();
       } else {
+        trackLoginAttempt();
         authResponse = await authService.login(username, password);
+        trackLoginSuccess();
         onLoginSuccess();
       }
 
       saveToken(authResponse.token);
     } catch (error: unknown) {
       if (error instanceof AxiosError) {
+        if (isRegistering) {
+          trackRegistrationFailure(error.response?.data?.error || 'Unknown Error');
+        } else {
+          trackLoginFailure(error.response?.data?.error || 'Unknown Error');
+        }
+
         if (error.response?.status === 429) {
           setError("Too many requests. Please try again later.");
         } else {
@@ -72,6 +91,7 @@ const LoginPanel: React.FC<LoginPanelProps> = ({ onLoginSuccess, onRegistrationS
   const loginAsGuest = async () => {
     setDisableButtons(true);
     try {
+      trackGuestLogin();
       const loginGuestResponse = await authService.loginGuest();
       saveToken(loginGuestResponse.token);
       onRegistrationSuccess();
