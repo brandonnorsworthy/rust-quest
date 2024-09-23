@@ -19,10 +19,13 @@ import AuthenticatedModeratorSuggestionsPage from './pages/moderator/ModeratorSu
 import AuthenticatedModeratorQuestsPage from './pages/moderator/ModeratorQuestsPage';
 import { useEffect } from 'react';
 import initializeGA, { trackPageView } from './analytics';
+import { API_DOMAIN } from './config';
 
 function App() {
   const { user } = useAuth();
   const location = useLocation();
+
+  console.log(API_DOMAIN)
 
   useEffect(() => {
     initializeGA();
