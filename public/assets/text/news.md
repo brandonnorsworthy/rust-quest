@@ -3,7 +3,7 @@
 ## September 21, 2024
 **New Release:** Version 1.0.0 is out!
 - spin the wheel to get a random challenge
-- add category filters to exclude stuff like "Roleplay" or "PVP"
+- add category filters to select only categories you want quests from "Roleplay" or "PVP"
 - submit your own challenges to be added to the wheel
 - track your progress with all the challenges
 - create an account to save your progress across devices

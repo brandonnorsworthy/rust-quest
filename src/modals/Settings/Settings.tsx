@@ -8,6 +8,8 @@ import categoryService from "@/service/categoryService";
 import { Category } from "@/models/CategoryModels/categoryResponse";
 import MultiSelect from "@/components/MultiSelect";
 import Loader from "@/components/Loader";
+import Modal from "@/components/Modal";
+import ConfirmDialog from "@/components/ConfirmDialog";
 
 interface SettingsProps {
   onClose: () => void;
@@ -24,6 +26,7 @@ const Settings: React.FC<SettingsProps> = ({ onClose }) => {
 
   const [categories, setCategories] = useState<Category[]>([]);
   const [isCategoriesLoading, setIsCategoriesLoading] = useState(true);
+  const [confirmDialog, setConfirmDialog] = useState<{ title: string; description: string; onConfirm: () => void; } | null>(null);
 
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -81,6 +84,27 @@ const Settings: React.FC<SettingsProps> = ({ onClose }) => {
     }
   };
 
+  const handleResetAllQuests = async () => {
+    const onConfirm = async () => {
+      try {
+        if (!accessToken) return;
+
+        await userService.resetAllQuests(accessToken);
+        toast.success("All quests have been reset successfully");
+      } catch (error) {
+        toast.error("Failed to reset all quests", error);
+      } finally {
+        setConfirmDialog(null);
+      }
+    };
+
+    setConfirmDialog({
+      title: "Are you sure?",
+      description: "If you reset all quests you will lose all progress, this cannot be undone.",
+      onConfirm: onConfirm,
+    });
+  }
+
   return (
     <div className="max-h-full w-full md:w-[500px]">
       <form onSubmit={handleSubmit} ref={formRef}>
@@ -98,7 +122,7 @@ const Settings: React.FC<SettingsProps> = ({ onClose }) => {
             <span>Disable Animations</span>
           </label>
 
-          <label className="flex items-center space-x-2">
+          {/* <label className="flex items-center space-x-2">
             <input
               type="checkbox"
               checked={instrumentDLCQuests}
@@ -123,7 +147,7 @@ const Settings: React.FC<SettingsProps> = ({ onClose }) => {
               onChange={() => setSunburnDLCQuests(!sunburnDLCQuests)}
             />
             <span>Show Sunburn DLC Quests</span>
-          </label>
+          </label> */}
         </div>
 
         {/* Category Filters */}
@@ -176,16 +200,17 @@ const Settings: React.FC<SettingsProps> = ({ onClose }) => {
         </div> */}
 
         {/* Danger Zone */}
-        {/* <div className="p-2 mt-2 space-y-4 rounded bg-secondary-highlight">
+        <div className="p-2 mt-2 space-y-4 rounded bg-secondary-highlight">
           <h2 className="font-medium text-red-500">Danger Zone</h2>
+          <p>This sets all quests back to incomplete for you to keep going on your favorite categories</p>
           <button
             type="button"
             className="px-4 py-2 bg-red-500 rounded text-white-500"
-            onClick={() => toast.warning("This has not been implemented yet")}
+            onClick={handleResetAllQuests}
           >
-            Reset all Quests
+            Reset Quest Progress
           </button>
-        </div> */}
+        </div>
 
         {/* Buttons */}
         <div className="flex flex-col items-start w-full gap-2 mt-2 sm:items-center sm:flex-row sm:justify-between">
@@ -202,6 +227,20 @@ const Settings: React.FC<SettingsProps> = ({ onClose }) => {
           </Button>
         </div>
       </form>
+
+      {
+        confirmDialog &&
+        <Modal
+          onClose={() => setConfirmDialog(null)}
+        >
+          <ConfirmDialog
+            title={confirmDialog.title}
+            description={confirmDialog.description}
+            onConfirm={confirmDialog.onConfirm}
+            onCancel={() => setConfirmDialog(null)}
+          />
+        </Modal>
+      }
     </div>
   );
 }

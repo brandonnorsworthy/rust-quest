@@ -51,7 +51,7 @@ const LandingPage = () => {
       const randomQuestResponse = await questService.getRandomQuest(accessToken);
 
       if (!randomQuestResponse) {
-        toast.warning("No quests available, check filters or you completed them all");
+        toast.warning("No quests available, add new filters or reset your progress to see more quests.");
         return;
       }
 

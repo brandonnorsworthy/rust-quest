@@ -6,8 +6,8 @@ const basePath = '/quests';
 export default {
   getRandomQuest: async (accessToken: string) => await sendRequest({
     method: 'GET',
-    endpoint: `${basePath}/random-quest?filters=pvp,raiding`,
-    accessToken
+    endpoint: `${basePath}/random-quest`,
+    accessToken,
   }) as Promise<Quest>,
 
   /**
