@@ -26,10 +26,11 @@ const Toaster: React.FC = () => {
     });
   };
 
+  const toastsCopy = [...toasts];
   return (
     <div className="absolute bottom-4 md:bottom-8 right-4 md:right-8 z-[1000] flex flex-col items-end">
       {
-        toasts.reverse().map((toast, index) => {
+        toastsCopy.reverse().map((toast, index) => {
           let toastStyle = null;
           switch (toast.type) {
             case 'error':
