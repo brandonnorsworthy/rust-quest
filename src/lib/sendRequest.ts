@@ -1,6 +1,6 @@
-import RequestOptions from '@/models/RequestOptions/requestOptions';
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { API_DOMAIN } from '../config';
+import RequestOptions from '@/models/RequestOptions/requestOptions';
 
 /**
  * Generic HTTP request function
@@ -10,7 +10,7 @@ import { API_DOMAIN } from '../config';
  * @param {String} options.endpoint - API endpoint to send request
  * @param {String} options.accessToken - JWT Bearer access token to authenticate user on API
  * @param {Object} [options.body={}] - body to send with request
- * @param {Array} [options.queryVariables=[]] - query variables which are appended on the URL Request ex: [{key: 'userId', value: 12}, {key: 'businessId', value: 244}]
+ * @param {Record<string, string>} [options.queryParams={}] - object representing query parameters, e.g., { userId: '12', businessId: '244' }
  * @param {String} [options.responseType='json'] - type of response to expect from API
  * @returns {Promise} If the request is successful, the promise will resolve with the response data and deconstruct it automatically. If the request fails, the promise will reject with the entire error for you to absorb with .status or .errorMessage and such.
  */
@@ -22,7 +22,7 @@ const sendRequest = (options: RequestOptions): Promise<unknown> => {
       endpoint,
       accessToken,
       body = {},
-      queryVariables = [],
+      queryParams = {},
       responseType = 'json'
     } = options;
 
@@ -34,23 +34,24 @@ const sendRequest = (options: RequestOptions): Promise<unknown> => {
       };
     }
 
-    const queryParameters = new URLSearchParams();
-    queryVariables.forEach(param => queryParameters.append(param.key, param.value));
-    const queryString = queryParameters.toString().length > 0 ? `?${queryParameters.toString()}` : '';
+    // Construct query string from query parameters object
+    const queryString = new URLSearchParams(queryParams).toString();
+    const url = `${domain ? domain : ''}${endpoint}${queryString ? `?${queryString}` : ''}`;
 
     axios({
       method,
-      url: `${domain ? domain : ''}${endpoint}${queryString}`,
+      url,
       data: body,
       ...config
-    }).then((response: AxiosResponse<unknown>) => {
-      resolve(response.data);
-    }).catch((error: AxiosError) => {
-      console.error(`Failed to send request to ${endpoint}:`, error);
-      reject(error);
-    });
+    })
+      .then((response: AxiosResponse<unknown>) => {
+        resolve(response.data);
+      })
+      .catch((error: AxiosError) => {
+        console.error(`Failed to send request to ${endpoint}:`, error);
+        reject(error);
+      });
   });
 };
-
 
 export default sendRequest;

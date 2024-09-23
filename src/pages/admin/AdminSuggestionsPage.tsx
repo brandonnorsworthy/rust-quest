@@ -82,16 +82,7 @@ const AdminSuggestionsPage = () => {
   }
 
   const handleCloseSuggestion = async () => {
-    if (confirmDialog) return;
-
-    setConfirmDialog({
-      title: "Are you sure?",
-      description: "If you close this suggestion, you will lose all changes.",
-      onConfirm: () => {
-        closeModal();
-        setConfirmDialog(null);
-      }
-    })
+    closeModal();
   };
 
   const handleDeleteSuggestion = async () => {

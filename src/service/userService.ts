@@ -33,6 +33,6 @@ export default {
     method: 'GET',
     endpoint: `${basePath}`,
     accessToken,
-    queryVariables: [{ key: 'page', value: page.toString() }]
+    queryParams: { page: page.toString() }
   }) as Promise<User[]>,
 }

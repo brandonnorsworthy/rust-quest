@@ -6,7 +6,7 @@ const basePath = '/categories';
 export default {
   getCategories: async (accessToken: string) => await sendRequest({
     method: 'GET',
-    endpoint: `${basePath}/`,
+    endpoint: `${basePath}`,
     accessToken
   }) as Promise<Category[]>,
 }

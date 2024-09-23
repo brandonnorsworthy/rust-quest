@@ -4,6 +4,6 @@ export default interface RequestOptions {
   endpoint: string;
   accessToken?: string | null;
   body?: Record<string, unknown>;
-  queryVariables?: Array<{ key: string; value: string }>;
+  queryParams?: Record<string, string>;
   responseType?: unknown;
 }

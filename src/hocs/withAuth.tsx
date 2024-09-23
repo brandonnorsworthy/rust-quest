@@ -16,7 +16,7 @@ const withAuth = <P extends object>(WrappedComponent: ComponentType<P>, required
         return;
       }
 
-      if (requiredRole && user.role !== requiredRole) {
+      if (requiredRole && (user.role !== "admin" && user.role !== requiredRole)) {
         navigate("/unauthorized");
         return;
       }
