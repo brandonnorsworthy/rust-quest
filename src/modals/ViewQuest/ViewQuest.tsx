@@ -8,7 +8,8 @@ interface ModalProps {
   onSkip?: () => void;
   onComplete?: () => void;
   onIncomplete?: () => void;
-  quest: Quest
+  quest: Quest,
+  disableButtons?: boolean;
 }
 
 const ViewQuest: React.FC<ModalProps> = (props) => {
@@ -17,7 +18,8 @@ const ViewQuest: React.FC<ModalProps> = (props) => {
     onSkip,
     onComplete,
     onIncomplete,
-    quest
+    quest,
+    disableButtons
   } = props;
   const { title, description, objectives, image_url, category, info_url, username } = quest;
 
@@ -78,6 +80,7 @@ const ViewQuest: React.FC<ModalProps> = (props) => {
               info_url &&
               <Button
                 type="info"
+                disabled={disableButtons}
                 onClick={() => window.open(info_url, '_blank', 'noopener,noreferrer')}>
                 learn more
               </Button>
@@ -88,6 +91,7 @@ const ViewQuest: React.FC<ModalProps> = (props) => {
               onSkip &&
               <Button
                 type="cancel"
+                disabled={disableButtons}
                 onClick={onSkip}>
                 skip
               </Button>
@@ -96,6 +100,7 @@ const ViewQuest: React.FC<ModalProps> = (props) => {
               onComplete &&
               <Button
                 type="confirm"
+                disabled={disableButtons}
                 onClick={onComplete}>
                 complete
               </Button>
@@ -104,6 +109,7 @@ const ViewQuest: React.FC<ModalProps> = (props) => {
               onIncomplete &&
               <Button
                 type="cancel"
+                disabled={disableButtons}
                 onClick={onIncomplete}>
                 mark incomplete
               </Button>
