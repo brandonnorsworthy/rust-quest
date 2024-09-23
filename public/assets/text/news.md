@@ -11,6 +11,7 @@
 
 ## Future Updates
 - Light/Dark mode toggle
+- Select the tier/stage you are in for the wipe to get challenges relevant to your progression. (e.g. early game, mid game, late game)
 - Bingo card generator with a code to share with friends to compete or collaborate  
 __^^ let us know if this is a feature you'd like to see! ^^__
 
