@@ -1,5 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { Toaster } from '@/components/Toaster';
 
 import LandingPage from './pages/LandingPage';
@@ -10,7 +9,6 @@ import AuthenticatedAdminPage from './pages/admin/AdminPage';
 import AuthenticatedAdminSuggestionsPage from './pages/admin/AdminSuggestionsPage';
 
 import './App.css';
-import Background from './components/Background';
 import { useAuth } from './context/useAuth';
 import UsernameBubble from './components/UsernameBubble';
 import AuthenticatedAdminUsersPage from './pages/admin/AdminUsersPage';
@@ -19,49 +17,55 @@ import LeaderboardPage from './pages/Leaderboard';
 import AuthenticatedModeratorPage from './pages/moderator/ModeratorPage';
 import AuthenticatedModeratorSuggestionsPage from './pages/moderator/ModeratorSuggestionsPage';
 import AuthenticatedModeratorQuestsPage from './pages/moderator/ModeratorQuestsPage';
-
-const queryClient = new QueryClient()
+import { useEffect } from 'react';
+import initializeGA, { trackPageView } from './analytics';
 
 function App() {
   const { user } = useAuth();
+  const location = useLocation();
+
+  useEffect(() => {
+    initializeGA();
+  }, []);
+
+  useEffect(() => {
+    trackPageView(location.pathname);
+  }, [location]);
 
   return (
-    <QueryClientProvider client={queryClient}>
+    <>
       <Toaster />
-      <Router>
-        <Routes>
-          {/* public routes */}
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/unauthorized" element={<UnauthorizedPage />} />
-          <Route path="/leaderboard" element={<LeaderboardPage />} />
+      <Routes>
+        {/* public routes */}
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/unauthorized" element={<UnauthorizedPage />} />
+        <Route path="/leaderboard" element={<LeaderboardPage />} />
 
-          {/* authorized routes */}
-          {/* <Route path="/all-quests" element={<CompletedQuestsPage />} /> */}
+        {/* authorized routes */}
+        {/* <Route path="/all-quests" element={<CompletedQuestsPage />} /> */}
 
-          {/* moderator routes */}
-          <Route path="/moderator" element={<AuthenticatedModeratorPage />} />
-          <Route path="/moderator/suggestions" element={<AuthenticatedModeratorSuggestionsPage />} />
-          <Route path="/moderator/quests" element={<AuthenticatedModeratorQuestsPage />} />
+        {/* moderator routes */}
+        <Route path="/moderator" element={<AuthenticatedModeratorPage />} />
+        <Route path="/moderator/suggestions" element={<AuthenticatedModeratorSuggestionsPage />} />
+        <Route path="/moderator/quests" element={<AuthenticatedModeratorQuestsPage />} />
 
-          {/* admin routes */}
-          <Route path="/admin" element={<AuthenticatedAdminPage />} />
-          <Route path="/admin/suggestions" element={<AuthenticatedAdminSuggestionsPage />} />
-          <Route path="/admin/quests" element={<AuthenticatedAdminQuestsPage />} />
-          <Route path="/admin/users" element={<AuthenticatedAdminUsersPage />} />
+        {/* admin routes */}
+        <Route path="/admin" element={<AuthenticatedAdminPage />} />
+        <Route path="/admin/suggestions" element={<AuthenticatedAdminSuggestionsPage />} />
+        <Route path="/admin/quests" element={<AuthenticatedAdminQuestsPage />} />
+        <Route path="/admin/users" element={<AuthenticatedAdminUsersPage />} />
 
-          {/* user routes */}
-          <Route path="*" element={<NotfoundPage />} />
-        </Routes>
-      </Router>
+        {/* user routes */}
+        <Route path="*" element={<NotfoundPage />} />
+      </Routes>
 
       {
         user &&
         <UsernameBubble user={user} />
       }
 
-      <Background />
-    </QueryClientProvider>
+    </>
   )
 }
 

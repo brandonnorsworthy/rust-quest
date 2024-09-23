@@ -19,6 +19,7 @@ import RegisterAccount from "@/modals/RegisterAccount";
 import { ModalTypes } from "@/models/modals";
 import ConfirmDialog from "@/components/ConfirmDialog";
 import SpinningWheel from "@/components/SpinningWheel";
+import { trackQuestCompletion, trackQuestSkip } from "@/analytics";
 
 
 const LandingPage = () => {
@@ -75,6 +76,9 @@ const LandingPage = () => {
   const handleQuestSkip = () => {
     // setCurrentQuest(null);
     localStorage.removeItem('currentQuest');
+    if (currentQuest) {
+      trackQuestSkip(currentQuest.id);
+    };
     handleSpinWheel();
   };
 
@@ -82,8 +86,10 @@ const LandingPage = () => {
     if (!accessToken) return navigate("/login");
 
     try {
+      if (!currentQuest) return;
       setIsModalLoading(true);
-      const completeQuestResponse = await userService.completeQuest(accessToken, currentQuest!.id);
+      trackQuestCompletion(currentQuest.id);
+      const completeQuestResponse = await userService.completeQuest(accessToken, currentQuest.id);
 
       // setCurrentQuest(null);
       localStorage.removeItem('currentQuest');
