@@ -6,8 +6,8 @@ const basePath = '/quests';
 export default {
   getRandomQuest: async (accessToken: string) => await sendRequest({
     method: 'GET',
-    endpoint: `${basePath}/random-quest?filters=pvp,raiding`,
-    accessToken
+    endpoint: `${basePath}/random-quest`,
+    accessToken,
   }) as Promise<Quest>,
 
   /**
@@ -18,9 +18,9 @@ export default {
    */
   getQuests: async (accessToken: string, page: number) => await sendRequest({
     method: 'GET',
-    endpoint: `${basePath}/`,
+    endpoint: `${basePath}`,
     accessToken,
-    queryVariables: [{ key: "page", value: page.toString() }]
+    queryParams: { page: page.toString() }
   }) as Promise<AllQuestsResponse[]>,
 
   editQuest: async (accessToken: string, questId: number, questData: Partial<Quest>) => await sendRequest({

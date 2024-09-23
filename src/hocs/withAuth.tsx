@@ -1,31 +1,31 @@
-import { role, UserToken } from "@/models/AuthModels/userToken";
-import React, { useEffect, useState, ComponentType } from "react";
+import { role } from "@/models/AuthModels/userToken";
+import React, { useLayoutEffect, useState, ComponentType } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/context/useAuth";
+import Loader from "@/components/Loader";
 
 const withAuth = <P extends object>(WrappedComponent: ComponentType<P>, requiredRole?: role) => {
   const ComponentWithAuth: React.FC<P> = (props) => {
     const navigate = useNavigate();
+    const { user } = useAuth();
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-    const [user, setUser] = useState<UserToken | null>(null);
 
-    useEffect(() => {
-      const token = localStorage.getItem("token");
-      if (!token) {
+    useLayoutEffect(() => {
+      if (!user) {
         navigate("/login");
         return;
       }
 
-      setUser({ ...JSON.parse(atob(token.split(".")[1])) });
+      if (requiredRole && (user.role !== "admin" && user.role !== requiredRole)) {
+        navigate("/unauthorized");
+        return;
+      }
+
       setIsAuthenticated(true);
-    }, [navigate]);
+    }, [navigate, user, requiredRole]);
 
-    if (!isAuthenticated || !user) {
-      return null;
-    }
-
-    if (user.role !== "admin" && user.role !== requiredRole) {
-      navigate("/unauthorized");
-      return null;
+    if (!isAuthenticated) {
+      return <Loader />
     }
 
     return <WrappedComponent {...props} />;

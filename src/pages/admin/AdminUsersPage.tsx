@@ -27,6 +27,10 @@ const AdminUsersPage = () => {
 
       const usersResponse = await userService.getUsers(accessToken, page);
 
+      usersResponse.forEach((user) => {
+        if (user.last_login) user.last_login = new Date(user.last_login).toLocaleString();
+      });
+
       setUsers(usersResponse);
     } catch (error) {
       toast.error("Failed to get suggestions", error);

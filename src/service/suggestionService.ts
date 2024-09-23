@@ -15,7 +15,7 @@ export default {
    */
   createSuggestion: async (suggestion: CreateSuggestionRequest, accessToken: string) => await sendRequest({
     method: "POST",
-    endpoint: baseUrl,
+    endpoint: `${baseUrl}`,
     body: { ...suggestion },
     accessToken
   }),
@@ -26,9 +26,9 @@ export default {
    */
   getSuggestions: async (accessToken: string, page: number) => await sendRequest({
     method: "GET",
-    endpoint: baseUrl,
+    endpoint: `${baseUrl}`,
     accessToken,
-    queryVariables: [{ key: "page", value: page.toString() }]
+    queryParams: { page: page.toString() }
   }) as Promise<Suggestion[]>,
 
   /**
