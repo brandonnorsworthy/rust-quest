@@ -85,18 +85,6 @@ const AdminSuggestionsPage = () => {
     closeModal();
   };
 
-  const handleDeleteSuggestion = async () => {
-    const onConfirm = () => toast.info('not implemented yet');
-    setConfirmDialog({
-      title: "Are you sure?",
-      description: "If you delete this suggestion, you will lose all changes.",
-      onConfirm: () => {
-        onConfirm();
-        setConfirmDialog(null);
-      }
-    });
-  };
-
   const handleCreateQuest = async (newQuest: convertSuggestionIntoQuestBodyRequest) => {
     const handleConvertSuggestionToQuest = async () => {
       try {
@@ -123,6 +111,30 @@ const AdminSuggestionsPage = () => {
         await handleConvertSuggestionToQuest();
         setConfirmDialog(null);
       }
+    });
+  };
+  
+  const handleDeleteSuggestion = async () => {
+    const onConfirm = () => {
+      try {
+        if (!selectedSuggestion) return;
+        if (!accessToken) return;
+
+        suggestionService.deleteSuggestion(accessToken, selectedSuggestion.id);
+        closeModal();
+        fetchSuggestions();
+
+        toast.success("Suggestion deleted successfully");
+      } catch (error) {
+        toast.error("Failed to delete suggestion", error);
+      } finally {
+        setConfirmDialog(null);
+      }
+    };
+    setConfirmDialog({
+      title: "Are you sure?",
+      description: "If you delete this suggestion, you will lose all changes.",
+      onConfirm: onConfirm,
     });
   };
 

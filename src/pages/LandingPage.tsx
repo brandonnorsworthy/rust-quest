@@ -29,6 +29,7 @@ const LandingPage = () => {
   const [currentQuest, setCurrentQuest] = useState<Quest | null>(storedQuests);
   const [currentOpenModal, setCurrentOpenModal] = useState<ModalTypes>(null);
   const [spinning, setSpinning] = useState(false);
+  const [isModalLoading, setIsModalLoading] = useState(false);
 
   const disableButtons = currentOpenModal ? true : false;
 
@@ -48,10 +49,13 @@ const LandingPage = () => {
     if (!accessToken) return navigate("/login");
 
     try {
+      setIsModalLoading(true);
       const randomQuestResponse = await questService.getRandomQuest(accessToken);
 
       if (!randomQuestResponse) {
         toast.warning("No quests available, add new filters or reset your progress to see more quests.");
+        setCurrentOpenModal(null);
+        setCurrentQuest(null);
         return;
       }
 
@@ -60,24 +64,31 @@ const LandingPage = () => {
       setCurrentOpenModal("quest");
       localStorage.setItem('currentQuest', JSON.stringify(randomQuestResponse));
     } catch (error) {
+      setCurrentOpenModal(null);
+      setCurrentQuest(null);
       toast.error("Failed to get random quest", error);
+    } finally {
+      setIsModalLoading(false);
     }
   };
 
   const handleQuestSkip = () => {
-    setCurrentQuest(null);
+    // setCurrentQuest(null);
     localStorage.removeItem('currentQuest');
+    handleSpinWheel();
   };
 
   const handleQuestComplete = async () => {
     if (!accessToken) return navigate("/login");
 
     try {
+      setIsModalLoading(true);
       const completeQuestResponse = await userService.completeQuest(accessToken, currentQuest!.id);
 
-      setCurrentQuest(null);
+      // setCurrentQuest(null);
       localStorage.removeItem('currentQuest');
       toast.success(completeQuestResponse);
+      handleSpinWheel();
     } catch (error) {
       toast.error("Failed to complete quest", error);
     }
@@ -132,6 +143,7 @@ const LandingPage = () => {
               onSkip={handleQuestSkip}
               onComplete={handleQuestComplete}
               quest={currentQuest}
+              disableButtons={isModalLoading}
             />
           </Modal>
         );
