@@ -1,6 +1,7 @@
 # Rust Strat Roulette
 
 design: [Figma Design Cards](https://www.figma.com/file/l73SeO5BDi8eN1KM0nBGjJ/rust-strat-roulette?node-id=0%3A1)
+api repo: [Github rust-quest-api](https://github.com/brandonnorsworthy/rust-quest-api)
 
 ## Introduction
 
